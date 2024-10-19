@@ -1,0 +1,27 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:15.6-alpine
+    container_name: projeto-pcp
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=123456
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=projeto-pcp
+    networks:
+      - postgres
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: projeto-pcp-pgadmin
+    ports:
+      - 8000:80
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=postgres@mail.com
+      - PGADMIN_DEFAULT_PASSWORD=123456
+    networks:
+      - postgres
+networks:
+  postgres:
+    driver: bridge
