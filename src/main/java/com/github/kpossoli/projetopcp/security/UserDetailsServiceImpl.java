@@ -66,6 +66,8 @@ private Collection<? extends GrantedAuthority> getPermissoes(Usuario usuario) {
         permissoes.add("MATERIA_DELETE");
 
         permissoes.add("PONTUACAO_READ");
+
+        permissoes.add("ESTATISTICAS_READ");
     } else if (usuario.getPapel().getNome().equals("PEDAGOGICO")) {
         permissoes.add("TURMA_READ");
         permissoes.add("TURMA_WRITE");
@@ -80,6 +82,8 @@ private Collection<? extends GrantedAuthority> getPermissoes(Usuario usuario) {
         permissoes.add("ALUNO_WRITE");
 
         permissoes.add("PONTUACAO_READ");
+
+        permissoes.add("ESTATISTICAS_READ");
     } else if (usuario.getPapel().getNome().equals("RECRUITER")) {
         permissoes.add("DOCENTE_READ");
         permissoes.add("DOCENTE_WRITE");
@@ -89,6 +93,7 @@ private Collection<? extends GrantedAuthority> getPermissoes(Usuario usuario) {
         permissoes.add("NOTA_WRITE");
 
         permissoes.add("PONTUACAO_READ");
+        permissoes.add("ESTATISTICAS_READ");
     } else {
         permissoes.add("NOTA_READ");
         permissoes.add("PONTUACAO_READ");
