@@ -1,14 +1,10 @@
 package com.github.kpossoli.projetopcp.model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -28,9 +24,64 @@ public class Docente {
 	@Getter @Setter
 	private String nome;
 
-	@Column(name = "data_entrada")
 	@Getter @Setter
-	private LocalDate dataEntrada;
+	private String genero;
+
+	@Column(name = "data_nascimento")
+	@Getter @Setter
+	private LocalDate dataNascimento;
+
+	@Getter @Setter
+	private String naturalidade;
+
+	@Getter @Setter
+	private String cpf;
+
+	@Getter @Setter
+	private String rg;
+
+	@Getter @Setter
+	private String telefone;
+
+	@Getter @Setter
+	private String email;
+
+	@Getter @Setter
+	private String senha;
+
+	@Column(name = "estado_civil")
+	@Getter @Setter
+	private String estadoCivil;
+
+	@Getter @Setter
+	@OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, orphanRemoval = true)
+	@JoinColumn(name = "id_usuario")
+	private List<Materia> materias = new ArrayList<>();
+
+	@Getter @Setter
+	private String cep;
+
+	@Getter @Setter
+	private String cidade;
+
+	@Getter @Setter
+	private String estado;
+
+	@Getter @Setter
+	private String logradouro;
+
+	@Getter @Setter
+	private Long numero;
+
+	@Getter @Setter
+	private String complemento;
+
+	@Getter @Setter
+	private String bairro;
+
+	@Column (name = "ponto_de_referencia")
+	@Getter @Setter
+	private String pontoDeReferencia;
 
 	@OneToOne
 	@JoinColumn(name = "id_usuario")
