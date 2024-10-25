@@ -2,6 +2,8 @@ package com.github.kpossoli.projetopcp.service;
 
 import java.util.List;
 
+import com.github.kpossoli.projetopcp.model.Usuario;
+import com.github.kpossoli.projetopcp.repository.PapelRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
@@ -23,8 +25,9 @@ import java.math.BigDecimal;
 public class AlunoServiceImpl implements AlunoService {
 
     private final AlunoRepository alunoRepository;
-    private final UsuarioRepository usuarioRepository;
     private final NotaRepository notaRepository;
+    private final PapelRepository papelRepository;
+    private final UsuarioService usuarioService;
 
     @Override
     public Aluno obter(Long id) {
@@ -41,10 +44,15 @@ public class AlunoServiceImpl implements AlunoService {
     public Aluno criar(Aluno aluno) {
         log.info("Criando aluno", aluno);
 
-        var usuario = usuarioRepository.findById(aluno.getUsuario().getId())
-                .orElseThrow(() -> new EmptyResultDataAccessException(1));
+        Usuario novoUsuario = new Usuario();
+        novoUsuario.setNome(aluno.getNome());
+        novoUsuario.setLogin(aluno.getEmail());
+        novoUsuario.setSenha(aluno.getSenha());
+        novoUsuario.setPapel(papelRepository.findByNome("ALUNO").orElseThrow(() -> new RuntimeException("Papel não encontrado")));
 
-        aluno.setUsuario(usuario);
+        Usuario usuarioSalvo = usuarioService.criarUsuario(novoUsuario);
+
+        aluno.setUsuario(usuarioSalvo);
 
         return alunoRepository.save(aluno);
     }
