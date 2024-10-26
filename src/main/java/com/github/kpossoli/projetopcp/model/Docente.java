@@ -54,7 +54,7 @@ public class Docente {
 	private String estadoCivil;
 
 	@Getter @Setter
-	@OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, orphanRemoval = true)
+	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_usuario")
 	private List<Materia> materias = new ArrayList<>();
 
