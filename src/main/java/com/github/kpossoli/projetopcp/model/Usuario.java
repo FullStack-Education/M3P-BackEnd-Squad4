@@ -37,4 +37,6 @@ public class Usuario {
 	@Getter @Setter
 	private Papel papel;
 
+	//TODO implementar validação para não permitir cadastro de usuario com e-mail já existente
+
 }

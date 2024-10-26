@@ -17,6 +17,6 @@ public class TurmaDto {
 	private DocenteDto docente;
 
 	@NotNull
-	private List<AlunoDto> alunos;
+	private List<MateriaDto> materias;
 
 }

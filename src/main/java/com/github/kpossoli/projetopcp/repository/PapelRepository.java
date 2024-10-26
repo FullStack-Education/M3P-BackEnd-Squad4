@@ -1,6 +1,5 @@
 package com.github.kpossoli.projetopcp.repository;
 
-import com.github.kpossoli.projetopcp.model.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
