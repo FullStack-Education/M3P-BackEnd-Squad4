@@ -63,8 +63,4 @@ public class AlunoDto {
 	@NotBlank
 	private String complemento;
 
-	@NotNull
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	private UsuarioDto usuario;
-
 }
