@@ -2,6 +2,8 @@ package com.github.kpossoli.projetopcp.service;
 
 import java.util.List;
 
+import com.github.kpossoli.projetopcp.model.Usuario;
+import com.github.kpossoli.projetopcp.repository.PapelRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,8 @@ public class DocenteServiceImpl implements DocenteService {
 
     private final DocenteRepository docenteRepository;
     private final UsuarioRepository usuarioRepository;
+    private final UsuarioService usuarioService;
+    private final PapelRepository papelRepository;
 
     @Override
     public Docente obter(Long id) {
@@ -36,10 +40,15 @@ public class DocenteServiceImpl implements DocenteService {
     public Docente criar(Docente docente) {
         log.info("Criando docente", docente);
 
-        var usuario = usuarioRepository.findById(docente.getUsuario().getId())
-            .orElseThrow(() -> new EmptyResultDataAccessException(1));
-            
-        docente.setUsuario(usuario);
+        Usuario novoUsuario = new Usuario();
+        novoUsuario.setNome(docente.getNome());
+        novoUsuario.setLogin(docente.getEmail());
+        novoUsuario.setSenha(docente.getSenha());
+        novoUsuario.setPapel(papelRepository.findByNome("PROFESSOR").orElseThrow(() -> new RuntimeException("Papel não encontrado")));
+
+        Usuario usuarioSalvo = usuarioService.criarUsuario(novoUsuario);
+
+        docente.setUsuario(usuarioSalvo);
 
         return docenteRepository.save(docente);
     }
