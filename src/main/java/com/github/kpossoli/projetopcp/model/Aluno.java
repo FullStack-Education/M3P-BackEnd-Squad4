@@ -77,4 +77,6 @@ public class Aluno {
 	@Getter @Setter
 	private Usuario usuario;
 
+	//TODO implementar validação para não permitir cadastro de aluno com e-mail já existente
+
 }
