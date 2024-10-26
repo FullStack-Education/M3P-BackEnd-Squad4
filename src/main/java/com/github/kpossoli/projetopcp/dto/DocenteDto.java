@@ -70,8 +70,4 @@ public class DocenteDto {
 
 	private String pontoDeReferencia;
 
-	@NotNull
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	private UsuarioDto usuario;
-
 }
