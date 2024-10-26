@@ -21,7 +21,6 @@ import lombok.extern.slf4j.Slf4j;
 public class DocenteServiceImpl implements DocenteService {
 
     private final DocenteRepository docenteRepository;
-    private final UsuarioRepository usuarioRepository;
     private final UsuarioService usuarioService;
     private final PapelRepository papelRepository;
 
@@ -42,7 +41,7 @@ public class DocenteServiceImpl implements DocenteService {
 
         Usuario novoUsuario = new Usuario();
         novoUsuario.setNome(docente.getNome());
-        novoUsuario.setLogin(docente.getEmail());
+        novoUsuario.setEmail(docente.getEmail());
         novoUsuario.setSenha(docente.getSenha());
         novoUsuario.setPapel(papelRepository.findByNome("PROFESSOR").orElseThrow(() -> new RuntimeException("Papel não encontrado")));
 

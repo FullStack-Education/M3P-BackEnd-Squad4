@@ -27,7 +27,7 @@ public class Usuario {
 	private String nome;
 
 	@Getter @Setter
-	private String login;
+	private String email;
 
 	@Getter @Setter
 	private String senha;

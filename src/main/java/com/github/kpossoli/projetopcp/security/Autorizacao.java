@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class Autorizacao {
 
-    private String usuario;
+    private String email;
     private String senha;
     
 }
