@@ -88,4 +88,6 @@ public class Docente {
 	@Getter @Setter
 	private Usuario usuario;
 
+	//TODO implementar validação para não permitir cadastro de docente com e-mail já existente
+
 }
