@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.github.kpossoli.projetopcp.model.Usuario;
 import com.github.kpossoli.projetopcp.repository.PapelRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
@@ -39,6 +40,7 @@ public class AlunoServiceImpl implements AlunoService {
     public List<Aluno> listar() {
         return alunoRepository.findAll();
     }
+
 
     @Override
     public Aluno criar(Aluno aluno) {

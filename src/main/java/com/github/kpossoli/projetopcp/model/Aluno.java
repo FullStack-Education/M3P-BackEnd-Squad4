@@ -31,9 +31,9 @@ public class Aluno {
 	private String genero;
 
 	@Getter @Setter
-	@OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, orphanRemoval = true)
-	@JoinColumn(name = "id_usuario")
-	private List<Turma> turmas = new ArrayList<>();
+	@OneToOne
+	@JoinColumn(name = "id_turma")
+	private Turma turma = new Turma();
 
 	@Column(name = "data_nascimento")
 	@Getter @Setter
