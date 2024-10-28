@@ -9,13 +9,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.Authentication;
 
-
+@CrossOrigin(origins = "http://localhost:4200/")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/login")
@@ -26,12 +23,12 @@ public class LoginController {
 
     @PostMapping
     public RespostaJWT login(@RequestBody Autorizacao authRequestDTO){
-        var auth = new UsernamePasswordAuthenticationToken(authRequestDTO.getUsuario(), authRequestDTO.getSenha());
+        var auth = new UsernamePasswordAuthenticationToken(authRequestDTO.getEmail(), authRequestDTO.getSenha());
         Authentication authentication = authenticationManager.authenticate(auth);
 
         if(authentication.isAuthenticated()){
             return RespostaJWT.builder()
-                    .accessToken(jwtService.gerarToken(authRequestDTO.getUsuario()))
+                    .accessToken(jwtService.gerarToken(authRequestDTO.getEmail()))
                     .build();
         } else {
             throw new UsernameNotFoundException("Usuário Não encontrado!");

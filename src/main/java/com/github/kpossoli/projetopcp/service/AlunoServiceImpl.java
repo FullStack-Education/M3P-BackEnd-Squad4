@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.github.kpossoli.projetopcp.model.Usuario;
 import com.github.kpossoli.projetopcp.repository.PapelRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
@@ -14,7 +13,6 @@ import com.github.kpossoli.projetopcp.model.Nota;
 import com.github.kpossoli.projetopcp.model.Pontuacao;
 import com.github.kpossoli.projetopcp.repository.AlunoRepository;
 import com.github.kpossoli.projetopcp.repository.NotaRepository;
-import com.github.kpossoli.projetopcp.repository.UsuarioRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -48,7 +46,7 @@ public class AlunoServiceImpl implements AlunoService {
 
         Usuario novoUsuario = new Usuario();
         novoUsuario.setNome(aluno.getNome());
-        novoUsuario.setLogin(aluno.getEmail());
+        novoUsuario.setEmail(aluno.getEmail());
         novoUsuario.setSenha(aluno.getSenha());
         novoUsuario.setPapel(papelRepository.findByNome("ALUNO").orElseThrow(() -> new RuntimeException("Papel não encontrado")));
 
