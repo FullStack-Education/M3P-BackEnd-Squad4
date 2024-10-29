@@ -37,6 +37,7 @@ public class Turma {
 
 	@OneToMany(fetch = FetchType.EAGER, orphanRemoval = true)
 	@JoinColumn(name = "id_turma")
+	@Getter @Setter
 	private List<Aluno> alunos = new ArrayList<>();
 
 }
