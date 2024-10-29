@@ -1,12 +1,6 @@
 package com.github.kpossoli.projetopcp.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -26,6 +20,7 @@ public class Usuario {
 	@Getter @Setter
 	private String nome;
 
+	@Column(unique = true)
 	@Getter @Setter
 	private String email;
 
@@ -36,7 +31,5 @@ public class Usuario {
 	@JoinColumn(name = "id_papel")
 	@Getter @Setter
 	private Papel papel;
-
-	//TODO implementar validação para não permitir cadastro de usuario com e-mail já existente
 
 }

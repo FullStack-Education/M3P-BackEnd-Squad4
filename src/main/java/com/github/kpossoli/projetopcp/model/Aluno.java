@@ -21,6 +21,7 @@ public class Aluno {
 	@Getter @Setter
 	private Long id;
 
+	@Column(nullable = false)
 	@Getter @Setter
 	private String nome;
 
@@ -39,6 +40,7 @@ public class Aluno {
 	@Getter @Setter
 	private LocalDate dataNascimento;
 
+	@Column(unique = true)
 	@Getter @Setter
 	private String email;
 
@@ -77,6 +79,5 @@ public class Aluno {
 	@Getter @Setter
 	private Usuario usuario;
 
-	//TODO implementar validação para não permitir cadastro de aluno com e-mail já existente
 
 }

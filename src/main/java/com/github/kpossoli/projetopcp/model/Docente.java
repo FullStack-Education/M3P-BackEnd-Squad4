@@ -43,6 +43,7 @@ public class Docente {
 	@Getter @Setter
 	private String telefone;
 
+	@Column(unique = true)
 	@Getter @Setter
 	private String email;
 
@@ -87,7 +88,5 @@ public class Docente {
 	@JoinColumn(name = "id_usuario")
 	@Getter @Setter
 	private Usuario usuario;
-
-	//TODO implementar validação para não permitir cadastro de docente com e-mail já existente
 
 }
