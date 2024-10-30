@@ -50,7 +50,8 @@ public class TurmaServiceImpl implements TurmaService {
         log.info("Atualizando turma de id: {}", id);
 
         Turma turmaSalva = obter(id);
-		BeanUtils.copyProperties(turma, turmaSalva, "id");
+		BeanUtils.copyProperties(turma, turmaSalva,     "id", "docente");
+
         return turmaRepository.save(turmaSalva);
     }
     
