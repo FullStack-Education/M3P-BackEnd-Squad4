@@ -70,6 +70,8 @@ private Collection<? extends GrantedAuthority> getPermissoes(Usuario usuario) {
           permissoes.add("ESTATISTICAS_READ");
         }
         case "PEDAGOGICO" -> {
+          permissoes.add("USUARIO_READ");
+
           permissoes.add("TURMA_READ");
           permissoes.add("TURMA_WRITE");
 
@@ -87,10 +89,14 @@ private Collection<? extends GrantedAuthority> getPermissoes(Usuario usuario) {
           permissoes.add("ESTATISTICAS_READ");
         }
         case "RECRUITER" -> {
+          permissoes.add("USUARIO_READ");
+
           permissoes.add("DOCENTE_READ");
           permissoes.add("DOCENTE_WRITE");
         }
         case "PROFESSOR" -> {
+          permissoes.add("USUARIO_READ");
+
           permissoes.add("NOTA_READ");
           permissoes.add("NOTA_WRITE");
 
@@ -98,6 +104,8 @@ private Collection<? extends GrantedAuthority> getPermissoes(Usuario usuario) {
           permissoes.add("ESTATISTICAS_READ");
         }
         default -> {
+          permissoes.add("USUARIO_READ");
+
           permissoes.add("NOTA_READ");
           permissoes.add("PONTUACAO_READ");
         }

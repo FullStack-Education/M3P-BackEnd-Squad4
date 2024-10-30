@@ -12,7 +12,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.Authentication;
 
-@CrossOrigin(origins = "http://localhost:4200/")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/login")
