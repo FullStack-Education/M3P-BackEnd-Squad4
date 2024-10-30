@@ -25,12 +25,12 @@ public class Curso {
 	private String nome;
 
 	@Getter @Setter
-	@OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, orphanRemoval = true)
+	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_curso")
 	private List<Turma> turmas = new ArrayList<>();
 
 	@Getter @Setter
-	@OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, orphanRemoval = true)
+	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_curso")
 	private List<Materia> materias = new ArrayList<>();
 
