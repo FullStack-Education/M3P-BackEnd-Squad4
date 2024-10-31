@@ -39,7 +39,7 @@ public class DocenteController {
                                             "  \"id\": 2,\n" +
                                             "  \"nome\": \"Prof. Pedro H\",\n" +
                                             "  \"genero\": \"Masculino\",\n" +
-                                            "  \"dataNascimento\": \"1993-05-12\",\n" +
+                                            "  \"nascimento\": \"1993-05-12\",\n" +
                                             "  \"naturalidade\": \"Florianópolis-SC\",\n" +
                                             "  \"cpf\": \"99999999999\",\n" +
                                             "  \"rg\": \"9999999-SSP/SC\",\n" +
@@ -52,8 +52,8 @@ public class DocenteController {
                                             "    { \"id\": 3 }\n" +
                                             "  ],\n" +
                                             "  \"cep\": \"88888888\",\n" +
-                                            "  \"cidade\": \"Florianópolis\",\n" +
-                                            "  \"estado\": \"Santa Catarina\",\n" +
+                                            "  \"localidade\": \"Florianópolis\",\n" +
+                                            "  \"uf\": \"Santa Catarina\",\n" +
                                             "  \"logradouro\": \"Rua dos Manezinhos\",\n" +
                                             "  \"numero\": 100,\n" +
                                             "  \"complemento\": \"Não há\",\n" +
@@ -92,7 +92,7 @@ public class DocenteController {
                                             "  \"id\": 2,\n" +
                                             "  \"nome\": \"Prof. Castro de Castro\",\n" +
                                             "  \"genero\": \"Masculino\",\n" +
-                                            "  \"dataNascimento\": \"1993-05-12\",\n" +
+                                            "  \"nascimento\": \"1993-05-12\",\n" +
                                             "  \"naturalidade\": \"Florianópolis-SC\",\n" +
                                             "  \"cpf\": \"99999999999\",\n" +
                                             "  \"rg\": \"9999999-SSP/SC\",\n" +
@@ -105,8 +105,8 @@ public class DocenteController {
                                             "    { \"id\": 3 }\n" +
                                             "  ],\n" +
                                             "  \"cep\": \"88888888\",\n" +
-                                            "  \"cidade\": \"Florianópolis\",\n" +
-                                            "  \"estado\": \"Santa Catarina\",\n" +
+                                            "  \"localidade\": \"Florianópolis\",\n" +
+                                            "  \"uf\": \"Santa Catarina\",\n" +
                                             "  \"logradouro\": \"Rua dos Manezinhos\",\n" +
                                             "  \"numero\": 100,\n" +
                                             "  \"complemento\": \"Não há\",\n" +
@@ -145,7 +145,7 @@ public class DocenteController {
                                             "  \"id\": 2,\n" +
                                             "  \"nome\": \"Prof. Matheus R\",\n" +
                                             "  \"genero\": \"Masculino\",\n" +
-                                            "  \"dataNascimento\": \"1993-05-12\",\n" +
+                                            "  \"nascimento\": \"1993-05-12\",\n" +
                                             "  \"naturalidade\": \"Florianópolis-SC\",\n" +
                                             "  \"cpf\": \"99999999999\",\n" +
                                             "  \"rg\": \"9999999-SSP/SC\",\n" +
@@ -158,8 +158,8 @@ public class DocenteController {
                                             "    { \"id\": 3 }\n" +
                                             "  ],\n" +
                                             "  \"cep\": \"88888888\",\n" +
-                                            "  \"cidade\": \"Florianópolis\",\n" +
-                                            "  \"estado\": \"Santa Catarina\",\n" +
+                                            "  \"localidade\": \"Florianópolis\",\n" +
+                                            "  \"uf\": \"Santa Catarina\",\n" +
                                             "  \"logradouro\": \"Rua dos Manezinhos\",\n" +
                                             "  \"numero\": 100,\n" +
                                             "  \"complemento\": \"Não há\",\n" +
@@ -199,7 +199,7 @@ public class DocenteController {
                                             "  \"id\": 2,\n" +
                                             "  \"nome\": \"Prof. Caio Pizza\",\n" +
                                             "  \"genero\": \"Masculino\",\n" +
-                                            "  \"dataNascimento\": \"1993-05-12\",\n" +
+                                            "  \"nascimento\": \"1993-05-12\",\n" +
                                             "  \"naturalidade\": \"Florianópolis-SC\",\n" +
                                             "  \"cpf\": \"99999999999\",\n" +
                                             "  \"rg\": \"9999999-SSP/SC\",\n" +
@@ -212,8 +212,8 @@ public class DocenteController {
                                             "    { \"id\": 3 }\n" +
                                             "  ],\n" +
                                             "  \"cep\": \"88888888\",\n" +
-                                            "  \"cidade\": \"Florianópolis\",\n" +
-                                            "  \"estado\": \"Santa Catarina\",\n" +
+                                            "  \"localidade\": \"Florianópolis\",\n" +
+                                            "  \"uf\": \"Santa Catarina\",\n" +
                                             "  \"logradouro\": \"Rua dos Manezinhos\",\n" +
                                             "  \"numero\": 100,\n" +
                                             "  \"complemento\": \"Não há\",\n" +
