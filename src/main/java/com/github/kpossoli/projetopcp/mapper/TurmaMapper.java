@@ -25,11 +25,11 @@ public interface TurmaMapper {
 
     default Docente map(Long docenteId) {
         if (docenteId == null) {
-            return null; // Retorna null se o ID for nulo
+            return null;
         }
-        Docente docente = new Docente(); // Crie uma nova instância de Docente
-        docente.setId(docenteId); // Defina o ID do docente
-        return docente; // Retorna o objeto Docente com o ID configurado
+        Docente docente = new Docente();
+        docente.setId(docenteId);
+        return docente;
     }
     default Curso mapCurso(Long cursoId) {
         if (cursoId == null) {
