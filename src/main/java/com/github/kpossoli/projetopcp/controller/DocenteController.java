@@ -29,7 +29,7 @@ public class DocenteController {
     private final DocenteService docenteService;
     private final DocenteMapper docenteMapper;
 
-    @Operation(summary = "Retorna o Docente com pelo ID ", method = "GET")
+    @Operation(summary = "Realiza a busca do Docente pelo ID ", method = "GET")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Docente encontrado com sucesso.",
                     content = @Content(
