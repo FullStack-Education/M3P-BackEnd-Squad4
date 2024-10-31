@@ -37,7 +37,7 @@ public class DocenteController {
                             schema = @Schema(
                                     example = "{\n" +
                                             "  \"id\": 2,\n" +
-                                            "  \"nome\": \"Prof. Pedro H\",\n" +
+                                            "  \"nomeCompleto\": \"Prof. Pedro H\",\n" +
                                             "  \"genero\": \"Masculino\",\n" +
                                             "  \"nascimento\": \"1993-05-12\",\n" +
                                             "  \"naturalidade\": \"Florianópolis-SC\",\n" +
@@ -58,7 +58,7 @@ public class DocenteController {
                                             "  \"numero\": 100,\n" +
                                             "  \"complemento\": \"Não há\",\n" +
                                             "  \"bairro\": \"Centro\",\n" +
-                                            "  \"pontoDeReferencia\": \"Não há\"\n" +
+                                            "  \"referencia\": \"Não há\"\n" +
                                             "}"
                             )
                     )),
@@ -90,7 +90,7 @@ public class DocenteController {
                             schema = @Schema(
                                     example = "[\n"+ "{\n" +
                                             "  \"id\": 2,\n" +
-                                            "  \"nome\": \"Prof. Castro de Castro\",\n" +
+                                            "  \"nomeCompleto\": \"Prof. Castro de Castro\",\n" +
                                             "  \"genero\": \"Masculino\",\n" +
                                             "  \"nascimento\": \"1993-05-12\",\n" +
                                             "  \"naturalidade\": \"Florianópolis-SC\",\n" +
@@ -111,7 +111,7 @@ public class DocenteController {
                                             "  \"numero\": 100,\n" +
                                             "  \"complemento\": \"Não há\",\n" +
                                             "  \"bairro\": \"Centro\",\n" +
-                                            "  \"pontoDeReferencia\": \"Não há\"\n" +
+                                            "  \"referencia\": \"Não há\"\n" +
                                             "}\n" + "]"
                             )
                     )),
@@ -143,7 +143,7 @@ public class DocenteController {
                             schema = @Schema(
                                     example = "{\n" +
                                             "  \"id\": 2,\n" +
-                                            "  \"nome\": \"Prof. Matheus R\",\n" +
+                                            "  \"nomeCompleto\": \"Prof. Matheus R\",\n" +
                                             "  \"genero\": \"Masculino\",\n" +
                                             "  \"nascimento\": \"1993-05-12\",\n" +
                                             "  \"naturalidade\": \"Florianópolis-SC\",\n" +
@@ -164,7 +164,7 @@ public class DocenteController {
                                             "  \"numero\": 100,\n" +
                                             "  \"complemento\": \"Não há\",\n" +
                                             "  \"bairro\": \"Centro\",\n" +
-                                            "  \"pontoDeReferencia\": \"Não há\"\n" +
+                                            "  \"referencia\": \"Não há\"\n" +
                                             "}\n"
                             )
                     )),
@@ -197,7 +197,7 @@ public class DocenteController {
                             schema = @Schema(
                                     example = "{\n" +
                                             "  \"id\": 2,\n" +
-                                            "  \"nome\": \"Prof. Caio Pizza\",\n" +
+                                            "  \"nomeCompleto\": \"Prof. Caio Pizza\",\n" +
                                             "  \"genero\": \"Masculino\",\n" +
                                             "  \"nascimento\": \"1993-05-12\",\n" +
                                             "  \"naturalidade\": \"Florianópolis-SC\",\n" +
@@ -218,7 +218,7 @@ public class DocenteController {
                                             "  \"numero\": 100,\n" +
                                             "  \"complemento\": \"Não há\",\n" +
                                             "  \"bairro\": \"Centro\",\n" +
-                                            "  \"pontoDeReferencia\": \"Não há\"\n" +
+                                            "  \"referencia\": \"Não há\"\n" +
                                             "}\n"
                             ))),
             @ApiResponse(responseCode = "401", description = "Credenciais inválidas. O usuário não está autorizado a acessar o sistema.",
