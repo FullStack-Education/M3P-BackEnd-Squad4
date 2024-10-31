@@ -73,21 +73,8 @@ public class CursoController {
 
     @GetMapping(params = "idAluno")
     @PreAuthorize("hasAuthority('CURSO_READ')")
-    public ResponseEntity<List<CursoDto>> obterCursosDoAluno(@RequestParam(required = false) Long idAluno) {
-        Aluno aluno = alunoService.obter(idAluno);
-        List<Curso> cursosDoAluno = new java.util.ArrayList<>(List.of());
-        List<Curso> cursos = cursoService.listar();
-        for (Curso c : cursos){
-            for (Turma t: c.getTurmas()){
-                for (Aluno a: t.getAlunos()){
-                    if (a.equals(aluno)){
-                        cursosDoAluno.add(c);
-                    }
-                }
-            }
-        }
-        List<CursoDto> cursosDto = cursoMapper.toDto(cursosDoAluno);
-        return ResponseEntity.ok(cursosDto);
+    public ResponseEntity<CursoDto> obterCursoDoAluno(@RequestParam(required = false) Long idAluno) {
+        return ResponseEntity.ok(cursoMapper.toDto(alunoService.obter(idAluno).getTurma().getCurso()));
     }
 
     @DeleteMapping("/{id}")
