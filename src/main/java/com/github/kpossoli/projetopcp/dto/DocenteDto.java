@@ -60,8 +60,8 @@ public class DocenteDto {
 	@NotBlank
 	private String logradouro;
 
-	@NotNull
-	private Long numero;
+	@NotBlank
+	private String numero;
 
 	private String complemento;
 

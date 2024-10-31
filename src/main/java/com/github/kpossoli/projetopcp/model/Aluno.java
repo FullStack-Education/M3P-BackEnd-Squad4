@@ -34,7 +34,7 @@ public class Aluno {
 	@Getter @Setter
 	@OneToOne
 	@JoinColumn(name = "id_turma")
-	private Turma turmas = new Turma();
+	private Turma turma = new Turma();
 
 	@Column(name = "data_nascimento")
 	@Getter @Setter

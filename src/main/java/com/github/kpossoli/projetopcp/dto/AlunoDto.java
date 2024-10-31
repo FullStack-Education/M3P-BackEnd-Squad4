@@ -25,7 +25,7 @@ public class AlunoDto {
 	private String genero;
 
 	@NotNull
-	private TurmaDto turmas;
+	private TurmaDto turma;
 
 	@NotNull
 	private LocalDate nascimento;
@@ -51,8 +51,8 @@ public class AlunoDto {
 	@NotBlank
 	private String logradouro;
 
-	@NotNull
-	private Long numero;
+	@NotBlank
+	private String numero;
 
 	@NotBlank
 	private String localidade;
