@@ -80,9 +80,9 @@ public class CursoController {
         return ResponseEntity.ok(cursoSalvoDto);
     }
 
-    @GetMapping("/aluno/{idAluno}")
+    @GetMapping(params = "idAluno")
     @PreAuthorize("hasAuthority('CURSO_READ')")
-    public ResponseEntity<List<CursoDto>> obterCursosDoAluno(@PathVariable Long idAluno) {
+    public ResponseEntity<List<CursoDto>> obterCursosDoAluno(@RequestParam(required = false) Long idAluno) {
         Aluno aluno = alunoService.obter(idAluno);
         List<Curso> cursosDoAluno = new java.util.ArrayList<>(List.of());
         List<Curso> cursos = cursoService.listar();

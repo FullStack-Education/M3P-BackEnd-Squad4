@@ -1,4 +1,4 @@
-CREATE DATABASE projeto_pcp;
+CREATE DATABASE projeto-pcp;
 
 CREATE TABLE aluno (
 	id bigserial NOT NULL,
