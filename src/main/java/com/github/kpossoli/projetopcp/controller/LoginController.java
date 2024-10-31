@@ -33,11 +33,8 @@ public class LoginController {
                             schema = @Schema(example = "{ \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\" }")
             )),
             @ApiResponse(responseCode = "401", description = "Credenciais inválidas. O usuário não está autorizado a acessar o sistema.",
-                    content = @Content(
-                            mediaType = "application/json",
-                            schema = @Schema(
-                                    example = "{ \"error\": \"Unauthorized\", \"message\": \"Credenciais inválidas.\" }"
-            ))),
+                    content = @Content
+            ),
             @ApiResponse(responseCode = "400", description = "Requisição inválida, dados ausentes ou incorretos.",
                     content = @Content(
                             mediaType = "application/json",
