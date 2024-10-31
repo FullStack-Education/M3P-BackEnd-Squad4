@@ -29,7 +29,7 @@ public class TurmaController {
     private final TurmaService turmaService;
     private final TurmaMapper turmaMapper;
 
-    @Operation(summary = "Retorna o Turma com pelo ID ", method = "GET")
+    @Operation(summary = "Realiza a busca da Turma pelo ID", method = "GET")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Turma encontrada com sucesso.",
                     content = @Content(
