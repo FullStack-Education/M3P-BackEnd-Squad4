@@ -171,7 +171,7 @@ public class DocenteController {
             @ApiResponse(responseCode = "401", description = "Credenciais inválidas. O usuário não está autorizado a acessar o sistema.",
                     content = @Content
             ),
-            @ApiResponse(responseCode = "400", description = "Não há docentes cadastrados",
+            @ApiResponse(responseCode = "400", description = "Requisição inválida, por exemplo, dados ausentes ou incorretos.",
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(
