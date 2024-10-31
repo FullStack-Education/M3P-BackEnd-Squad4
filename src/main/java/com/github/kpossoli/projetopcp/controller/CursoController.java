@@ -51,15 +51,6 @@ public class CursoController {
         return ResponseEntity.ok(cursosDto);
     }
 
-    @GetMapping("/{id}/materias")
-    @PreAuthorize("hasAuthority('CURSO_READ')")
-    public ResponseEntity<List<MateriaDto>> listarMaterias(@PathVariable Long id) {
-        List<Materia> materias = cursoService.listarMaterias(id);
-        List<MateriaDto> materiasDto = materiaMapper.toDto(materias);
-
-        return ResponseEntity.ok(materiasDto);
-    }
-
     @PostMapping
     @PreAuthorize("hasAuthority('CURSO_WRITE')")
     public ResponseEntity<CursoDto> criar(@RequestBody @Valid CursoDto cursoDto) {

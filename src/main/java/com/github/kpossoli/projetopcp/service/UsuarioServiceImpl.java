@@ -1,11 +1,13 @@
 package com.github.kpossoli.projetopcp.service;
 
+import com.github.kpossoli.projetopcp.model.Aluno;
 import com.github.kpossoli.projetopcp.repository.PapelRepository;
 import com.github.kpossoli.projetopcp.repository.UsuarioRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -34,5 +36,11 @@ public class UsuarioServiceImpl implements UsuarioService {
 
         return usuarioRepository.save(usuario);
     }
-    
+
+    @Override
+    public Usuario obterByEmail (String email) {
+        return usuarioRepository.findByEmail(email)
+                .orElseThrow(() -> new EmptyResultDataAccessException(1));
+    }
+
 }

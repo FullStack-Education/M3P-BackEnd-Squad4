@@ -9,6 +9,8 @@ public interface MateriaService {
 
     List<Materia> listar();
 
+    List<Materia> listarMateriasPorCurso(Long id);
+
     Materia criar(Materia materia);
     
     Materia atualizar(Long id, Materia materia);

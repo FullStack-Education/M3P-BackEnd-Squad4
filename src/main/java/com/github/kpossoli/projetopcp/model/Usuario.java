@@ -1,12 +1,6 @@
 package com.github.kpossoli.projetopcp.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -26,8 +20,9 @@ public class Usuario {
 	@Getter @Setter
 	private String nome;
 
+	@Column(unique = true)
 	@Getter @Setter
-	private String login;
+	private String email;
 
 	@Getter @Setter
 	private String senha;
