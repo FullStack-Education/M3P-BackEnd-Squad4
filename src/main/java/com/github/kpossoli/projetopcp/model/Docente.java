@@ -22,14 +22,14 @@ public class Docente {
 	private Long id;
 
 	@Getter @Setter
-	private String nome;
+	private String nomeCompleto;
 
 	@Getter @Setter
 	private String genero;
 
 	@Column(name = "data_nascimento")
 	@Getter @Setter
-	private LocalDate dataNascimento;
+	private LocalDate nascimento;
 
 	@Getter @Setter
 	private String naturalidade;
@@ -63,16 +63,16 @@ public class Docente {
 	private String cep;
 
 	@Getter @Setter
-	private String cidade;
+	private String localidade;
 
 	@Getter @Setter
-	private String estado;
+	private String uf;
 
 	@Getter @Setter
 	private String logradouro;
 
 	@Getter @Setter
-	private Long numero;
+	private String numero;
 
 	@Getter @Setter
 	private String complemento;
@@ -82,7 +82,7 @@ public class Docente {
 
 	@Column (name = "ponto_de_referencia")
 	@Getter @Setter
-	private String pontoDeReferencia;
+	private String referencia;
 
 	@OneToOne
 	@JoinColumn(name = "id_usuario")

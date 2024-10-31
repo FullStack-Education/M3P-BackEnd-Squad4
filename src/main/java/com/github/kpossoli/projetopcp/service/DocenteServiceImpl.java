@@ -40,7 +40,7 @@ public class DocenteServiceImpl implements DocenteService {
         log.info("Criando docente", docente);
 
         Usuario novoUsuario = new Usuario();
-        novoUsuario.setNome(docente.getNome());
+        novoUsuario.setNome(docente.getNomeCompleto());
         novoUsuario.setEmail(docente.getEmail());
         novoUsuario.setSenha(docente.getSenha());
         novoUsuario.setPapel(papelRepository.findByNome("PROFESSOR").orElseThrow(() -> new RuntimeException("Papel não encontrado")));

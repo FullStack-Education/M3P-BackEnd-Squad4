@@ -23,7 +23,7 @@ public class Aluno {
 
 	@Column(nullable = false)
 	@Getter @Setter
-	private String nome;
+	private String nomeCompleto;
 
 	@Getter @Setter
 	private String telefone;
@@ -38,7 +38,7 @@ public class Aluno {
 
 	@Column(name = "data_nascimento")
 	@Getter @Setter
-	private LocalDate dataNascimento;
+	private LocalDate nascimento;
 
 	@Column(unique = true)
 	@Getter @Setter
@@ -60,16 +60,16 @@ public class Aluno {
 	private String cep;
 
 	@Getter @Setter
-	private String rua;
+	private String logradouro;
 
 	@Getter @Setter
-	private Long numero;
+	private String numero;
 
 	@Getter @Setter
-	private String cidade;
+	private String localidade;
 
 	@Getter @Setter
-	private String estado;
+	private String uf;
 
 	@Getter @Setter
 	private String complemento;

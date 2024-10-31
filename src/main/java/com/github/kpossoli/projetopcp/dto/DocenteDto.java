@@ -16,13 +16,13 @@ public class DocenteDto {
 	private Long id;
 
 	@NotBlank
-	private String nome;
+	private String nomeCompleto;
 
 	@NotBlank
 	private String genero;
 
 	@NotNull
-	private LocalDate dataNascimento;
+	private LocalDate nascimento;
 
 	@NotBlank
 	private String naturalidade;
@@ -52,22 +52,22 @@ public class DocenteDto {
 	private String cep;
 
 	@NotBlank
-	private String cidade;
+	private String localidade;
 
 	@NotBlank
-	private String estado;
+	private String uf;
 
 	@NotBlank
 	private String logradouro;
 
-	@NotNull
-	private Long numero;
+	@NotBlank
+	private String numero;
 
 	private String complemento;
 
 	@NotBlank
 	private String bairro;
 
-	private String pontoDeReferencia;
+	private String referencia;
 
 }

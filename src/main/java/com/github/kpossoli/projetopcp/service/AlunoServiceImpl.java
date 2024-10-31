@@ -45,7 +45,7 @@ public class AlunoServiceImpl implements AlunoService {
         log.info("Criando aluno", aluno);
 
         Usuario novoUsuario = new Usuario();
-        novoUsuario.setNome(aluno.getNome());
+        novoUsuario.setNome(aluno.getNomeCompleto());
         novoUsuario.setEmail(aluno.getEmail());
         novoUsuario.setSenha(aluno.getSenha());
         novoUsuario.setPapel(papelRepository.findByNome("ALUNO").orElseThrow(() -> new RuntimeException("Papel não encontrado")));
