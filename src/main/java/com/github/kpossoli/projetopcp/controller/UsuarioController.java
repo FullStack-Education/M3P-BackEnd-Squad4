@@ -1,6 +1,7 @@
 package com.github.kpossoli.projetopcp.controller;
 
 import com.github.kpossoli.projetopcp.dto.UsuarioDto;
+import com.github.kpossoli.projetopcp.dto.UsuarioSimplifiedDto;
 import com.github.kpossoli.projetopcp.mapper.UsuarioMapper;
 import com.github.kpossoli.projetopcp.model.Usuario;
 import com.github.kpossoli.projetopcp.service.UsuarioService;
@@ -11,15 +12,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/cadastro")
-public class CadastroController {
+@RequestMapping("/usuarios")
+public class UsuarioController {
 
     private final UsuarioService usuarioService;
     private final UsuarioMapper usuarioMapper;
@@ -33,6 +31,15 @@ public class CadastroController {
         usuarioSalvoDto.setSenha(null);
         
         return ResponseEntity.status(HttpStatus.CREATED).body(usuarioSalvoDto);
+    }
+
+    @GetMapping("/buscar")
+    @PreAuthorize("hasAuthority('USUARIO_READ')")
+    public ResponseEntity<UsuarioSimplifiedDto> obterByEmail(@RequestParam String email) {
+        Usuario usuario = usuarioService.obterByEmail(email);
+        UsuarioSimplifiedDto usuarioSimplifiedDto = usuarioMapper.toSimpliedDto(usuario);
+
+        return ResponseEntity.ok(usuarioSimplifiedDto);
     }
 
 }

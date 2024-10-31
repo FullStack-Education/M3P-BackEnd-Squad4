@@ -1,9 +1,9 @@
 package com.github.kpossoli.projetopcp.dto;
 
-import java.util.List;
-
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+
+import java.time.LocalDate;
 
 @Data
 public class TurmaDto {
@@ -11,12 +11,21 @@ public class TurmaDto {
 	private Long id;
 
 	@NotNull
-	private String nome;
+	private String nomeTurma;
 
 	@NotNull
-	private DocenteDto docente;
+	private LocalDate dataInicio;
 
 	@NotNull
-	private List<AlunoDto> alunos;
+	private LocalDate dataTermino;
+
+	@NotNull
+	private String horario;
+
+	@NotNull
+	private Long docenteId;
+
+	@NotNull
+	private Long cursoId;
 
 }

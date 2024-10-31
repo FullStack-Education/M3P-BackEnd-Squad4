@@ -3,14 +3,8 @@ package com.github.kpossoli.projetopcp.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -27,16 +21,18 @@ public class Curso {
 	@Getter @Setter
 	private Long id;
 
+	@Column(unique = true)
 	@Getter @Setter
 	private String nome;
 
 	@Getter @Setter
-	@OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, orphanRemoval = true)
+	@OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY, orphanRemoval = true)
 	@JoinColumn(name = "id_curso")
+	@JsonBackReference
 	private List<Turma> turmas = new ArrayList<>();
 
 	@Getter @Setter
-	@OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, orphanRemoval = true)
+	@OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY, orphanRemoval = true)
 	@JoinColumn(name = "id_curso")
 	private List<Materia> materias = new ArrayList<>();
 

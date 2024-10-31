@@ -2,6 +2,8 @@ package com.github.kpossoli.projetopcp.service;
 
 import java.util.List;
 
+import com.github.kpossoli.projetopcp.model.Curso;
+import com.github.kpossoli.projetopcp.repository.CursoRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,8 @@ import lombok.extern.slf4j.Slf4j;
 public class MateriaServiceImpl implements MateriaService {
 
     private final MateriaRepository materiaRepository;
+    private final CursoService cursoService;
+    private final CursoRepository cursoRepository;
 
     @Override
     public Materia obter(Long id) {
@@ -28,6 +32,13 @@ public class MateriaServiceImpl implements MateriaService {
     @Override
     public List<Materia> listar() {
         return materiaRepository.findAll();
+    }
+
+    @Override
+    public List<Materia> listarMateriasPorCurso(Long idCurso) {
+
+        Curso curso = cursoService.obter(idCurso);
+        return curso.getMaterias();
     }
 
     @Override

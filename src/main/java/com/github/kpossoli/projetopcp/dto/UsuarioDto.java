@@ -14,7 +14,7 @@ public class UsuarioDto {
 	private String nome;
 
 	@NotBlank
-	private String login;
+	private String email;
 
 	@NotBlank
 	private String senha;

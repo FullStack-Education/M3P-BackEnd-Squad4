@@ -69,5 +69,19 @@ public class NotaController {
 
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping(path = "/alunos/{id_aluno}/notas")
+    @PreAuthorize("hasAuthority('NOTA_READ')")
+    public ResponseEntity<List<NotaDto>> listarNotasPorAluno(@PathVariable Long id) {
+        List<Nota> notas = notaService.listar();
+        List<Nota> notasDoAluno = new java.util.ArrayList<>(List.of());
+        for (Nota nota : notas){
+            if (nota.getAluno().getId().equals(id)){
+                notasDoAluno.add(nota);
+            }
+        }
+        List<NotaDto> notasDoAlunoDTO = notaMapper.toDto(notasDoAluno);
+        return  ResponseEntity.ok(notasDoAlunoDTO);
+    }
 }
 
