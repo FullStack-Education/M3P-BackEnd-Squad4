@@ -30,10 +30,16 @@ public class DashboardController {
     @Operation(summary = "Retorna a quantidade de Alunos, Docentes, Turmas cadastrados no sistema", method = "GET")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Dados retornados com sucesso!",
-                    content = @Content(examples = @ExampleObject(value = "{\"quantidadeDeAlunos\": 50, \"quantidadeDeDocentes\": 10, \"quantidadeDeTurmas\": 5}")
+                    content = @Content(
+                            mediaType = "application/json",
+                            examples = @ExampleObject(value = "{\"quantidadeDeAlunos\": 50, \"quantidadeDeDocentes\": 10, \"quantidadeDeTurmas\": 5}")
             )),
-            @ApiResponse(responseCode = "401", description = "Credenciais inválidas. O usuário não está autorizado a acessar o sistema."),
-            @ApiResponse(responseCode = "400", description = "Requisição inválida, dados ausentes ou incorretos.")
+            @ApiResponse(responseCode = "401", description = "Credenciais inválidas. O usuário não está autorizado a acessar o sistema.",
+                    content = @Content
+            ),
+            @ApiResponse(responseCode = "400", description = "Requisição inválida, dados ausentes ou incorretos.",
+                    content = @Content
+            )
     })
     @GetMapping()
     @PreAuthorize("hasAuthority('ESTATISTICAS_READ')")
