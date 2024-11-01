@@ -36,7 +36,7 @@ public class AlunoController {
 
     @Operation(summary = "Retorna todos os Alunos cadastrados ", method = "GET")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Alunos encontrados com sucesso.",
+            @ApiResponse(responseCode = "200", description = "Alunos encontrados com sucesso.",
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(
@@ -88,7 +88,7 @@ public class AlunoController {
 
     @Operation(summary = "Realiza a busca do Aluno pelo ID ", method = "GET")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Aluno encontrado com sucesso.",
+            @ApiResponse(responseCode = "200", description = "Aluno encontrado com sucesso.",
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(
@@ -267,7 +267,7 @@ public class AlunoController {
         return ResponseEntity.noContent().build();
     }
 
-    @Operation(summary = "Exclui Docentes pelo ID", method = "DELETE")
+    @Operation(summary = "Realiza o calculo da pontuação do Aluno", method = "GET")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Pontuação calculada com sucesso.",
                     content = @Content(
@@ -296,7 +296,7 @@ public class AlunoController {
 
     @Operation(summary = "Realiza a busca das Notas do Aluno pelo ID", method = "GET")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Notas do Aluno encontradas com sucesso.",
+            @ApiResponse(responseCode = "200", description = "Notas do Aluno encontradas com sucesso.",
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(
