@@ -65,7 +65,7 @@ public class MateriaController {
 
     @Operation(summary = "Retorna todas as Materias cadastradas", method = "GET")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Materia encontradas com sucesso.",
+            @ApiResponse(responseCode = "200", description = "Materias encontradas com sucesso.",
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(
@@ -95,16 +95,16 @@ public class MateriaController {
         return ResponseEntity.ok(materiasDto);
     }
 
-    @Operation(summary = "Realiza a busca da Materia pelo ID do Curso", method = "GET")
+    @Operation(summary = "Realiza a busca das Materias do Curso", method = "GET")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Materia encontrada com sucesso.",
+            @ApiResponse(responseCode = "200", description = "Materias encontrada com sucesso.",
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(
-                                    example = "{\n" +
+                                    example = "[\n" + "{\n" +
                                             "  \"id\": 1,\n" +
                                             "  \"nome\": \"Java\"\n" +
-                                            "}"
+                                            "}\n" + "]"
                             )
                     )),
             @ApiResponse(responseCode = "401", description = "Credenciais inválidas. O usuário não está autorizado a acessar o sistema.",
