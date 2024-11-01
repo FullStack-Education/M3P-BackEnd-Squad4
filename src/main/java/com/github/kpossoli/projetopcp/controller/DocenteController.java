@@ -31,7 +31,7 @@ public class DocenteController {
 
     @Operation(summary = "Realiza a busca do Docente pelo ID ", method = "GET")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Docente encontrado com sucesso.",
+            @ApiResponse(responseCode = "200", description = "Docente encontrado com sucesso.",
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(
@@ -84,7 +84,7 @@ public class DocenteController {
 
     @Operation(summary = "Retorna todos os Docentes cadastrados", method = "GET")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Docentes encontrados com sucesso.",
+            @ApiResponse(responseCode = "200", description = "Docentes encontrados com sucesso.",
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(
