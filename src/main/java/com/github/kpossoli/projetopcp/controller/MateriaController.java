@@ -78,7 +78,7 @@ public class MateriaController {
             @ApiResponse(responseCode = "401", description = "Credenciais inválidas. O usuário não está autorizado a acessar o sistema.",
                     content = @Content
             ),
-            @ApiResponse(responseCode = "404", description = "Não há Materia cadastrados",
+            @ApiResponse(responseCode = "404", description = "Não há Materias cadastradas",
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(
