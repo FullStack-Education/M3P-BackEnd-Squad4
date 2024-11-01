@@ -32,7 +32,7 @@ public class Aluno {
 	private String genero;
 
 	@Getter @Setter
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "id_turma")
 	private Turma turma = new Turma();
 

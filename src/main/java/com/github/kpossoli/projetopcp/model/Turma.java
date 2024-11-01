@@ -46,7 +46,7 @@ public class Turma {
 	@JsonManagedReference
 	private Docente docente;
 
-	@OneToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_curso")
 	@Getter @Setter
 	@JsonManagedReference
