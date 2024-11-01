@@ -40,7 +40,7 @@ public class Turma {
 	@ToString.Include
 	private String horario;
 
-	@OneToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_docente")
 	@Getter @Setter
 	@JsonManagedReference

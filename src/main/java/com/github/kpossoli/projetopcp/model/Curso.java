@@ -26,8 +26,7 @@ public class Curso {
 	private String nome;
 
 	@Getter @Setter
-	@OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY, orphanRemoval = true)
-	@JoinColumn(name = "id_curso")
+	@OneToMany(mappedBy = "curso", cascade = CascadeType.MERGE, fetch = FetchType.LAZY, orphanRemoval = true)
 	@JsonBackReference
 	private List<Turma> turmas = new ArrayList<>();
 
