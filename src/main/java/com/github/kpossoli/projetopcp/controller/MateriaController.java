@@ -63,7 +63,7 @@ public class MateriaController {
         return ResponseEntity.ok(materiaDto);
     }
 
-    @Operation(summary = "Retorna todas as Materia cadastradas", method = "GET")
+    @Operation(summary = "Retorna todas as Materias cadastradas", method = "GET")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Materia encontradas com sucesso.",
                     content = @Content(
