@@ -33,7 +33,7 @@ public class MateriaController {
 
     @Operation(summary = "Realiza a busca da Materia pelo ID", method = "GET")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Materia encontrada com sucesso.",
+            @ApiResponse(responseCode = "200", description = "Materia encontrada com sucesso.",
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(
@@ -65,7 +65,7 @@ public class MateriaController {
 
     @Operation(summary = "Retorna todas as Materia cadastradas", method = "GET")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Materia encontradas com sucesso.",
+            @ApiResponse(responseCode = "200", description = "Materia encontradas com sucesso.",
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(
@@ -97,7 +97,7 @@ public class MateriaController {
 
     @Operation(summary = "Realiza a busca da Materia pelo ID do Curso", method = "GET")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Materia encontrada com sucesso.",
+            @ApiResponse(responseCode = "200", description = "Materia encontrada com sucesso.",
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(
