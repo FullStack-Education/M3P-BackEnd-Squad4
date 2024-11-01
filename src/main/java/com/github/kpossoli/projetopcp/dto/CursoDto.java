@@ -13,10 +13,10 @@ public class CursoDto {
 	@NotEmpty
 	private String nome;
 
-	@NotEmpty
+
 	private List<MateriaDto> materias;
 
-	@NotEmpty
+
 	private List<TurmaDto> turmas;
 
 }

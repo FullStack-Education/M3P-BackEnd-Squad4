@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import com.github.kpossoli.projetopcp.dto.AlunoDto;
@@ -182,6 +183,7 @@ public class AlunoController {
                             )))
     })
     @PostMapping
+    @Transactional
     @PreAuthorize("hasAuthority('ALUNO_WRITE')")
     public ResponseEntity<AlunoDto> criar(@RequestBody @Valid AlunoDto alunoDto) {
         Aluno aluno = alunoMapper.toEntity(alunoDto);
