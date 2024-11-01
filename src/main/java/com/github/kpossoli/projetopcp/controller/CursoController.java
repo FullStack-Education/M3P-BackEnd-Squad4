@@ -5,6 +5,7 @@ import com.github.kpossoli.projetopcp.model.Turma;
 import com.github.kpossoli.projetopcp.service.AlunoService;
 import com.github.kpossoli.projetopcp.service.TurmaService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -38,9 +39,9 @@ public class CursoController {
     private final CursoMapper cursoMapper;
     private final MateriaMapper materiaMapper;
 
-    @Operation(osummary = "Realiza a busca do Curso pelo ID", method = "GET")
+    @Operation(summary = "Realiza a busca do Curso pelo ID", method = "GET")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Curso encontrado com sucesso.",
+            @ApiResponse(responseCode = "200", description = "Curso encontrado com sucesso.",
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(
@@ -54,7 +55,6 @@ public class CursoController {
                                             "  \"materias\": [\n" +
                                             "    { \"id\": 2, \"nome\": \"Algoritmos\" },\n" +
                                             "    { \"id\": 3, \"nome\": \"Estruturas de Dados\" }\n" +
-                                            "  ]\n" +
                                             "}"
                             )
                     )),
@@ -78,9 +78,9 @@ public class CursoController {
         return ResponseEntity.ok(cursoDto);
     }
 
-    @Operation(operationId = "obterCursos",summary = "Retorna todos os Cursos cadastrados", method = "GET")
+    @Operation(summary = "Retorna todos os Cursos cadastrados / Realiza a busca do Curso pelo ID do Aluno", method = "GET")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Cursos encontrados com sucesso.",
+            @ApiResponse(responseCode = "200", description = "Cursos encontrados com sucesso.",
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(
@@ -101,7 +101,7 @@ public class CursoController {
             @ApiResponse(responseCode = "401", description = "Credenciais inválidas. O usuário não está autorizado a acessar o sistema.",
                     content = @Content
             ),
-            @ApiResponse(responseCode = "404", description = "Não há Cursos cadastrados",
+            @ApiResponse(responseCode = "404", description = "Não há Cursos cadastrados. / Aluno não encontrado.",
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(
@@ -199,13 +199,14 @@ public class CursoController {
         return ResponseEntity.ok(cursoSalvoDto);
     }
 
-    @Operation(operationId = "obterCursoDoAluno", summary = "Realiza a busca do Curso pelo ID do Aluno", method = "GET")
+    @Operation(summary = "Retorna todos os Cursos cadastrados / Realiza a busca do Curso pelo ID do Aluno", method = "GET")
+    @Parameter(name = "idAluno", description = "ID do Aluno: Realiza a busca do Curso em que o Aluno está cadastrado", required = false)
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Curso encontrado com sucesso.",
+            @ApiResponse(responseCode = "200", description = "Cursos encontrados com sucesso.",
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(
-                                    example = "{\n" +
+                                    example = "[\n"+ "{\n" +
                                             "  \"id\": 1,\n" +
                                             "  \"nome\": \"Curso de Ciências da Computação\",\n" +
                                             "  \"turmas\": [\n" +
@@ -216,13 +217,13 @@ public class CursoController {
                                             "    { \"id\": 2, \"nome\": \"Algoritmos\" },\n" +
                                             "    { \"id\": 3, \"nome\": \"Estruturas de Dados\" }\n" +
                                             "  ]\n" +
-                                            "}"
+                                            "}"+ "]"
                             )
                     )),
             @ApiResponse(responseCode = "401", description = "Credenciais inválidas. O usuário não está autorizado a acessar o sistema.",
                     content = @Content
             ),
-            @ApiResponse(responseCode = "404", description = "Aluno não encontrado.",
+            @ApiResponse(responseCode = "404", description = "Não há Cursos cadastrados. / Aluno não encontrado.",
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(
