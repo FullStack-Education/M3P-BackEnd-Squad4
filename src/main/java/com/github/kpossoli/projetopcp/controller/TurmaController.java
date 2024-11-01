@@ -31,7 +31,7 @@ public class TurmaController {
 
     @Operation(summary = "Realiza a busca da Turma pelo ID", method = "GET")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Turma encontrada com sucesso.",
+            @ApiResponse(responseCode = "200", description = "Turma encontrada com sucesso.",
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(
@@ -68,7 +68,7 @@ public class TurmaController {
 
     @Operation(summary = "Retorna todas as Turmas cadastradas", method = "GET")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Turmas encontradas com sucesso.",
+            @ApiResponse(responseCode = "200", description = "Turmas encontradas com sucesso.",
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(
