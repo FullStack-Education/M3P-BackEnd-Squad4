@@ -46,7 +46,7 @@ public class DocenteDto {
 	private String estadoCivil;
 
 	@NotEmpty
-	private List<MateriaDto> materias;
+	private List<Long> materias;
 
 	@NotBlank
 	private String cep;
