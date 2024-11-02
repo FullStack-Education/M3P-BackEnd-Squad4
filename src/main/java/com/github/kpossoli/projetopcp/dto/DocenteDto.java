@@ -47,25 +47,19 @@ public class DocenteDto {
 
 	@NotEmpty
 	private List<Long> materias;
-
-	@NotBlank
+	
 	private String cep;
 
-	@NotBlank
 	private String localidade;
 
-	@NotBlank
 	private String uf;
 
-	@NotBlank
 	private String logradouro;
 
-	@NotBlank
 	private String numero;
 
 	private String complemento;
 
-	@NotBlank
 	private String bairro;
 
 	private String referencia;
