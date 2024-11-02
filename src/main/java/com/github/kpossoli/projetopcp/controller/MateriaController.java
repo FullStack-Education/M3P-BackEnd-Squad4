@@ -1,5 +1,6 @@
 package com.github.kpossoli.projetopcp.controller;
 
+import com.github.kpossoli.projetopcp.service.CursoService;
 import org.springframework.web.bind.annotation.*;
 
 import com.github.kpossoli.projetopcp.dto.MateriaDto;
@@ -18,13 +19,14 @@ import org.springframework.security.access.prepost.PreAuthorize;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/materias")
+@RequestMapping
 public class MateriaController {
 
     private final MateriaService materiaService;
     private final MateriaMapper materiaMapper;
+    private final CursoService cursoService;
 
-    @GetMapping("/{id}")
+    @GetMapping("materias/{id}")
     @PreAuthorize("hasAuthority('MATERIA_READ')")
     public ResponseEntity<MateriaDto> obter(@PathVariable Long id) {
         Materia materia = materiaService.obter(id);
@@ -33,7 +35,7 @@ public class MateriaController {
         return ResponseEntity.ok(materiaDto);
     }
 
-    @GetMapping
+    @GetMapping("materias")
     @PreAuthorize("hasAuthority('MATERIA_READ')")
     public ResponseEntity<List<MateriaDto>> listar() {
         List<Materia> materias = materiaService.listar();
@@ -42,7 +44,16 @@ public class MateriaController {
         return ResponseEntity.ok(materiasDto);
     }
 
-    @PostMapping
+    @GetMapping("cursos/{id}/materias")
+    @PreAuthorize("hasAuthority('MATERIA_READ')")
+    public ResponseEntity<List<MateriaDto>> listarMateriasPorCurso(@PathVariable("id") Long idCurso) {
+        List<Materia> materias = materiaService.listarMateriasPorCurso(idCurso);
+        List<MateriaDto> materiasDto = materiaMapper.toDto(materias);
+
+        return ResponseEntity.ok(materiasDto);
+    }
+
+    @PostMapping("materias")
     @PreAuthorize("hasAuthority('MATERIA_WRITE')")
     public ResponseEntity<MateriaDto> criar(@RequestBody @Valid MateriaDto materiaDto) {
         Materia materia = materiaMapper.toEntity(materiaDto);
@@ -52,7 +63,7 @@ public class MateriaController {
         return ResponseEntity.status(HttpStatus.CREATED).body(materiaSalvoDto);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("materias/{id}")
     @PreAuthorize("hasAuthority('MATERIA_WRITE')")
     public ResponseEntity<MateriaDto> atualizar(@PathVariable Long id, @RequestBody @Valid MateriaDto materiaDto) {
         Materia materia = materiaMapper.toEntity(materiaDto);
@@ -62,7 +73,7 @@ public class MateriaController {
         return ResponseEntity.ok(materiaSalvoDto);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("materias/{id}")
     @PreAuthorize("hasAuthority('MATERIA_DELETE')")
     public ResponseEntity<Void> excluir(@PathVariable Long id) {
         materiaService.excluir(id);

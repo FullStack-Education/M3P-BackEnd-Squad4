@@ -16,7 +16,7 @@ public class AlunoDto {
 	private Long id;
 
 	@NotBlank
-	private String nome;
+	private String nomeCompleto;
 
 	@NotBlank
 	private String telefone;
@@ -28,7 +28,7 @@ public class AlunoDto {
 	private TurmaDto turma;
 
 	@NotNull
-	private LocalDate dataNascimento;
+	private LocalDate nascimento;
 
 	@NotBlank
 	private String email;
@@ -49,16 +49,16 @@ public class AlunoDto {
 	private String cep;
 
 	@NotBlank
-	private String rua;
-
-	@NotNull
-	private Long numero;
+	private String logradouro;
 
 	@NotBlank
-	private String cidade;
+	private String numero;
 
 	@NotBlank
-	private String estado;
+	private String localidade;
+
+	@NotBlank
+	private String uf;
 
 	@NotBlank
 	private String complemento;

@@ -1,5 +1,9 @@
 package com.github.kpossoli.projetopcp.controller;
 
+import com.github.kpossoli.projetopcp.model.Aluno;
+import com.github.kpossoli.projetopcp.model.Turma;
+import com.github.kpossoli.projetopcp.service.AlunoService;
+import com.github.kpossoli.projetopcp.service.TurmaService;
 import org.springframework.web.bind.annotation.*;
 
 import com.github.kpossoli.projetopcp.dto.CursoDto;
@@ -25,6 +29,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 public class CursoController {
 
     private final CursoService cursoService;
+    private final AlunoService alunoService;
     private final CursoMapper cursoMapper;
     private final MateriaMapper materiaMapper;
 
@@ -44,15 +49,6 @@ public class CursoController {
         List<CursoDto> cursosDto = cursoMapper.toDto(cursos);
 
         return ResponseEntity.ok(cursosDto);
-    }
-
-    @GetMapping("/{id}/materias")
-    @PreAuthorize("hasAuthority('CURSO_READ')")
-    public ResponseEntity<List<MateriaDto>> listarMaterias(@PathVariable Long id) {
-        List<Materia> materias = cursoService.listarMaterias(id);
-        List<MateriaDto> materiasDto = materiaMapper.toDto(materias);
-
-        return ResponseEntity.ok(materiasDto);
     }
 
     @PostMapping
@@ -75,6 +71,12 @@ public class CursoController {
         return ResponseEntity.ok(cursoSalvoDto);
     }
 
+    @GetMapping(params = "idAluno")
+    @PreAuthorize("hasAuthority('CURSO_READ')")
+    public ResponseEntity<CursoDto> obterCursoDoAluno(@RequestParam(required = false) Long idAluno) {
+        return ResponseEntity.ok(cursoMapper.toDto(alunoService.obter(idAluno).getTurma().getCurso()));
+    }
+
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('CURSO_DELETE')")
     public ResponseEntity<Void> excluir(@PathVariable Long id) {
@@ -83,4 +85,3 @@ public class CursoController {
         return ResponseEntity.noContent().build();
     }
 }
-

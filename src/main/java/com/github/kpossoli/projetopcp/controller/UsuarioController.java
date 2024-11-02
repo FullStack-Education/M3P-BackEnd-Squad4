@@ -1,10 +1,8 @@
 package com.github.kpossoli.projetopcp.controller;
 
-import com.github.kpossoli.projetopcp.dto.DocenteDto;
 import com.github.kpossoli.projetopcp.dto.UsuarioDto;
 import com.github.kpossoli.projetopcp.dto.UsuarioSimplifiedDto;
 import com.github.kpossoli.projetopcp.mapper.UsuarioMapper;
-import com.github.kpossoli.projetopcp.model.Docente;
 import com.github.kpossoli.projetopcp.model.Usuario;
 import com.github.kpossoli.projetopcp.service.UsuarioService;
 

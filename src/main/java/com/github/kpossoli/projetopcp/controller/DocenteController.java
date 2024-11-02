@@ -1,5 +1,6 @@
 package com.github.kpossoli.projetopcp.controller;
 
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import com.github.kpossoli.projetopcp.dto.DocenteDto;
@@ -43,6 +44,7 @@ public class DocenteController {
     }
 
     @PostMapping
+    @Transactional
     @PreAuthorize("hasAuthority('DOCENTE_WRITE')")
     public ResponseEntity<DocenteDto> criar(@RequestBody @Valid DocenteDto docenteDto) {
         Docente docente = docenteMapper.toEntity(docenteDto);
