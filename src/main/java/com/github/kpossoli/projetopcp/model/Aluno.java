@@ -69,10 +69,16 @@ public class Aluno {
 	private String localidade;
 
 	@Getter @Setter
+	private String bairro;
+
+	@Getter @Setter
 	private String uf;
 
 	@Getter @Setter
 	private String complemento;
+
+	@Getter @Setter
+	private String referencia;
 
 	@OneToOne
 	@JoinColumn(name = "id_usuario")
