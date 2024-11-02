@@ -97,14 +97,32 @@ private Collection<? extends GrantedAuthority> getPermissoes(Usuario usuario) {
         case "PROFESSOR" -> {
           permissoes.add("USUARIO_READ");
 
+          permissoes.add("ALUNO_READ");
+
+          permissoes.add("TURMA_READ");
+          permissoes.add("TURMA_WRITE");
+
+          permissoes.add("CURSO_READ");
+
+          permissoes.add("MATERIA_READ");
+
+          permissoes.add("DOCENTE_READ");
+
           permissoes.add("NOTA_READ");
           permissoes.add("NOTA_WRITE");
 
           permissoes.add("PONTUACAO_READ");
-          permissoes.add("ESTATISTICAS_READ");
         }
         default -> {
           permissoes.add("USUARIO_READ");
+
+          permissoes.add("ALUNO_READ");
+
+          permissoes.add("DOCENTE_READ");
+
+          permissoes.add("TURMA_READ");
+
+          permissoes.add("MATERIA_READ");
 
           permissoes.add("NOTA_READ");
           permissoes.add("PONTUACAO_READ");
