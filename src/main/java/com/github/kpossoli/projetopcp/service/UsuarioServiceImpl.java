@@ -43,4 +43,10 @@ public class UsuarioServiceImpl implements UsuarioService {
                 .orElseThrow(() -> new EmptyResultDataAccessException(1));
     }
 
+    @Override
+    public void excluir(Long id) {
+        log.info("Excluindo usuário de id: {}", id);
+        usuarioRepository.deleteById(id);
+    }
+
 }

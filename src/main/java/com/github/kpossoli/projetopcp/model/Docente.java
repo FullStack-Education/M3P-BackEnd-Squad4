@@ -84,7 +84,7 @@ public class Docente {
 	@Getter @Setter
 	private String referencia;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "id_usuario")
 	@Getter @Setter
 	private Usuario usuario;

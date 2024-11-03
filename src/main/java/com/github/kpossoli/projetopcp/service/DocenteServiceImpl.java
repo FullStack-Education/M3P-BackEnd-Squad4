@@ -2,8 +2,10 @@ package com.github.kpossoli.projetopcp.service;
 
 import java.util.List;
 
+import com.github.kpossoli.projetopcp.model.Turma;
 import com.github.kpossoli.projetopcp.model.Usuario;
 import com.github.kpossoli.projetopcp.repository.PapelRepository;
+import com.github.kpossoli.projetopcp.repository.TurmaRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,7 @@ public class DocenteServiceImpl implements DocenteService {
     private final DocenteRepository docenteRepository;
     private final UsuarioService usuarioService;
     private final PapelRepository papelRepository;
+    private final TurmaRepository turmaRepository;
 
     @Override
     public Docente obter(Long id) {
@@ -64,6 +67,18 @@ public class DocenteServiceImpl implements DocenteService {
     @Override
     public void excluir(Long id) {
         log.info("Excluindo docente de id: {}", id);
+
+        Docente docente = obter(id);
+
+        List<Turma> turmasAssociadas = turmaRepository.findByDocenteId(docente.getId());
+        for (Turma turma : turmasAssociadas) {
+            turma.setDocente(null);
+            turmaRepository.save(turma);
+        }
+
+        if(docente.getUsuario() != null) {
+            usuarioService.excluir(docente.getUsuario().getId());
+        }
 
         docenteRepository.deleteById(id);
     }

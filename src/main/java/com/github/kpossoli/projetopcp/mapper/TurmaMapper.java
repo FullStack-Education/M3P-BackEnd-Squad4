@@ -23,6 +23,8 @@ public interface TurmaMapper {
     @Mapping(target = "curso", source = "cursoId")
     Turma toEntity(TurmaDto turmaDto);
 
+    List<Turma> toEntity(List<TurmaDto> turmaDtos);
+
     default Docente map(Long docenteId) {
         if (docenteId == null) {
             return null;
@@ -38,6 +40,14 @@ public interface TurmaMapper {
         Curso curso = new Curso();
         curso.setId(cursoId);
         return curso;
+    }
+
+    default Long mapDocenteToId(Docente docente) {
+        return docente != null ? docente.getId() : null;
+    }
+
+    default Long mapCursoToId(Curso curso) {
+        return curso != null ? curso.getId() : null;
     }
 
 
