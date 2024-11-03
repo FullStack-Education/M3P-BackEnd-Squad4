@@ -56,7 +56,7 @@ public class TurmaController {
     @PreAuthorize("hasAuthority('TURMA_WRITE')")
     public ResponseEntity<TurmaDto> atualizar(@PathVariable Long id, @RequestBody @Valid TurmaDto turmaDto) {
         Turma turma = turmaMapper.toEntity(turmaDto);
-        Turma turmaSalvo = turmaService.atualizar(id, turma);
+        Turma turmaSalvo = turmaService.atualizar(id, turmaDto);
         TurmaDto turmaSalvoDto = turmaMapper.toDto(turmaSalvo);
 
         return ResponseEntity.ok(turmaSalvoDto);

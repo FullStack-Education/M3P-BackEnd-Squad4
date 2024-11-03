@@ -70,6 +70,12 @@ public class AlunoServiceImpl implements AlunoService {
     public void excluir(Long id) {
         log.info("Excluindo aluno de id: {}", id);
 
+        Aluno aluno = obter(id);
+
+        if(aluno.getUsuario() != null) {
+            usuarioService.excluir(aluno.getUsuario().getId());
+        }
+
         alunoRepository.deleteById(id);
     }
 

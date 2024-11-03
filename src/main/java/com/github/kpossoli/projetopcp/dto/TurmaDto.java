@@ -22,7 +22,6 @@ public class TurmaDto {
 	@NotNull
 	private String horario;
 
-	@NotNull
 	private Long docenteId;
 
 	@NotNull
