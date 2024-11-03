@@ -4,6 +4,12 @@ import com.github.kpossoli.projetopcp.model.Aluno;
 import com.github.kpossoli.projetopcp.model.Turma;
 import com.github.kpossoli.projetopcp.service.AlunoService;
 import com.github.kpossoli.projetopcp.service.TurmaService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.web.bind.annotation.*;
 
 import com.github.kpossoli.projetopcp.dto.CursoDto;
@@ -33,6 +39,36 @@ public class CursoController {
     private final CursoMapper cursoMapper;
     private final MateriaMapper materiaMapper;
 
+    @Operation(summary = "Realiza a busca do Curso pelo ID", method = "GET")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Curso encontrado com sucesso.",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    example = "{\n" +
+                                            "  \"id\": 1,\n" +
+                                            "  \"nome\": \"Curso de Ciências da Computação\",\n" +
+                                            "  \"turmas\": [\n" +
+                                            "    { \"id\": 5, \"nomeTurma\": \"Turma A\" },\n" +
+                                            "    { \"id\": 6, \"nomeTurma\": \"Turma B\" }\n" +
+                                            "  ],\n" +
+                                            "  \"materias\": [\n" +
+                                            "    { \"id\": 2, \"nome\": \"Algoritmos\" },\n" +
+                                            "    { \"id\": 3, \"nome\": \"Estruturas de Dados\" }\n" +
+                                            "}"
+                            )
+                    )),
+            @ApiResponse(responseCode = "401", description = "Credenciais inválidas. O usuário não está autorizado a acessar o sistema.",
+                    content = @Content
+            ),
+            @ApiResponse(responseCode = "404", description = "Curso não encontrado.",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    type = "object",
+                                    example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
+                            )))
+    })
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('CURSO_READ')")
     public ResponseEntity<CursoDto> obter(@PathVariable Long id) {
@@ -42,6 +78,37 @@ public class CursoController {
         return ResponseEntity.ok(cursoDto);
     }
 
+    @Operation(summary = "Retorna todos os Cursos cadastrados / Realiza a busca do Curso pelo ID do Aluno", method = "GET")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Cursos encontrados com sucesso.",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    example = "[\n"+ "{\n" +
+                                            "  \"id\": 1,\n" +
+                                            "  \"nome\": \"Curso de Ciências da Computação\",\n" +
+                                            "  \"turmas\": [\n" +
+                                            "    { \"id\": 5, \"nomeTurma\": \"Turma A\" },\n" +
+                                            "    { \"id\": 6, \"nomeTurma\": \"Turma B\" }\n" +
+                                            "  ],\n" +
+                                            "  \"materias\": [\n" +
+                                            "    { \"id\": 2, \"nome\": \"Algoritmos\" },\n" +
+                                            "    { \"id\": 3, \"nome\": \"Estruturas de Dados\" }\n" +
+                                            "  ]\n" +
+                                            "}"+ "]"
+                            )
+                    )),
+            @ApiResponse(responseCode = "401", description = "Credenciais inválidas. O usuário não está autorizado a acessar o sistema.",
+                    content = @Content
+            ),
+            @ApiResponse(responseCode = "404", description = "Não há Cursos cadastrados. / Aluno não encontrado.",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    type = "object",
+                                    example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
+                            )))
+    })
     @GetMapping
     @PreAuthorize("hasAuthority('CURSO_READ')")
     public ResponseEntity<List<CursoDto>> listar() {
@@ -51,6 +118,37 @@ public class CursoController {
         return ResponseEntity.ok(cursosDto);
     }
 
+    @Operation(summary = "Cadastra Curso no sistema", method = "POST")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Curso criado com sucesso.",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    example = "{\n" +
+                                            "  \"id\": 1,\n" +
+                                            "  \"nome\": \"Curso de Ciências da Computação\",\n" +
+                                            "  \"turmas\": [\n" +
+                                            "    { \"id\": 5, \"nomeTurma\": \"Turma A\" },\n" +
+                                            "    { \"id\": 6, \"nomeTurma\": \"Turma B\" }\n" +
+                                            "  ],\n" +
+                                            "  \"materias\": [\n" +
+                                            "    { \"id\": 2, \"nome\": \"Algoritmos\" },\n" +
+                                            "    { \"id\": 3, \"nome\": \"Estruturas de Dados\" }\n" +
+                                            "  ]\n" +
+                                            "}"
+                            )
+                    )),
+            @ApiResponse(responseCode = "401", description = "Credenciais inválidas. O usuário não está autorizado a acessar o sistema.",
+                    content = @Content
+            ),
+            @ApiResponse(responseCode = "400", description = "Requisição inválida, por exemplo, dados ausentes ou incorretos.",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    type = "object",
+                                    example = "{ \"status\": 400, \"messages\": [{ \"code\": \"json_parse\", \"message\": \"Mensagem inválida\" }] }"
+                            )))
+    })
     @PostMapping
     @PreAuthorize("hasAuthority('CURSO_WRITE')")
     public ResponseEntity<CursoDto> criar(@RequestBody @Valid CursoDto cursoDto) {
@@ -61,6 +159,36 @@ public class CursoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(cursoSalvoDto);
     }
 
+    @Operation(summary = "Atualiza o Curso pelo ID", method = "PUT")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Curso atualizado com sucesso.",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    example = "{\n" +
+                                            "  \"id\": 1,\n" +
+                                            "  \"nome\": \"Curso de Ciências da Computação\",\n" +
+                                            "  \"turmas\": [\n" +
+                                            "    { \"id\": 5, \"nomeTurma\": \"Turma A\" },\n" +
+                                            "    { \"id\": 6, \"nomeTurma\": \"Turma B\" }\n" +
+                                            "  ],\n" +
+                                            "  \"materias\": [\n" +
+                                            "    { \"id\": 2, \"nome\": \"Algoritmos\" },\n" +
+                                            "    { \"id\": 3, \"nome\": \"Estruturas de Dados\" }\n" +
+                                            "  ]\n" +
+                                            "}"
+                            ))),
+            @ApiResponse(responseCode = "401", description = "Credenciais inválidas. O usuário não está autorizado a acessar o sistema.",
+                    content = @Content
+            ),
+            @ApiResponse(responseCode = "404", description = "Curso não encontrado.",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    type = "object",
+                                    example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
+                            )))
+    })
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('CURSO_WRITE')")
     public ResponseEntity<CursoDto> atualizar(@PathVariable Long id, @RequestBody @Valid CursoDto cursoDto) {
@@ -71,12 +199,60 @@ public class CursoController {
         return ResponseEntity.ok(cursoSalvoDto);
     }
 
+    @Operation(summary = "Retorna todos os Cursos cadastrados / Realiza a busca do Curso pelo ID do Aluno", method = "GET")
+    @Parameter(name = "idAluno", description = "ID do Aluno: Realiza a busca do Curso em que o Aluno está cadastrado", required = false)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Cursos encontrados com sucesso.",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    example = "[\n"+ "{\n" +
+                                            "  \"id\": 1,\n" +
+                                            "  \"nome\": \"Curso de Ciências da Computação\",\n" +
+                                            "  \"turmas\": [\n" +
+                                            "    { \"id\": 5, \"nomeTurma\": \"Turma A\" },\n" +
+                                            "    { \"id\": 6, \"nomeTurma\": \"Turma B\" }\n" +
+                                            "  ],\n" +
+                                            "  \"materias\": [\n" +
+                                            "    { \"id\": 2, \"nome\": \"Algoritmos\" },\n" +
+                                            "    { \"id\": 3, \"nome\": \"Estruturas de Dados\" }\n" +
+                                            "  ]\n" +
+                                            "}"+ "]"
+                            )
+                    )),
+            @ApiResponse(responseCode = "401", description = "Credenciais inválidas. O usuário não está autorizado a acessar o sistema.",
+                    content = @Content
+            ),
+            @ApiResponse(responseCode = "404", description = "Não há Cursos cadastrados. / Aluno não encontrado.",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    type = "object",
+                                    example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
+                            )))
+    })
     @GetMapping(params = "idAluno")
     @PreAuthorize("hasAuthority('CURSO_READ')")
     public ResponseEntity<CursoDto> obterCursoDoAluno(@RequestParam(required = false) Long idAluno) {
         return ResponseEntity.ok(cursoMapper.toDto(alunoService.obter(idAluno).getTurma().getCurso()));
     }
 
+    @Operation(summary = "Exclui Curso pelo ID", method = "DELETE")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Curso excluido com sucesso.",
+                    content = @Content
+            ),
+            @ApiResponse(responseCode = "401", description = "Credenciais inválidas. O usuário não está autorizado a acessar o sistema.",
+                    content = @Content
+            ),
+            @ApiResponse(responseCode = "404", description = "Curso não encontrado.",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    type = "object",
+                                    example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
+                            )))
+    })
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('CURSO_DELETE')")
     public ResponseEntity<Void> excluir(@PathVariable Long id) {
