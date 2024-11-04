@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @ToString
 @EqualsAndHashCode(of = "id")
@@ -19,5 +22,13 @@ public class Materia {
 	@Column(unique = true)
 	@Getter @Setter
 	private String nome;
+
+	@ManyToMany(mappedBy = "materias")
+	@Getter @Setter
+	private List<Docente> docentes = new ArrayList<>();
+
+	@ManyToMany(mappedBy = "materias")
+	@Getter @Setter
+	private List<Curso> cursos = new ArrayList<>();
 
 }

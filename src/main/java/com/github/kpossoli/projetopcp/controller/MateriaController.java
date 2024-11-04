@@ -154,7 +154,7 @@ public class MateriaController {
     @PreAuthorize("hasAuthority('MATERIA_WRITE')")
     public ResponseEntity<MateriaDto> criar(@RequestBody @Valid MateriaDto materiaDto) {
         Materia materia = materiaMapper.toEntity(materiaDto);
-        Materia materiaSalvo = materiaService.criar(materia);
+        Materia materiaSalvo = materiaService.criar(materiaDto);
         MateriaDto materiaSalvoDto = materiaMapper.toDto(materiaSalvo);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(materiaSalvoDto);
@@ -186,7 +186,7 @@ public class MateriaController {
     @PreAuthorize("hasAuthority('MATERIA_WRITE')")
     public ResponseEntity<MateriaDto> atualizar(@PathVariable Long id, @RequestBody @Valid MateriaDto materiaDto) {
         Materia materia = materiaMapper.toEntity(materiaDto);
-        Materia materiaSalvo = materiaService.atualizar(id, materia);
+        Materia materiaSalvo = materiaService.atualizar(id, materiaDto);
         MateriaDto materiaSalvoDto = materiaMapper.toDto(materiaSalvo);
 
         return ResponseEntity.ok(materiaSalvoDto);
