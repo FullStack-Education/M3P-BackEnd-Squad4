@@ -1,5 +1,10 @@
 package com.github.kpossoli.projetopcp.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.web.bind.annotation.*;
 
 import com.github.kpossoli.projetopcp.dto.NotaDto;
@@ -24,6 +29,39 @@ public class NotaController {
     private final NotaService notaService;
     private final NotaMapper notaMapper;
 
+    @Operation(summary = "Realiza a busca da Nota pelo ID", method = "GET")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Nota encontrada com sucesso.",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    example = "{\n" +
+                                            "  \"id\": 1,\n" +
+                                            "  \"valor\": 9.5,\n" +
+                                            "  \"data\": \"2024-10-15\",\n" +
+                                            "  \"aluno\": {\n" +
+                                            "    \"id\": 3\n" +
+                                            "  },\n" +
+                                            "  \"docente\": {\n" +
+                                            "    \"id\": 2\n" +
+                                            "  },\n" +
+                                            "  \"materia\": {\n" +
+                                            "    \"id\": 4\n" +
+                                            "  }\n" +
+                                            "}"
+                            )
+                    )),
+            @ApiResponse(responseCode = "401", description = "Credenciais inválidas. O usuário não está autorizado a acessar o sistema.",
+                    content = @Content
+            ),
+            @ApiResponse(responseCode = "404", description = "Nota não encontrada.",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    type = "object",
+                                    example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
+                            )))
+    })
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('NOTA_READ')")
     public ResponseEntity<NotaDto> obter(@PathVariable Long id) {
@@ -33,6 +71,39 @@ public class NotaController {
         return ResponseEntity.ok(notaDto);
     }
 
+    @Operation(summary = "Retorna todas as Notas cadastradas", method = "GET")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Notas encontradas com sucesso.",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    example = "[\n"+"{\n" +
+                                            "  \"id\": 1,\n" +
+                                            "  \"valor\": 9.5,\n" +
+                                            "  \"data\": \"2024-10-15\",\n" +
+                                            "  \"aluno\": {\n" +
+                                            "    \"id\": 3\n" +
+                                            "  },\n" +
+                                            "  \"docente\": {\n" +
+                                            "    \"id\": 2\n" +
+                                            "  },\n" +
+                                            "  \"materia\": {\n" +
+                                            "    \"id\": 4\n" +
+                                            "  }\n" +
+                                            "}" + "]"
+                            )
+                    )),
+            @ApiResponse(responseCode = "401", description = "Credenciais inválidas. O usuário não está autorizado a acessar o sistema.",
+                    content = @Content
+            ),
+            @ApiResponse(responseCode = "404", description = "Não há Notas cadastradas",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    type = "object",
+                                    example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
+                            )))
+    })
     @GetMapping
     @PreAuthorize("hasAuthority('NOTA_READ')")
     public ResponseEntity<List<NotaDto>> listar() {
@@ -42,6 +113,39 @@ public class NotaController {
         return ResponseEntity.ok(notasDto);
     }
 
+    @Operation(summary = "Cadastra Nota no sistema", method = "POST")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Nota criada com sucesso.",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    example = "{\n" +
+                                            "  \"id\": 1,\n" +
+                                            "  \"valor\": 9.5,\n" +
+                                            "  \"data\": \"2024-10-15\",\n" +
+                                            "  \"aluno\": {\n" +
+                                            "    \"id\": 3\n" +
+                                            "  },\n" +
+                                            "  \"docente\": {\n" +
+                                            "    \"id\": 2\n" +
+                                            "  },\n" +
+                                            "  \"materia\": {\n" +
+                                            "    \"id\": 4\n" +
+                                            "  }\n" +
+                                            "}"
+                            )
+                    )),
+            @ApiResponse(responseCode = "401", description = "Credenciais inválidas. O usuário não está autorizado a acessar o sistema.",
+                    content = @Content
+            ),
+            @ApiResponse(responseCode = "400", description = "Requisição inválida, por exemplo, dados ausentes ou incorretos.",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    type = "object",
+                                    example = "{ \"status\": 400, \"messages\": [{ \"code\": \"json_parse\", \"message\": \"Mensagem inválida\" }] }"
+                            )))
+    })
     @PostMapping
     @PreAuthorize("hasAuthority('NOTA_WRITE')")
     public ResponseEntity<NotaDto> criar(@RequestBody @Valid NotaDto notaDto) {
@@ -52,6 +156,38 @@ public class NotaController {
         return ResponseEntity.status(HttpStatus.CREATED).body(notaSalvoDto);
     }
 
+    @Operation(summary = "Atualiza a Nota pelo ID", method = "PUT")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Nota atualizada com sucesso.",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    example = "{\n" +
+                                            "  \"id\": 1,\n" +
+                                            "  \"valor\": 9.5,\n" +
+                                            "  \"data\": \"2024-10-15\",\n" +
+                                            "  \"aluno\": {\n" +
+                                            "    \"id\": 3\n" +
+                                            "  },\n" +
+                                            "  \"docente\": {\n" +
+                                            "    \"id\": 2\n" +
+                                            "  },\n" +
+                                            "  \"materia\": {\n" +
+                                            "    \"id\": 4\n" +
+                                            "  }\n" +
+                                            "}"
+                            ))),
+            @ApiResponse(responseCode = "401", description = "Credenciais inválidas. O usuário não está autorizado a acessar o sistema.",
+                    content = @Content
+            ),
+            @ApiResponse(responseCode = "404", description = "Nota não encontrada.",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    type = "object",
+                                    example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
+                            )))
+    })
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('NOTA_WRITE')")
     public ResponseEntity<NotaDto> atualizar(@PathVariable Long id, @RequestBody @Valid NotaDto notaDto) {
@@ -62,6 +198,22 @@ public class NotaController {
         return ResponseEntity.ok(notaSalvoDto);
     }
 
+    @Operation(summary = "Exclui Nota pelo ID", method = "DELETE")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Nota excluida com sucesso.",
+                    content = @Content
+            ),
+            @ApiResponse(responseCode = "401", description = "Credenciais inválidas. O usuário não está autorizado a acessar o sistema.",
+                    content = @Content
+            ),
+            @ApiResponse(responseCode = "404", description = "Nota não encontrada.",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    type = "object",
+                                    example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
+                            )))
+    })
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('NOTA_DELETE')")
     public ResponseEntity<Void> excluir(@PathVariable Long id) {
@@ -70,6 +222,39 @@ public class NotaController {
         return ResponseEntity.noContent().build();
     }
 
+    @Operation(summary = "Realiza a busca das Notas do Aluno pelo ID do Aluno", method = "GET")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Notas do Aluno encontradas com sucesso.",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    example = "{\n" +
+                                            "  \"id\": 1,\n" +
+                                            "  \"valor\": 9.5,\n" +
+                                            "  \"data\": \"2024-10-15\",\n" +
+                                            "  \"aluno\": {\n" +
+                                            "    \"id\": 3\n" +
+                                            "  },\n" +
+                                            "  \"docente\": {\n" +
+                                            "    \"id\": 2\n" +
+                                            "  },\n" +
+                                            "  \"materia\": {\n" +
+                                            "    \"id\": 4\n" +
+                                            "  }\n" +
+                                            "}"
+                            )
+                    )),
+            @ApiResponse(responseCode = "401", description = "Credenciais inválidas. O usuário não está autorizado a acessar o sistema.",
+                    content = @Content
+            ),
+            @ApiResponse(responseCode = "404", description = "Aluno não encontrado.",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    type = "object",
+                                    example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
+                            )))
+    })
     @GetMapping(path = "/alunos/{id_aluno}/notas")
     @PreAuthorize("hasAuthority('NOTA_READ')")
     public ResponseEntity<List<NotaDto>> listarNotasPorAluno(@PathVariable Long id) {

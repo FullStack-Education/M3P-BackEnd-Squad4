@@ -55,8 +55,12 @@ public class Docente {
 	private String estadoCivil;
 
 	@Getter @Setter
-	@OneToMany(fetch = FetchType.EAGER)
-	@JoinColumn(name = "id_docente")
+	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+	@JoinTable(
+		name = "docente_materia",
+		joinColumns = @JoinColumn(name = "docente_id"),
+		inverseJoinColumns = @JoinColumn(name = "materia_id")
+	)
 	private List<Materia> materias = new ArrayList<>();
 
 	@Getter @Setter

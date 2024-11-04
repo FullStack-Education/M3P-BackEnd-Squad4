@@ -3,6 +3,11 @@ package com.github.kpossoli.projetopcp.controller;
 import com.github.kpossoli.projetopcp.dto.CursoDto;
 import com.github.kpossoli.projetopcp.mapper.CursoMapperImpl;
 import com.github.kpossoli.projetopcp.model.Curso;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.web.bind.annotation.*;
 
 import com.github.kpossoli.projetopcp.dto.TurmaDto;
@@ -37,6 +42,34 @@ public class TurmaController {
         return ResponseEntity.ok(turmaDto);
     }
 
+    @Operation(summary = "Retorna todas as Turmas cadastradas", method = "GET")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Turmas encontradas com sucesso.",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    example = "[\n"+ "{\n" +
+                                            "  \"id\": 1,\n" +
+                                            "  \"nomeTurma\": \"Turma B\",\n" +
+                                            "  \"dataInicio\": \"2024-01-15\",\n" +
+                                            "  \"dataTermino\": \"2024-06-15\",\n" +
+                                            "  \"horario\": \"08:00 - 12:00\",\n" +
+                                            "  \"docenteId\": 2,\n" +
+                                            "  \"cursoId\": 3\n" +
+                                            "}" + "]"
+                            )
+                    )),
+            @ApiResponse(responseCode = "401", description = "Credenciais inválidas. O usuário não está autorizado a acessar o sistema.",
+                    content = @Content
+            ),
+            @ApiResponse(responseCode = "404", description = "Não há turmas cadastrados",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    type = "object",
+                                    example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
+                            )))
+    })
     @GetMapping("/{id}/curso")
     @PreAuthorize("hasAuthority('TURMA_READ')")
     public ResponseEntity<CursoDto> obterCurso(@PathVariable Long id) {
