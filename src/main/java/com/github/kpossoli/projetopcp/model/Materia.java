@@ -25,6 +25,10 @@ public class Materia {
 
 	@ManyToMany(mappedBy = "materias")
 	@Getter @Setter
+	private List<Docente> docentes = new ArrayList<>();
+
+	@ManyToMany(mappedBy = "materias")
+	@Getter @Setter
 	private List<Curso> cursos = new ArrayList<>();
 
 }
