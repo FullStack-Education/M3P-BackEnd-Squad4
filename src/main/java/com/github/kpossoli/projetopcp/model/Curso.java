@@ -26,14 +26,17 @@ public class Curso {
 	private String nome;
 
 	@Getter @Setter
-	@OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY, orphanRemoval = true)
-	@JoinColumn(name = "id_curso")
+	@OneToMany(mappedBy = "curso", cascade = CascadeType.MERGE, fetch = FetchType.LAZY, orphanRemoval = true)
 	@JsonBackReference
 	private List<Turma> turmas = new ArrayList<>();
 
 	@Getter @Setter
-	@OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY, orphanRemoval = true)
-	@JoinColumn(name = "id_curso")
+	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+	@JoinTable(
+			name = "curso_materia",
+			joinColumns = @JoinColumn(name = "curso_id"),
+			inverseJoinColumns = @JoinColumn(name = "materia_id")
+	)
 	private List<Materia> materias = new ArrayList<>();
 
 }

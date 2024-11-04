@@ -2,6 +2,8 @@ package com.github.kpossoli.projetopcp.service;
 
 import java.util.List;
 
+import com.github.kpossoli.projetopcp.dto.TurmaDto;
+import com.github.kpossoli.projetopcp.model.Docente;
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
@@ -46,11 +48,20 @@ public class TurmaServiceImpl implements TurmaService {
     }
     
     @Override
-    public Turma atualizar(Long id, Turma turma) {
+    public Turma atualizar(Long id, TurmaDto turmaDto) {
         log.info("Atualizando turma de id: {}", id);
 
         Turma turmaSalva = obter(id);
-		BeanUtils.copyProperties(turma, turmaSalva,     "id", "docente");
+
+		BeanUtils.copyProperties(turmaDto, turmaSalva,     "id", "docente");
+
+        if(turmaDto.getDocenteId() == null) {
+            turmaSalva.setDocente(null);
+        } else {
+            Docente docente = docenteRepository.findById(turmaDto.getDocenteId())
+                    .orElseThrow(() -> new RuntimeException("Docente não encontrado"));
+            turmaSalva.setDocente(docente);
+        }
 
         return turmaRepository.save(turmaSalva);
     }

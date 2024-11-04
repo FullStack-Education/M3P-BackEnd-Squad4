@@ -22,14 +22,14 @@ public class Docente {
 	private Long id;
 
 	@Getter @Setter
-	private String nome;
+	private String nomeCompleto;
 
 	@Getter @Setter
 	private String genero;
 
 	@Column(name = "data_nascimento")
 	@Getter @Setter
-	private LocalDate dataNascimento;
+	private LocalDate nascimento;
 
 	@Getter @Setter
 	private String naturalidade;
@@ -55,24 +55,28 @@ public class Docente {
 	private String estadoCivil;
 
 	@Getter @Setter
-	@OneToMany(fetch = FetchType.EAGER)
-	@JoinColumn(name = "id_usuario")
+	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+	@JoinTable(
+		name = "docente_materia",
+		joinColumns = @JoinColumn(name = "docente_id"),
+		inverseJoinColumns = @JoinColumn(name = "materia_id")
+	)
 	private List<Materia> materias = new ArrayList<>();
 
 	@Getter @Setter
 	private String cep;
 
 	@Getter @Setter
-	private String cidade;
+	private String localidade;
 
 	@Getter @Setter
-	private String estado;
+	private String uf;
 
 	@Getter @Setter
 	private String logradouro;
 
 	@Getter @Setter
-	private Long numero;
+	private String numero;
 
 	@Getter @Setter
 	private String complemento;
@@ -82,9 +86,9 @@ public class Docente {
 
 	@Column (name = "ponto_de_referencia")
 	@Getter @Setter
-	private String pontoDeReferencia;
+	private String referencia;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "id_usuario")
 	@Getter @Setter
 	private Usuario usuario;

@@ -1,5 +1,10 @@
 package com.github.kpossoli.projetopcp.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.web.bind.annotation.*;
 
 import com.github.kpossoli.projetopcp.dto.TurmaDto;
@@ -24,6 +29,34 @@ public class TurmaController {
     private final TurmaService turmaService;
     private final TurmaMapper turmaMapper;
 
+    @Operation(summary = "Realiza a busca da Turma pelo ID", method = "GET")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Turma encontrada com sucesso.",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    example = "{\n" +
+                                            "  \"id\": 1,\n" +
+                                            "  \"nomeTurma\": \"Turma A\",\n" +
+                                            "  \"dataInicio\": \"2024-01-15\",\n" +
+                                            "  \"dataTermino\": \"2024-06-15\",\n" +
+                                            "  \"horario\": \"08:00 - 12:00\",\n" +
+                                            "  \"docenteId\": 2,\n" +
+                                            "  \"cursoId\": 3\n" +
+                                            "}"
+                            )
+                    )),
+            @ApiResponse(responseCode = "401", description = "Credenciais inválidas. O usuário não está autorizado a acessar o sistema.",
+                    content = @Content
+            ),
+            @ApiResponse(responseCode = "404", description = "Turma não encontrada.",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    type = "object",
+                                    example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
+                            )))
+    })
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('TURMA_READ')")
     public ResponseEntity<TurmaDto> obter(@PathVariable Long id) {
@@ -33,6 +66,34 @@ public class TurmaController {
         return ResponseEntity.ok(turmaDto);
     }
 
+    @Operation(summary = "Retorna todas as Turmas cadastradas", method = "GET")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Turmas encontradas com sucesso.",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    example = "[\n"+ "{\n" +
+                                            "  \"id\": 1,\n" +
+                                            "  \"nomeTurma\": \"Turma B\",\n" +
+                                            "  \"dataInicio\": \"2024-01-15\",\n" +
+                                            "  \"dataTermino\": \"2024-06-15\",\n" +
+                                            "  \"horario\": \"08:00 - 12:00\",\n" +
+                                            "  \"docenteId\": 2,\n" +
+                                            "  \"cursoId\": 3\n" +
+                                            "}" + "]"
+                            )
+                    )),
+            @ApiResponse(responseCode = "401", description = "Credenciais inválidas. O usuário não está autorizado a acessar o sistema.",
+                    content = @Content
+            ),
+            @ApiResponse(responseCode = "404", description = "Não há turmas cadastrados",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    type = "object",
+                                    example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
+                            )))
+    })
     @GetMapping
     @PreAuthorize("hasAuthority('TURMA_READ')")
     public ResponseEntity<List<TurmaDto>> listar() {
@@ -42,6 +103,34 @@ public class TurmaController {
         return ResponseEntity.ok(turmasDto);
     }
 
+    @Operation(summary = "Cadastra Turma no sistema", method = "POST")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Turma criada com sucesso.",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    example = "{\n" +
+                                            "  \"id\": 1,\n" +
+                                            "  \"nomeTurma\": \"Turma C\",\n" +
+                                            "  \"dataInicio\": \"2024-01-15\",\n" +
+                                            "  \"dataTermino\": \"2024-06-15\",\n" +
+                                            "  \"horario\": \"08:00 - 12:00\",\n" +
+                                            "  \"docenteId\": 2,\n" +
+                                            "  \"cursoId\": 3\n" +
+                                            "}"
+                            )
+                    )),
+            @ApiResponse(responseCode = "401", description = "Credenciais inválidas. O usuário não está autorizado a acessar o sistema.",
+                    content = @Content
+            ),
+            @ApiResponse(responseCode = "400", description = "Requisição inválida, por exemplo, dados ausentes ou incorretos.",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    type = "object",
+                                    example = "{ \"status\": 400, \"messages\": [{ \"code\": \"json_parse\", \"message\": \"Mensagem inválida\" }] }"
+                            )))
+    })
     @PostMapping
     @PreAuthorize("hasAuthority('TURMA_WRITE')")
     public ResponseEntity<TurmaDto> criar(@RequestBody @Valid TurmaDto turmaDto) {
@@ -52,16 +141,59 @@ public class TurmaController {
         return ResponseEntity.status(HttpStatus.CREATED).body(turmaSalvoDto);
     }
 
+    @Operation(summary = "Atualiza a Turma pelo ID", method = "PUT")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Turma atualizada com sucesso.",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    example = "{\n" +
+                                            "  \"id\": 1,\n" +
+                                            "  \"nomeTurma\": \"Turma D\",\n" +
+                                            "  \"dataInicio\": \"2024-01-15\",\n" +
+                                            "  \"dataTermino\": \"2024-06-15\",\n" +
+                                            "  \"horario\": \"08:00 - 12:00\",\n" +
+                                            "  \"docenteId\": 2,\n" +
+                                            "  \"cursoId\": 3\n" +
+                                            "}"
+                            ))),
+            @ApiResponse(responseCode = "401", description = "Credenciais inválidas. O usuário não está autorizado a acessar o sistema.",
+                    content = @Content
+            ),
+            @ApiResponse(responseCode = "404", description = "Turma não encontrada.",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    type = "object",
+                                    example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
+                            )))
+    })
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('TURMA_WRITE')")
     public ResponseEntity<TurmaDto> atualizar(@PathVariable Long id, @RequestBody @Valid TurmaDto turmaDto) {
         Turma turma = turmaMapper.toEntity(turmaDto);
-        Turma turmaSalvo = turmaService.atualizar(id, turma);
+        Turma turmaSalvo = turmaService.atualizar(id, turmaDto);
         TurmaDto turmaSalvoDto = turmaMapper.toDto(turmaSalvo);
 
         return ResponseEntity.ok(turmaSalvoDto);
     }
 
+    @Operation(summary = "Exclui Turma pelo ID", method = "DELETE")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Turma excluida com sucesso.",
+                    content = @Content
+            ),
+            @ApiResponse(responseCode = "401", description = "Credenciais inválidas. O usuário não está autorizado a acessar o sistema.",
+                    content = @Content
+            ),
+            @ApiResponse(responseCode = "404", description = "Turma não encontrada.",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    type = "object",
+                                    example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
+                            )))
+    })
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('TURMA_DELETE')")
     public ResponseEntity<Void> excluir(@PathVariable Long id) {

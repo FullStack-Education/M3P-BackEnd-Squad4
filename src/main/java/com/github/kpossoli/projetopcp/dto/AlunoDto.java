@@ -9,6 +9,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Data
 public class AlunoDto {
@@ -16,7 +18,7 @@ public class AlunoDto {
 	private Long id;
 
 	@NotBlank
-	private String nome;
+	private String nomeCompleto;
 
 	@NotBlank
 	private String telefone;
@@ -25,10 +27,10 @@ public class AlunoDto {
 	private String genero;
 
 	@NotNull
-	private TurmaDto turma;
+	private Long turma;
 
 	@NotNull
-	private LocalDate dataNascimento;
+	private LocalDate nascimento;
 
 	@NotBlank
 	private String email;
@@ -45,22 +47,27 @@ public class AlunoDto {
 	@NotBlank
 	private String naturalidade;
 
-	@NotBlank
+
 	private String cep;
 
-	@NotBlank
-	private String rua;
 
-	@NotNull
-	private Long numero;
+	private String logradouro;
 
-	@NotBlank
-	private String cidade;
 
-	@NotBlank
-	private String estado;
+	private String numero;
 
-	@NotBlank
+
+	private String localidade;
+
+	private String bairro;
+
+
+	private String uf;
+
+
 	private String complemento;
+
+
+	private String referencia;
 
 }

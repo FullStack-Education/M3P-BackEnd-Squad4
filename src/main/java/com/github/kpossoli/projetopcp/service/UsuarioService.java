@@ -8,4 +8,6 @@ public interface UsuarioService {
 
     Usuario obterByEmail (String email);
 
+    void excluir (Long id);
+
 }

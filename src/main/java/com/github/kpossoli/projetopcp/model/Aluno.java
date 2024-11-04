@@ -23,7 +23,7 @@ public class Aluno {
 
 	@Column(nullable = false)
 	@Getter @Setter
-	private String nome;
+	private String nomeCompleto;
 
 	@Getter @Setter
 	private String telefone;
@@ -32,13 +32,13 @@ public class Aluno {
 	private String genero;
 
 	@Getter @Setter
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "id_turma")
-	private Turma turma = new Turma();
+	private Turma turma;
 
 	@Column(name = "data_nascimento")
 	@Getter @Setter
-	private LocalDate dataNascimento;
+	private LocalDate nascimento;
 
 	@Column(unique = true)
 	@Getter @Setter
@@ -60,21 +60,27 @@ public class Aluno {
 	private String cep;
 
 	@Getter @Setter
-	private String rua;
+	private String logradouro;
 
 	@Getter @Setter
-	private Long numero;
+	private String numero;
 
 	@Getter @Setter
-	private String cidade;
+	private String localidade;
 
 	@Getter @Setter
-	private String estado;
+	private String bairro;
+
+	@Getter @Setter
+	private String uf;
 
 	@Getter @Setter
 	private String complemento;
 
-	@OneToOne
+	@Getter @Setter
+	private String referencia;
+
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "id_usuario")
 	@Getter @Setter
 	private Usuario usuario;
