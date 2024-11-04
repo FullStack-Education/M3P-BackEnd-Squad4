@@ -56,7 +56,7 @@ public class Docente {
 
 	@Getter @Setter
 	@OneToMany(fetch = FetchType.EAGER)
-	@JoinColumn(name = "id_usuario")
+	@JoinColumn(name = "id_docente")
 	private List<Materia> materias = new ArrayList<>();
 
 	@Getter @Setter

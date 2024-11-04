@@ -1,5 +1,8 @@
 package com.github.kpossoli.projetopcp.controller;
 
+import com.github.kpossoli.projetopcp.dto.CursoDto;
+import com.github.kpossoli.projetopcp.mapper.CursoMapperImpl;
+import com.github.kpossoli.projetopcp.model.Curso;
 import org.springframework.web.bind.annotation.*;
 
 import com.github.kpossoli.projetopcp.dto.TurmaDto;
@@ -23,6 +26,7 @@ public class TurmaController {
 
     private final TurmaService turmaService;
     private final TurmaMapper turmaMapper;
+    private final CursoMapperImpl cursoMapper;
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('TURMA_READ')")
@@ -31,6 +35,19 @@ public class TurmaController {
         TurmaDto turmaDto = turmaMapper.toDto(turma);
 
         return ResponseEntity.ok(turmaDto);
+    }
+
+    @GetMapping("/{id}/curso")
+    @PreAuthorize("hasAuthority('TURMA_READ')")
+    public ResponseEntity<CursoDto> obterCurso(@PathVariable Long id) {
+        Turma turma = turmaService.obter(id);
+
+        if (turma == null || turma.getCurso() == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        CursoDto cursoDto = cursoMapper.toDto(turma.getCurso());
+        return ResponseEntity.ok(cursoDto);
     }
 
     @GetMapping

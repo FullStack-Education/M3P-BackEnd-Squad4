@@ -27,4 +27,9 @@ public class Materia {
 	@Getter @Setter
 	private List<Curso> cursos = new ArrayList<>();
 
+	@ManyToOne
+	@JoinColumn(name = "id_docente")
+	@Getter @Setter
+	private Docente docente;
+
 }

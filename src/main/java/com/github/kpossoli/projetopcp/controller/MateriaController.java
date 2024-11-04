@@ -1,5 +1,7 @@
 package com.github.kpossoli.projetopcp.controller;
 
+import com.github.kpossoli.projetopcp.model.Docente;
+import com.github.kpossoli.projetopcp.repository.MateriaRepository;
 import com.github.kpossoli.projetopcp.service.CursoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -17,6 +19,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +33,7 @@ public class MateriaController {
     private final MateriaService materiaService;
     private final MateriaMapper materiaMapper;
     private final CursoService cursoService;
+    private final MateriaRepository materiaRepository;
 
     @Operation(summary = "Realiza a busca da Materia pelo ID", method = "GET")
     @ApiResponses(value = {
@@ -61,6 +65,19 @@ public class MateriaController {
         MateriaDto materiaDto = materiaMapper.toDto(materia);
 
         return ResponseEntity.ok(materiaDto);
+    }
+
+    @GetMapping("/{id}/docente")
+    public ResponseEntity<Docente> getDocenteByMateriaId(@PathVariable Long id) {
+        Optional<Materia> materiaOpt = materiaRepository.findById(id);
+
+        if (materiaOpt.isPresent()) {
+            Materia materia = materiaOpt.get();
+            Docente docente = materia.getDocente();
+            return ResponseEntity.ok(docente);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @Operation(summary = "Retorna todas as Materias cadastradas", method = "GET")

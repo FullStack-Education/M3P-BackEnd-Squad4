@@ -78,6 +78,20 @@ public class CursoController {
         return ResponseEntity.ok(cursoDto);
     }
 
+    @GetMapping("curso/{idCurso}/materias")
+    @PreAuthorize("hasAuthority('CURSO_READ')")
+    public ResponseEntity<List<MateriaDto>> obterMateriasPorCursoId(@PathVariable Long id) {
+
+        List<Materia> materias = cursoService.listarMaterias(id);
+
+        if (materias == null || materias.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        List<MateriaDto> materiasDto = materiaMapper.toDto(materias);
+        return ResponseEntity.ok(materiasDto);
+    }
+
     @Operation(summary = "Retorna todos os Cursos cadastrados / Realiza a busca do Curso pelo ID do Aluno", method = "GET")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Cursos encontrados com sucesso.",
