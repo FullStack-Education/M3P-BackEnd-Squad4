@@ -1,5 +1,8 @@
 package com.github.kpossoli.projetopcp.controller;
 
+import com.github.kpossoli.projetopcp.model.Docente;
+import com.github.kpossoli.projetopcp.model.Materia;
+import com.github.kpossoli.projetopcp.service.CursoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -28,6 +31,7 @@ public class TurmaController {
 
     private final TurmaService turmaService;
     private final TurmaMapper turmaMapper;
+    private final CursoService cursoService;
 
     @Operation(summary = "Realiza a busca da Turma pelo ID", method = "GET")
     @ApiResponses(value = {
@@ -200,6 +204,41 @@ public class TurmaController {
         turmaService.excluir(id);
         
         return ResponseEntity.noContent().build();
+    }
+    @Operation(summary = "Retorna todos os Id's dos Docentes, cadastrados nas Materias do Curso", method = "GET")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Id's dos Docentes encontrados com sucesso.",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    example = "[\n"+ "1,\n" +"3"+  "]"
+                            )
+                    )),
+            @ApiResponse(responseCode = "401", description = "Credenciais inválidas. O usuário não está autorizado a acessar o sistema.",
+                    content = @Content
+            ),
+            @ApiResponse(responseCode = "404", description = "Curso não encontrado",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    type = "object",
+                                    example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
+                            )))
+    })
+    @GetMapping(path = "/cursos/{idCurso}/docentes")
+    @PreAuthorize("hasAuthority('DOCENTE_READ')")
+    public ResponseEntity<List<Long>> pegarDocentesPorMateriasDoCurso(@PathVariable Long idCurso) {
+        List<Materia> materias = cursoService.obter(idCurso).getMaterias();
+        List<Docente> docentesDoCurso = new java.util.ArrayList<>(List.of());
+        List<Long> idDocentesDoCurso = new java.util.ArrayList<>(List.of());
+
+        for (Materia materia: materias){
+            docentesDoCurso.addAll(materia.getDocentes());
+        }
+        for (Docente docente : docentesDoCurso){
+            idDocentesDoCurso.add(docente.getId());
+        }
+        return ResponseEntity.ok(idDocentesDoCurso);
     }
 }
 
