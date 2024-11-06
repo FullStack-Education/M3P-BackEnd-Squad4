@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import lombok.EqualsAndHashCode;
@@ -56,6 +57,7 @@ public class Docente {
 
 	@Getter @Setter
 	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+	@JsonManagedReference
 	@JoinTable(
 		name = "docente_materia",
 		joinColumns = @JoinColumn(name = "docente_id"),

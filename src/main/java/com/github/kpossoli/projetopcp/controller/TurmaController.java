@@ -227,18 +227,14 @@ public class TurmaController {
     })
     @GetMapping(path = "/cursos/{idCurso}/docentes")
     @PreAuthorize("hasAuthority('DOCENTE_READ')")
-    public ResponseEntity<List<Long>> pegarDocentesPorMateriasDoCurso(@PathVariable Long idCurso) {
+    public ResponseEntity<List<Docente>> pegarDocentesPorMateriasDoCurso(@PathVariable Long idCurso) {
         List<Materia> materias = cursoService.obter(idCurso).getMaterias();
         List<Docente> docentesDoCurso = new java.util.ArrayList<>(List.of());
-        List<Long> idDocentesDoCurso = new java.util.ArrayList<>(List.of());
 
         for (Materia materia: materias){
             docentesDoCurso.addAll(materia.getDocentes());
         }
-        for (Docente docente : docentesDoCurso){
-            idDocentesDoCurso.add(docente.getId());
-        }
-        return ResponseEntity.ok(idDocentesDoCurso);
+        return ResponseEntity.ok(docentesDoCurso);
     }
 }
 

@@ -1,5 +1,7 @@
 package com.github.kpossoli.projetopcp.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -25,10 +27,12 @@ public class Materia {
 
 	@ManyToMany(mappedBy = "materias")
 	@Getter @Setter
+	@JsonBackReference
 	private List<Docente> docentes = new ArrayList<>();
 
 	@Getter @Setter
 	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+	@JsonManagedReference
 	@JoinTable(
 		name = "curso_materia",
 		joinColumns = @JoinColumn(name = "materia_id"),

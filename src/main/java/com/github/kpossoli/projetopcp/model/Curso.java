@@ -32,6 +32,7 @@ public class Curso {
 
 	@ManyToMany(mappedBy = "cursos")
 	@Getter @Setter
+	@JsonBackReference
 	private List<Materia> materias = new ArrayList<>();
 
 }
