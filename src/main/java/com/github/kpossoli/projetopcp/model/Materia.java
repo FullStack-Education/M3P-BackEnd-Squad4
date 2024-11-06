@@ -27,8 +27,13 @@ public class Materia {
 	@Getter @Setter
 	private List<Docente> docentes = new ArrayList<>();
 
-	@ManyToMany(mappedBy = "materias")
 	@Getter @Setter
+	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+	@JoinTable(
+		name = "curso_materia",
+		joinColumns = @JoinColumn(name = "materia_id"),
+		inverseJoinColumns = @JoinColumn(name = "curso_id")
+	)
 	private List<Curso> cursos = new ArrayList<>();
 
 }
