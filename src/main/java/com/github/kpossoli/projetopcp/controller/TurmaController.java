@@ -1,8 +1,10 @@
 package com.github.kpossoli.projetopcp.controller;
 
+import com.github.kpossoli.projetopcp.model.Curso;
 import com.github.kpossoli.projetopcp.model.Docente;
 import com.github.kpossoli.projetopcp.model.Materia;
 import com.github.kpossoli.projetopcp.service.CursoService;
+import com.github.kpossoli.projetopcp.service.DocenteService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -18,7 +20,10 @@ import com.github.kpossoli.projetopcp.service.TurmaService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +37,7 @@ public class TurmaController {
     private final TurmaService turmaService;
     private final TurmaMapper turmaMapper;
     private final CursoService cursoService;
+    private final DocenteService docenteService;
 
     @Operation(summary = "Realiza a busca da Turma pelo ID", method = "GET")
     @ApiResponses(value = {
@@ -205,9 +211,9 @@ public class TurmaController {
         
         return ResponseEntity.noContent().build();
     }
-    @Operation(summary = "Retorna todos os Id's dos Docentes, cadastrados nas Materias do Curso", method = "GET")
+    @Operation(summary = "Retorna todos os Docentes, cadastrados nas Materias do Curso", method = "GET")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Id's dos Docentes encontrados com sucesso.",
+            @ApiResponse(responseCode = "200", description = "Docentes encontrados com sucesso.",
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(
@@ -236,5 +242,25 @@ public class TurmaController {
         }
         return ResponseEntity.ok(docentesDoCurso);
     }
+
+    @GetMapping(path = "/docentes/{idDocente}/cursos")
+    @PreAuthorize("hasAuthority('CURSO_READ')")
+    public ResponseEntity<List<Curso>> pegarCursosPorMateriasDoDocente(@PathVariable Long idDocente) {
+
+        Docente docente = docenteService.obter(idDocente);
+
+        if (docente == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        List<Materia> materias = docente.getMaterias();
+        Set<Curso> cursosDoDocente = new HashSet<>();
+
+        for (Materia materia: materias){
+            cursosDoDocente.addAll(materia.getCursos());
+        }
+        return ResponseEntity.ok(new ArrayList<>(cursosDoDocente));
+    }
+
 }
 
