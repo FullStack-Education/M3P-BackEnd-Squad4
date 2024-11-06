@@ -1,5 +1,10 @@
 package com.github.kpossoli.projetopcp.controller;
 
+import com.github.kpossoli.projetopcp.model.Curso;
+import com.github.kpossoli.projetopcp.model.Docente;
+import com.github.kpossoli.projetopcp.model.Materia;
+import com.github.kpossoli.projetopcp.service.CursoService;
+import com.github.kpossoli.projetopcp.service.DocenteService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -15,7 +20,10 @@ import com.github.kpossoli.projetopcp.service.TurmaService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +36,8 @@ public class TurmaController {
 
     private final TurmaService turmaService;
     private final TurmaMapper turmaMapper;
+    private final CursoService cursoService;
+    private final DocenteService docenteService;
 
     @Operation(summary = "Realiza a busca da Turma pelo ID", method = "GET")
     @ApiResponses(value = {
@@ -201,5 +211,81 @@ public class TurmaController {
         
         return ResponseEntity.noContent().build();
     }
+    @Operation(summary = "Retorna todos os Docentes, cadastrados nas Materias do Curso", method = "GET")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Docentes encontrados com sucesso.",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    example = "[\n"+ "1,\n" +"3"+  "]"
+                            )
+                    )),
+            @ApiResponse(responseCode = "401", description = "Credenciais inválidas. O usuário não está autorizado a acessar o sistema.",
+                    content = @Content
+            ),
+            @ApiResponse(responseCode = "404", description = "Curso não encontrado",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    type = "object",
+                                    example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
+                            )))
+    })
+    @GetMapping(path = "/cursos/{idCurso}/docentes")
+    @PreAuthorize("hasAuthority('DOCENTE_READ')")
+    public ResponseEntity<List<Docente>> pegarDocentesPorMateriasDoCurso(@PathVariable Long idCurso) {
+        List<Materia> materias = cursoService.obter(idCurso).getMaterias();
+        List<Docente> docentesDoCurso = new java.util.ArrayList<>(List.of());
+
+        for (Materia materia: materias){
+            docentesDoCurso.addAll(materia.getDocentes());
+        }
+        return ResponseEntity.ok(docentesDoCurso);
+    }
+
+    @Operation(summary = "Retorna todos os Cursos, que o Docente está relacionado", method = "GET")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Cursos encontrados com sucesso.",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    example = "[\n" +
+                                            "    {\n" +
+                                            "        \"id\": 3,\n" +
+                                            "        \"nome\": \"Engenharia de Software\"\n" +
+                                            "    }\n" +
+                                            "]"
+                            )
+                    )),
+            @ApiResponse(responseCode = "401", description = "Credenciais inválidas. O usuário não está autorizado a acessar o sistema.",
+                    content = @Content
+            ),
+            @ApiResponse(responseCode = "404", description = "Docente não encontrado",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    type = "object",
+                                    example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
+                            )))
+    })
+    @GetMapping(path = "/docentes/{idDocente}/cursos")
+    @PreAuthorize("hasAuthority('CURSO_READ')")
+    public ResponseEntity<List<Curso>> pegarCursosPorMateriasDoDocente(@PathVariable Long idDocente) {
+
+        Docente docente = docenteService.obter(idDocente);
+
+        if (docente == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        List<Materia> materias = docente.getMaterias();
+        Set<Curso> cursosDoDocente = new HashSet<>();
+
+        for (Materia materia: materias){
+            cursosDoDocente.addAll(materia.getCursos());
+        }
+        return ResponseEntity.ok(new ArrayList<>(cursosDoDocente));
+    }
+
 }
 

@@ -13,6 +13,7 @@ public class MateriaDto {
 
 	private Long docenteId;
 
+	@NotNull
 	private Long cursoId;
 
 }

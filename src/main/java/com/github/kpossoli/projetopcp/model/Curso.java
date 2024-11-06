@@ -30,13 +30,9 @@ public class Curso {
 	@JsonBackReference
 	private List<Turma> turmas = new ArrayList<>();
 
+	@ManyToMany(mappedBy = "cursos")
 	@Getter @Setter
-	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
-	@JoinTable(
-			name = "curso_materia",
-			joinColumns = @JoinColumn(name = "curso_id"),
-			inverseJoinColumns = @JoinColumn(name = "materia_id")
-	)
+	@JsonBackReference
 	private List<Materia> materias = new ArrayList<>();
 
 }
