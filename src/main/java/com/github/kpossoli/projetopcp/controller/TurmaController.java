@@ -243,6 +243,31 @@ public class TurmaController {
         return ResponseEntity.ok(docentesDoCurso);
     }
 
+    @Operation(summary = "Retorna todos os Cursos, que o Docente está relacionado", method = "GET")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Cursos encontrados com sucesso.",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    example = "[\n" +
+                                            "    {\n" +
+                                            "        \"id\": 3,\n" +
+                                            "        \"nome\": \"Engenharia de Software\"\n" +
+                                            "    }\n" +
+                                            "]"
+                            )
+                    )),
+            @ApiResponse(responseCode = "401", description = "Credenciais inválidas. O usuário não está autorizado a acessar o sistema.",
+                    content = @Content
+            ),
+            @ApiResponse(responseCode = "404", description = "Docente não encontrado",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    type = "object",
+                                    example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
+                            )))
+    })
     @GetMapping(path = "/docentes/{idDocente}/cursos")
     @PreAuthorize("hasAuthority('CURSO_READ')")
     public ResponseEntity<List<Curso>> pegarCursosPorMateriasDoDocente(@PathVariable Long idDocente) {
