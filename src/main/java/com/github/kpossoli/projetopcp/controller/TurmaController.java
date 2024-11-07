@@ -1,5 +1,7 @@
 package com.github.kpossoli.projetopcp.controller;
 
+import com.github.kpossoli.projetopcp.dto.DocenteSimplifiedDto;
+import com.github.kpossoli.projetopcp.mapper.DocenteMapper;
 import com.github.kpossoli.projetopcp.model.Curso;
 import com.github.kpossoli.projetopcp.model.Docente;
 import com.github.kpossoli.projetopcp.model.Materia;
@@ -38,6 +40,7 @@ public class TurmaController {
     private final TurmaMapper turmaMapper;
     private final CursoService cursoService;
     private final DocenteService docenteService;
+    private final DocenteMapper docenteMapper;
 
     @Operation(summary = "Realiza a busca da Turma pelo ID", method = "GET")
     @ApiResponses(value = {
@@ -233,7 +236,7 @@ public class TurmaController {
     })
     @GetMapping(path = "/cursos/{idCurso}/docentes")
     @PreAuthorize("hasAuthority('DOCENTE_READ')")
-    public ResponseEntity<List<Docente>> pegarDocentesPorMateriasDoCurso(@PathVariable Long idCurso) {
+    public ResponseEntity<List<DocenteSimplifiedDto>> pegarDocentesPorMateriasDoCurso(@PathVariable Long idCurso) {
 
         Curso curso = cursoService.obter(idCurso);
 
@@ -247,7 +250,10 @@ public class TurmaController {
         for (Materia materia: materias){
             docentesDoCurso.addAll(materia.getDocentes());
         }
-        return ResponseEntity.ok(new ArrayList<>(docentesDoCurso));
+
+        List<DocenteSimplifiedDto> responseDocentesDoCurso = docenteMapper.toSimplifiedDto(new ArrayList<>(docentesDoCurso));
+
+        return ResponseEntity.ok(responseDocentesDoCurso);
     }
 
     @Operation(summary = "Retorna todos os Cursos, que o Docente está relacionado", method = "GET")

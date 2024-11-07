@@ -1,5 +1,6 @@
 package com.github.kpossoli.projetopcp.controller;
 
+import com.github.kpossoli.projetopcp.dto.DocenteSimplifiedDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -129,11 +130,13 @@ public class DocenteController {
     })
     @GetMapping
     @PreAuthorize("hasAuthority('DOCENTE_READ')")
-    public ResponseEntity<List<DocenteDto>> listar() {
+    public ResponseEntity<List<DocenteSimplifiedDto>> listar() {
         List<Docente> docentes = docenteService.listar();
-        List<DocenteDto> docentesDto = docenteMapper.toDto(docentes);
+        List<DocenteSimplifiedDto> docentesSimplificados = docenteMapper.toSimplifiedDto(docentes);
 
-        return ResponseEntity.ok(docentesDto);
+
+
+        return ResponseEntity.ok(docentesSimplificados);
     }
 
     @Operation(summary = "Cadastra Docente no sistema", method = "POST")

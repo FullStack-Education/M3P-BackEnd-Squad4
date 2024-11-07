@@ -3,6 +3,7 @@ package com.github.kpossoli.projetopcp.mapper;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.github.kpossoli.projetopcp.dto.DocenteSimplifiedDto;
 import com.github.kpossoli.projetopcp.dto.MateriaDto;
 import com.github.kpossoli.projetopcp.model.Materia;
 import org.mapstruct.Mapper;
@@ -20,6 +21,10 @@ public interface DocenteMapper {
     List<DocenteDto> toDto(List<Docente> docente);
     @Mapping(source = "materias", target = "materias", qualifiedByName = "idsToMaterias")
     Docente toEntity(DocenteDto docenteDto);
+    DocenteSimplifiedDto toSimplifiedDto(Docente docente);
+
+    List<DocenteSimplifiedDto> toSimplifiedDto(List<Docente> docentes);
+
 
     @Named("materiasToIds")
     static List<Long> materiasToIds (List<Materia> materias) {
