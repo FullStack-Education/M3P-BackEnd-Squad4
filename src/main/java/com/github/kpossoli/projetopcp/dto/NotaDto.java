@@ -17,7 +17,7 @@ public class NotaDto {
 	private String avaliacao;
 
 	@NotNull
-	private BigDecimal valor;
+	private BigDecimal nota;
 
 	@NotNull
 	private LocalDate data;
