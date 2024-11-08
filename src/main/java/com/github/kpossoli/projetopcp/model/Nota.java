@@ -27,7 +27,10 @@ public class Nota {
 	private Long id;
 
 	@Getter @Setter
-	private BigDecimal valor;
+	private String avaliacao;
+
+	@Getter @Setter
+	private BigDecimal nota;
 
 	@Getter @Setter
 	private LocalDate data;
