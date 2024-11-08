@@ -3,6 +3,7 @@ package com.github.kpossoli.projetopcp.service;
 import java.util.List;
 
 import com.github.kpossoli.projetopcp.dto.TurmaDto;
+import com.github.kpossoli.projetopcp.mapper.TurmaMapper;
 import com.github.kpossoli.projetopcp.model.Docente;
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -22,11 +23,16 @@ public class TurmaServiceImpl implements TurmaService {
 
     private final TurmaRepository turmaRepository;
     private final DocenteRepository docenteRepository;
+    private final TurmaMapper turmaMapper;
 
     @Override
     public Turma obter(Long id) {
         return turmaRepository.findById(id)
             .orElseThrow(() -> new EmptyResultDataAccessException(1));
+    }
+
+    public List<TurmaDto> obterTurmasPorDocente(Long docenteId) {
+        return turmaMapper.toDto(turmaRepository.findByDocenteId(docenteId));
     }
 
     @Override
