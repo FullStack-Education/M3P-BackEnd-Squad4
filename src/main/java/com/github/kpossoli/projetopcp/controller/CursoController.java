@@ -1,7 +1,9 @@
 package com.github.kpossoli.projetopcp.controller;
 
+import com.github.kpossoli.projetopcp.dto.CursoSimplifiedDto;
 import com.github.kpossoli.projetopcp.model.Aluno;
 import com.github.kpossoli.projetopcp.model.Turma;
+import com.github.kpossoli.projetopcp.repository.CursoRepository;
 import com.github.kpossoli.projetopcp.service.AlunoService;
 import com.github.kpossoli.projetopcp.service.TurmaService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -24,6 +26,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,6 +41,7 @@ public class CursoController {
     private final AlunoService alunoService;
     private final CursoMapper cursoMapper;
     private final MateriaMapper materiaMapper;
+    private final CursoRepository cursoRepository;
 
     @Operation(summary = "Realiza a busca do Curso pelo ID", method = "GET")
     @ApiResponses(value = {
@@ -233,8 +237,28 @@ public class CursoController {
     })
     @GetMapping(params = "idAluno")
     @PreAuthorize("hasAuthority('CURSO_READ')")
-    public ResponseEntity<CursoDto> obterCursoDoAluno(@RequestParam(required = false) Long idAluno) {
+    public ResponseEntity<CursoDto> obterCursoDoAluno(@PathVariable(required = false) Long idAluno) {
         return ResponseEntity.ok(cursoMapper.toDto(alunoService.obter(idAluno).getTurma().getCurso()));
+    }
+
+    @GetMapping("alunos/{idAluno}/cursos")
+    @PreAuthorize("hasAuthority('CURSO_READ')")
+    public ResponseEntity<List<CursoSimplifiedDto>> obterCursosExtraDoAluno(@PathVariable Long idAluno) {
+
+        Aluno aluno = alunoService.obter(idAluno);
+
+        Curso cursosAluno = aluno.getTurma() != null ? aluno.getTurma().getCurso() : null;
+
+        List<Curso> todosCursos = cursoRepository.findAll();
+
+        List<Curso> cursosDisponíveis = todosCursos.stream()
+                .filter(curso -> !curso.equals(cursosAluno))
+                .collect(Collectors.toList());
+
+        List<CursoSimplifiedDto> cursoSimplifiedDtos = cursoMapper.toSimplifiedDto(cursosDisponíveis);
+
+        return ResponseEntity.ok(cursoSimplifiedDtos);
+
     }
 
     @Operation(summary = "Exclui Curso pelo ID", method = "DELETE")

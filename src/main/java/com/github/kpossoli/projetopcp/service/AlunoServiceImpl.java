@@ -86,7 +86,7 @@ public class AlunoServiceImpl implements AlunoService {
         BigDecimal totalNotas = BigDecimal.valueOf(notas.size());
 
         BigDecimal somaNotas = notas.stream()
-                .map(Nota::getValor)
+                .map(Nota::getNota)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         BigDecimal pontuacao = somaNotas
