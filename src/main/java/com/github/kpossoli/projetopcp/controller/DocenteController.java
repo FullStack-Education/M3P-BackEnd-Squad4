@@ -1,11 +1,15 @@
 package com.github.kpossoli.projetopcp.controller;
 
-import com.github.kpossoli.projetopcp.dto.DocenteSimplifiedDto;
+import com.github.kpossoli.projetopcp.model.Materia;
+import com.github.kpossoli.projetopcp.repository.DocenteRepository;
+import com.github.kpossoli.projetopcp.repository.MateriaRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.persistence.EntityNotFoundException;
+import org.springframework.beans.BeanUtils;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +21,9 @@ import com.github.kpossoli.projetopcp.service.DocenteService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +36,8 @@ public class DocenteController {
 
     private final DocenteService docenteService;
     private final DocenteMapper docenteMapper;
+    private final DocenteRepository docenteRepository;
+    private final MateriaRepository materiaRepository;
 
     @Operation(summary = "Realiza a busca do Docente pelo ID ", method = "GET")
     @ApiResponses(value = {
@@ -130,13 +138,11 @@ public class DocenteController {
     })
     @GetMapping
     @PreAuthorize("hasAuthority('DOCENTE_READ')")
-    public ResponseEntity<List<DocenteSimplifiedDto>> listar() {
+    public ResponseEntity<List<DocenteDto>> listar() {
         List<Docente> docentes = docenteService.listar();
-        List<DocenteSimplifiedDto> docentesSimplificados = docenteMapper.toSimplifiedDto(docentes);
+        List<DocenteDto> docentesDto = docenteMapper.toDto(docentes);
 
-
-
-        return ResponseEntity.ok(docentesSimplificados);
+        return ResponseEntity.ok(docentesDto);
     }
 
     @Operation(summary = "Cadastra Docente no sistema", method = "POST")
@@ -239,12 +245,22 @@ public class DocenteController {
     })
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('DOCENTE_WRITE')")
-    public ResponseEntity<DocenteDto> atualizar(@PathVariable Long id, @RequestBody @Valid DocenteDto docenteDto) {
-        Docente docente = docenteMapper.toEntity(docenteDto);
-        Docente docenteSalvo = docenteService.atualizar(id, docente);
-        DocenteDto docenteSalvoDto = docenteMapper.toDto(docenteSalvo);
+    @Transactional
+    public Docente atualizar(@PathVariable Long id, @RequestBody DocenteDto docenteAtualizado) {
+        Docente docenteExistente = docenteRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Docente não encontrado"));
 
-        return ResponseEntity.ok(docenteSalvoDto);
+        BeanUtils.copyProperties(docenteAtualizado, docenteExistente, "id", "materias", "usuario");
+
+        if (docenteAtualizado.getMaterias() != null && !docenteAtualizado.getMaterias().isEmpty()) {
+            List<Long> materiaIds = docenteAtualizado.getMaterias();
+
+            List<Materia> materiasAssociadas = materiaRepository.findAllById(materiaIds);
+
+            docenteExistente.setMaterias(materiasAssociadas);
+        }
+
+        return docenteRepository.save(docenteExistente);
     }
 
     @Operation(summary = "Exclui Docentes pelo ID", method = "DELETE")
