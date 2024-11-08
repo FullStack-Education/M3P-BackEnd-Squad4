@@ -2,8 +2,12 @@ package com.github.kpossoli.projetopcp.service;
 
 import java.util.List;
 
+import com.github.kpossoli.projetopcp.dto.AlunoDto;
+import com.github.kpossoli.projetopcp.mapper.AlunoMapper;
+import com.github.kpossoli.projetopcp.mapper.TurmaMapper;
 import com.github.kpossoli.projetopcp.model.Usuario;
 import com.github.kpossoli.projetopcp.repository.PapelRepository;
+import com.github.kpossoli.projetopcp.repository.TurmaRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
@@ -27,6 +31,9 @@ public class AlunoServiceImpl implements AlunoService {
     private final NotaRepository notaRepository;
     private final PapelRepository papelRepository;
     private final UsuarioService usuarioService;
+    private final TurmaMapper turmaMapper;
+    private final TurmaRepository turmaRepository;
+    private final AlunoMapper alunoMapper;
 
     @Override
     public Aluno obter(Long id) {
@@ -100,9 +107,15 @@ public class AlunoServiceImpl implements AlunoService {
     }
 
     @Override
-    public List<Nota> notas(Long id) {
+    public List<Nota> listarNotas(Long id) {
         Aluno aluno = obter(id);
         return notaRepository.findByAlunoId(aluno.getId());
+    }
+
+    @Override
+    public List<AlunoDto> pegarAlunosPorTurma(Long idTurma) {
+        List<Aluno> alunos = alunoRepository.findByTurmaId(idTurma);
+        return alunoMapper.toDto(alunos);
     }
 
 }

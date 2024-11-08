@@ -1,5 +1,6 @@
 package com.github.kpossoli.projetopcp.service;
 
+import com.github.kpossoli.projetopcp.dto.AlunoDto;
 import com.github.kpossoli.projetopcp.model.Aluno;
 import com.github.kpossoli.projetopcp.model.Nota;
 import com.github.kpossoli.projetopcp.model.Pontuacao;
@@ -20,6 +21,8 @@ public interface AlunoService {
 
     Pontuacao obterPontuacao(Long id);
 
-    List<Nota> notas(Long id);
+    List<Nota> listarNotas(Long id);
+
+    List<AlunoDto> pegarAlunosPorTurma(Long id);
 
 }
