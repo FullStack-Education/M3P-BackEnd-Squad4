@@ -42,6 +42,7 @@ public interface DocenteMapper {
         return ids.stream().map(id -> {
             Materia materia = new Materia();
             materia.setId(id);
+
             return materia;
         }).collect(Collectors.toList());
     }
