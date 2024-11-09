@@ -299,6 +299,7 @@ public class TurmaController {
         }
         return ResponseEntity.ok(new ArrayList<>(cursosDoDocente));
     }
+
     @GetMapping("docentes/{idDocente}/turmas")
     @PreAuthorize("hasAuthority('TURMA_READ')")
     public ResponseEntity<List<TurmaDto>> pegarTurmasPorDocente(@PathVariable Long idDocente) {
