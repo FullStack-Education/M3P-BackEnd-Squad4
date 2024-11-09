@@ -13,6 +13,8 @@ public interface TurmaService {
     Turma criar(Turma turma);
     
     Turma atualizar(Long id, TurmaDto turmaDto);
+
+    List<TurmaDto> obterTurmasPorDocente(Long docenteId);
     
     void excluir(Long id);
 

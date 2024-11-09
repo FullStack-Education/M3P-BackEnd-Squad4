@@ -331,13 +331,24 @@ public class AlunoController {
     })
     @GetMapping("/{id}/notas")
     @PreAuthorize("hasAuthority('NOTA_READ')")
-    public ResponseEntity<List<NotaDto>> listar(@PathVariable Long id) {
-        List<Nota> notas = alunoService.notas(id);
+    public ResponseEntity<List<NotaDto>> listarNotas(@PathVariable Long id) {
+        List<Nota> notas = alunoService.listarNotas(id);
         List<NotaDto> alunosDto = notaMapper.toDto(notas);
 
         return ResponseEntity.ok(alunosDto);
     }
 
+    @GetMapping("turmas/{idTurma}/alunos")
+    @PreAuthorize("hasAuthority('ALUNO_READ')")
+    public ResponseEntity<List<AlunoDto>> pegarAlunosPorTurma(@PathVariable Long idTurma) {
+
+        List<AlunoDto> alunos = alunoService.pegarAlunosPorTurma(idTurma);
+
+        if(alunos.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(alunos);
+    }
 
 }
 
