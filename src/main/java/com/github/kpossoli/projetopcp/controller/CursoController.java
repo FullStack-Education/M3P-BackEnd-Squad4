@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.web.bind.annotation.*;
 
 import com.github.kpossoli.projetopcp.dto.CursoDto;
@@ -235,6 +236,7 @@ public class CursoController {
                                     example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
                             )))
     })
+    //TODO Retornando todos os cursos do db, necessário ajustar.
     @GetMapping(params = "idAluno")
     @PreAuthorize("hasAuthority('CURSO_READ')")
     public ResponseEntity<CursoDto> obterCursoDoAluno(@PathVariable(required = false) Long idAluno) {
@@ -259,6 +261,18 @@ public class CursoController {
 
         return ResponseEntity.ok(cursoSimplifiedDtos);
 
+    }
+
+    @GetMapping("/{idCurso}/docentes/{idDocente}/materias")
+    @PreAuthorize("hasAuthority('MATERIA_READ')")
+    public ResponseEntity<List<MateriaDto>> pegarMateriasPorCursoEDocente(@PathVariable Long idCurso, @PathVariable Long idDocente) throws ChangeSetPersister.NotFoundException {
+
+        List<MateriaDto> materias = cursoService.obterMateriasPorCursoEDocente(idCurso, idDocente);
+
+        if(materias.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(materias);
     }
 
     @Operation(summary = "Exclui Curso pelo ID", method = "DELETE")
