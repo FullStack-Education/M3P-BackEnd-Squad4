@@ -1,5 +1,6 @@
 package com.github.kpossoli.projetopcp.controller;
 
+import com.github.kpossoli.projetopcp.dto.AlunoSimplifiedDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -348,6 +349,15 @@ public class AlunoController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(alunos);
+    }
+
+    @GetMapping("/email")
+    @PreAuthorize("hasAuthority('ALUNO_READ')")
+    public ResponseEntity<AlunoSimplifiedDto> obterAlunoPorEmail(@RequestParam String email) {
+        Aluno aluno = alunoService.obterAlunoPorEmail(email);
+        AlunoSimplifiedDto alunoSimplifiedDto = alunoMapper.toSimplifiedDto(aluno);
+
+        return ResponseEntity.ok(alunoSimplifiedDto);
     }
 
 }
