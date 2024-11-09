@@ -65,6 +65,12 @@ public class AlunoServiceImpl implements AlunoService {
     }
 
     @Override
+    public Aluno obterAlunoPorEmail(String email) {
+        return alunoRepository.findByEmail(email)
+                .orElseThrow(() -> new EmptyResultDataAccessException(1));
+    }
+
+    @Override
     public Aluno atualizar(Long id, Aluno aluno) {
         log.info("Atualizando aluno de id: {}", id);
 
