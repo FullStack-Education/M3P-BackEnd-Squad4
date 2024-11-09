@@ -220,7 +220,31 @@ public class TurmaController {
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(
-                                    example = "[\n"+ "1,\n" +"3"+  "]"
+                                    example = "[\n"+ "{\n" +
+                                            "  \"id\": 2,\n" +
+                                            "  \"nomeCompleto\": \"Prof. Rafael Malfussi\",\n" +
+                                            "  \"genero\": \"Masculino\",\n" +
+                                            "  \"nascimento\": \"1993-05-12\",\n" +
+                                            "  \"naturalidade\": \"Florianópolis-SC\",\n" +
+                                            "  \"cpf\": \"99999999999\",\n" +
+                                            "  \"rg\": \"9999999-SSP/SC\",\n" +
+                                            "  \"telefone\": \"99999999999\",\n" +
+                                            "  \"email\": \"mcastrodcastro@mail.com\",\n" +
+                                            "  \"senha\": \"1234\",\n" +
+                                            "  \"estadoCivil\": \"Casado\",\n" +
+                                            "  \"materias\": [\n" +
+                                            "    { \"id\": 2 },\n" +
+                                            "    { \"id\": 3 }\n" +
+                                            "  ],\n" +
+                                            "  \"cep\": \"88888888\",\n" +
+                                            "  \"localidade\": \"Florianópolis\",\n" +
+                                            "  \"uf\": \"Santa Catarina\",\n" +
+                                            "  \"logradouro\": \"Rua dos Manezinhos\",\n" +
+                                            "  \"numero\": 100,\n" +
+                                            "  \"complemento\": \"Não há\",\n" +
+                                            "  \"bairro\": \"Centro\",\n" +
+                                            "  \"referencia\": \"Não há\"\n" +
+                                            "}\n" + "]"
                             )
                     )),
             @ApiResponse(responseCode = "401", description = "Credenciais inválidas. O usuário não está autorizado a acessar o sistema.",
