@@ -141,7 +141,19 @@ class AlunoControllerTest {
 
     @Test
     void obterPontuacao() {
+        Long alunoId = 1L;
+        Pontuacao pontuacao = new Pontuacao();
+        pontuacao.setPontuacao(new BigDecimal("10"));
 
+        when(alunoService.obterPontuacao(alunoId)).thenReturn(pontuacao);
+
+        ResponseEntity<Pontuacao> response = alunoController.obterPontuacao(alunoId);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals(new BigDecimal("10"), response.getBody().getPontuacao());
+
+        verify(alunoService).obterPontuacao(alunoId);
     }
 
     @Test
