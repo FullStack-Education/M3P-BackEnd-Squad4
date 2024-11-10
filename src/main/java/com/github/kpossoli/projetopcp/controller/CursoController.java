@@ -243,6 +243,37 @@ public class CursoController {
         return ResponseEntity.ok(cursoMapper.toDto(alunoService.obter(idAluno).getTurma().getCurso()));
     }
 
+    @Operation(summary = "Retorna todos os Cursos que o Aluno não esta cadastrado", method = "GET")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Cursos encontrados com sucesso.",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    example = "[\n"+ "{\n" +
+                                            "  \"id\": 1,\n" +
+                                            "  \"nome\": \"Curso de Ciências da Computação\",\n" +
+                                            "  \"turmas\": [\n" +
+                                            "    { \"id\": 5, \"nomeTurma\": \"Turma A\" },\n" +
+                                            "    { \"id\": 6, \"nomeTurma\": \"Turma B\" }\n" +
+                                            "  ],\n" +
+                                            "  \"materias\": [\n" +
+                                            "    { \"id\": 2, \"nome\": \"Algoritmos\" },\n" +
+                                            "    { \"id\": 3, \"nome\": \"Estruturas de Dados\" }\n" +
+                                            "  ]\n" +
+                                            "}"+ "]"
+                            )
+                    )),
+            @ApiResponse(responseCode = "401", description = "Credenciais inválidas. O usuário não está autorizado a acessar o sistema.",
+                    content = @Content
+            ),
+            @ApiResponse(responseCode = "404", description = "Não há Cursos que o Aluno não está cadastrados.",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    type = "object",
+                                    example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
+                            )))
+    })
     @GetMapping("alunos/{idAluno}/cursos")
     @PreAuthorize("hasAuthority('CURSO_READ')")
     public ResponseEntity<List<CursoSimplifiedDto>> obterCursosExtraDoAluno(@PathVariable Long idAluno) {
@@ -263,6 +294,29 @@ public class CursoController {
 
     }
 
+    @Operation(summary = "Retorna as Materias Pelo Curso e o Docente", method = "GET")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Materias encontrados com sucesso.",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    example = "[\n"+ "{\n" +
+                                            "  \"id\": 1,\n" +
+                                            "  \"nome\": \"Java\"\n" +
+                                            "}" + "]"
+                            )
+                    )),
+            @ApiResponse(responseCode = "401", description = "Credenciais inválidas. O usuário não está autorizado a acessar o sistema.",
+                    content = @Content
+            ),
+            @ApiResponse(responseCode = "404", description = "Curso não encontrado. / Docente não encontrado.",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    type = "object",
+                                    example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
+                            )))
+    })
     @GetMapping("/{idCurso}/docentes/{idDocente}/materias")
     @PreAuthorize("hasAuthority('MATERIA_READ')")
     public ResponseEntity<List<MateriaDto>> pegarMateriasPorCursoEDocente(@PathVariable Long idCurso, @PathVariable Long idDocente) throws ChangeSetPersister.NotFoundException {

@@ -338,6 +338,49 @@ public class AlunoController {
         return ResponseEntity.ok(alunosDto);
     }
 
+    @Operation(summary = "Retorna todos os Alunos cadastrados na Turma", method = "GET")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Alunos encontrados com sucesso.",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    example = "[\n" +"{\n" +
+                                            "  \"id\": 1,\n" +
+                                            "  \"nomeCompleto\": \"Jonis\",\n" +
+                                            "  \"telefone\": \"(11) 98765-4321\",\n" +
+                                            "  \"genero\": \"Masculino\",\n" +
+                                            "  \"turma\": {\n" +
+                                            "    \"id\": 5\n" +
+                                            "  },\n" +
+                                            "  \"nascimento\": \"1990-04-23\",\n" +
+                                            "  \"email\": \"jonis@mail.com\",\n" +
+                                            "  \"senha\": \"senhaSegura123\",\n" +
+                                            "  \"cpf\": \"12345678900\",\n" +
+                                            "  \"rg\": \"12345678-SSP/SP\",\n" +
+                                            "  \"naturalidade\": \"São Paulo-SP\",\n" +
+                                            "  \"cep\": \"01001000\",\n" +
+                                            "  \"logradouro\": \"Av. Paulista\",\n" +
+                                            "  \"numero\": \"1000\",\n" +
+                                            "  \"localidade\": \"São Paulo\",\n" +
+                                            "  \"uf\": \"SP\",\n" +
+                                            "  \"complemento\": \"Apto 101\",\n" +
+                                            "  \"usuario\": {\n" +
+                                            "    \"id\": 8\n" +
+                                            "  }\n" +
+                                            "}\n" + "]"
+                            )
+                    )),
+            @ApiResponse(responseCode = "401", description = "Credenciais inválidas. O usuário não está autorizado a acessar o sistema.",
+                    content = @Content
+            ),
+            @ApiResponse(responseCode = "404", description = "Turma não encontrada.",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    type = "object",
+                                    example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
+                            )))
+    })
     @GetMapping("turmas/{idTurma}/alunos")
     @PreAuthorize("hasAuthority('ALUNO_READ')")
     public ResponseEntity<List<AlunoDto>> pegarAlunosPorTurma(@PathVariable Long idTurma) {
