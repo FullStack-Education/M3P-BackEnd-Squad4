@@ -2,7 +2,10 @@ package com.github.kpossoli.projetopcp.mapper;
 
 import java.util.List;
 
+import com.github.kpossoli.projetopcp.dto.AlunoSimplifiedDto;
+import com.github.kpossoli.projetopcp.dto.UsuarioSimplifiedDto;
 import com.github.kpossoli.projetopcp.model.Turma;
+import com.github.kpossoli.projetopcp.model.Usuario;
 import org.mapstruct.Mapper;
 
 import com.github.kpossoli.projetopcp.dto.AlunoDto;
@@ -18,6 +21,9 @@ public interface AlunoMapper {
 
     @Mapping(target = "turma", source = "turma")
     Aluno toEntity(AlunoDto alunoDto);
+
+    @Mapping(target = "email", source = "email")
+    AlunoSimplifiedDto toSimplifiedDto (Aluno aluno);
 
     default Long mapTurmaToId(Turma turma) {
         return turma != null ? turma.getId() : null;

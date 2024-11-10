@@ -11,6 +11,8 @@ public interface AlunoService {
 
     Aluno obter(Long id);
 
+    Aluno obterAlunoPorEmail(String email);
+
     List<Aluno> listar();
 
     Aluno criar(Aluno aluno);
