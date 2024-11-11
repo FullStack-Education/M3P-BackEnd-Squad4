@@ -299,6 +299,35 @@ public class TurmaController {
         }
         return ResponseEntity.ok(new ArrayList<>(cursosDoDocente));
     }
+
+    @Operation(summary = "Retorna todas as Turmas do Docente", method = "GET")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Turmas encontradas com sucesso.",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    example = "[\n"+ "{\n" +
+                                            "  \"id\": 1,\n" +
+                                            "  \"nomeTurma\": \"Turma B\",\n" +
+                                            "  \"dataInicio\": \"2024-01-15\",\n" +
+                                            "  \"dataTermino\": \"2024-06-15\",\n" +
+                                            "  \"horario\": \"08:00 - 12:00\",\n" +
+                                            "  \"docenteId\": 2,\n" +
+                                            "  \"cursoId\": 3\n" +
+                                            "}" + "]"
+                            )
+                    )),
+            @ApiResponse(responseCode = "401", description = "Credenciais inválidas. O usuário não está autorizado a acessar o sistema.",
+                    content = @Content
+            ),
+            @ApiResponse(responseCode = "404", description = "Docente não encontrado.",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    type = "object",
+                                    example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
+                            )))
+    })
     @GetMapping("docentes/{idDocente}/turmas")
     @PreAuthorize("hasAuthority('TURMA_READ')")
     public ResponseEntity<List<TurmaDto>> pegarTurmasPorDocente(@PathVariable Long idDocente) {
