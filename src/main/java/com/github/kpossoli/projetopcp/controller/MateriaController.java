@@ -127,6 +127,39 @@ public class MateriaController {
         return ResponseEntity.ok(materiasDto);
     }
 
+    @Operation(summary = "Realiza a busca das Materias do Docente", method = "GET")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Materias encontrada com sucesso.",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    example = "[\n" + "{\n" +
+                                            "  \"id\": 1,\n" +
+                                            "  \"nome\": \"Java\"\n" +
+                                            "}\n" + "]"
+                            )
+                    )),
+            @ApiResponse(responseCode = "401", description = "Credenciais inválidas. O usuário não está autorizado a acessar o sistema.",
+                    content = @Content
+            ),
+            @ApiResponse(responseCode = "404", description = "Docente não encontrado.",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    type = "object",
+                                    example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
+                            )))
+    })
+    @GetMapping(path = "docentes/{idDocente}/materias")
+    @PreAuthorize(("hasAuthority('MATERIA_READ')"))
+    public ResponseEntity<List<MateriaDto>> pegarMateriasPorDocente(@PathVariable("idDocente") Long idDocente) {
+
+        List<Materia> materias = materiaService.pegarMateriasPorDocente(idDocente);
+        List<MateriaDto> materiaDtos = materiaMapper.toDto(materias);
+
+        return ResponseEntity.ok(materiaDtos);
+    }
+
     @Operation(summary = "Cadastra Materia no sistema", method = "POST")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Materia criada com sucesso.",
@@ -215,5 +248,7 @@ public class MateriaController {
 
         return ResponseEntity.noContent().build();
     }
+
+
 }
 
