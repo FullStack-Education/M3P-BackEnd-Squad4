@@ -18,4 +18,6 @@ public interface MateriaService {
     
     void excluir(Long id);
 
+    List<Materia> pegarMateriasPorDocente (Long id);
+
 }

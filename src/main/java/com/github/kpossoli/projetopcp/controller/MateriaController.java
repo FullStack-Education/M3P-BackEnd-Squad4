@@ -127,6 +127,16 @@ public class MateriaController {
         return ResponseEntity.ok(materiasDto);
     }
 
+    @GetMapping(path = "docentes/{idDocente}/materias")
+    @PreAuthorize(("hasAuthority('MATERIA_READ')"))
+    public ResponseEntity<List<MateriaDto>> pegarMateriasPorDocente(@PathVariable("idDocente") Long idDocente) {
+
+        List<Materia> materias = materiaService.pegarMateriasPorDocente(idDocente);
+        List<MateriaDto> materiaDtos = materiaMapper.toDto(materias);
+
+        return ResponseEntity.ok(materiaDtos);
+    }
+
     @Operation(summary = "Cadastra Materia no sistema", method = "POST")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Materia criada com sucesso.",
@@ -215,5 +225,7 @@ public class MateriaController {
 
         return ResponseEntity.noContent().build();
     }
+
+
 }
 

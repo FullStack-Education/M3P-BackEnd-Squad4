@@ -235,7 +235,7 @@ public class CursoController {
                                     example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
                             )))
     })
-    @GetMapping(params = "idAluno")
+    @GetMapping("aluno/{idAluno}/curso")
     @PreAuthorize("hasAuthority('CURSO_READ')")
     public ResponseEntity<CursoDto> obterCursoDoAluno(@PathVariable(required = false) Long idAluno) {
         return ResponseEntity.ok(cursoMapper.toDto(alunoService.obter(idAluno).getTurma().getCurso()));

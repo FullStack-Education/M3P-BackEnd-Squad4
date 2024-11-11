@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.github.kpossoli.projetopcp.dto.MateriaDto;
 import com.github.kpossoli.projetopcp.model.Curso;
+import com.github.kpossoli.projetopcp.model.Docente;
 import com.github.kpossoli.projetopcp.repository.CursoRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -24,6 +25,7 @@ public class MateriaServiceImpl implements MateriaService {
     private final MateriaRepository materiaRepository;
     private final CursoService cursoService;
     private final CursoRepository cursoRepository;
+    private final DocenteService docenteService;
 
     @Override
     public Materia obter(Long id) {
@@ -41,6 +43,14 @@ public class MateriaServiceImpl implements MateriaService {
 
         Curso curso = cursoService.obter(idCurso);
         return curso.getMaterias();
+    }
+
+    @Override
+    public List<Materia> pegarMateriasPorDocente (Long idDocente) {
+
+        Docente docente = docenteService.obter(idDocente);
+        return docente.getMaterias();
+
     }
 
     @Override
