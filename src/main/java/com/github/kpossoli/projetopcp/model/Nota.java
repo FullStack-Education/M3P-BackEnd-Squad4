@@ -39,7 +39,6 @@ public class Nota {
 	@JoinColumn(name = "id_aluno")
 	@Getter @Setter
 	private Aluno aluno;
-
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_docente")
 	@Getter @Setter

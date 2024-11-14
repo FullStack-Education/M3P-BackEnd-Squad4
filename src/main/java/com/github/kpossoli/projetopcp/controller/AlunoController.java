@@ -382,7 +382,7 @@ public class AlunoController {
                                     example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
                             )))
     })
-    @GetMapping("turmas/{idTurma}/alunos")
+    @GetMapping(path = "turmas/{idTurma}/alunos")
     @PreAuthorize("hasAuthority('ALUNO_READ')")
     public ResponseEntity<List<AlunoDto>> pegarAlunosPorTurma(@PathVariable Long idTurma) {
 
