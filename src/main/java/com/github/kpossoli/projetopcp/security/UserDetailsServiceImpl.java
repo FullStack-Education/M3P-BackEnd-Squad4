@@ -120,6 +120,8 @@ private Collection<? extends GrantedAuthority> getPermissoes(Usuario usuario) {
 
           permissoes.add("DOCENTE_READ");
 
+            permissoes.add("CURSO_READ");
+
           permissoes.add("TURMA_READ");
 
           permissoes.add("MATERIA_READ");

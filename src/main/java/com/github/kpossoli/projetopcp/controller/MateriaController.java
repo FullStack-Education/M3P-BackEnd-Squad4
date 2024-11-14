@@ -24,7 +24,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping
+@RequestMapping("/materias")
 public class MateriaController {
 
     private final MateriaService materiaService;
@@ -54,7 +54,7 @@ public class MateriaController {
                                     example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
                             )))
     })
-    @GetMapping("materias/{id}")
+    @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('MATERIA_READ')")
     public ResponseEntity<MateriaDto> obter(@PathVariable Long id) {
         Materia materia = materiaService.obter(id);
@@ -86,7 +86,7 @@ public class MateriaController {
                                     example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
                             )))
     })
-    @GetMapping("materias")
+    @GetMapping
     @PreAuthorize("hasAuthority('MATERIA_READ')")
     public ResponseEntity<List<MateriaDto>> listar() {
         List<Materia> materias = materiaService.listar();
@@ -118,7 +118,7 @@ public class MateriaController {
                                     example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
                             )))
     })
-    @GetMapping("cursos/{id}/materias")
+    @GetMapping(path = "cursos/{idCurso}/materias")
     @PreAuthorize("hasAuthority('MATERIA_READ')")
     public ResponseEntity<List<MateriaDto>> listarMateriasPorCurso(@PathVariable("id") Long idCurso) {
         List<Materia> materias = materiaService.listarMateriasPorCurso(idCurso);
@@ -183,7 +183,7 @@ public class MateriaController {
                                     example = "{ \"status\": 400, \"messages\": [{ \"code\": \"json_parse\", \"message\": \"Mensagem inválida\" }] }"
                             )))
     })
-    @PostMapping("materias")
+    @PostMapping
     @PreAuthorize("hasAuthority('MATERIA_WRITE')")
     public ResponseEntity<MateriaDto> criar(@RequestBody @Valid MateriaDto materiaDto) {
         Materia materia = materiaMapper.toEntity(materiaDto);
@@ -215,7 +215,7 @@ public class MateriaController {
                                     example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
                             )))
     })
-    @PutMapping("materias/{id}")
+    @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('MATERIA_WRITE')")
     public ResponseEntity<MateriaDto> atualizar(@PathVariable Long id, @RequestBody @Valid MateriaDto materiaDto) {
         Materia materia = materiaMapper.toEntity(materiaDto);
@@ -241,7 +241,7 @@ public class MateriaController {
                                     example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
                             )))
     })
-    @DeleteMapping("materias/{id}")
+    @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('MATERIA_DELETE')")
     public ResponseEntity<Void> excluir(@PathVariable Long id) {
         materiaService.excluir(id);

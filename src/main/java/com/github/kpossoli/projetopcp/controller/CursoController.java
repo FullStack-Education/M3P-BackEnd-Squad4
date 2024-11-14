@@ -237,9 +237,9 @@ public class CursoController {
                             )))
     })
 
-    @GetMapping("aluno/{idAluno}/curso")
+    @GetMapping(params = "idAluno")
     @PreAuthorize("hasAuthority('CURSO_READ')")
-    public ResponseEntity<CursoDto> obterCursoDoAluno(@PathVariable(required = false) Long idAluno) {
+    public ResponseEntity<CursoDto> obterCursoDoAluno(@RequestParam Long idAluno) {
         return ResponseEntity.ok(cursoMapper.toDto(alunoService.obter(idAluno).getTurma().getCurso()));
     }
 
@@ -274,9 +274,9 @@ public class CursoController {
                                     example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
                             )))
     })
-    @GetMapping("alunos/{idAluno}/cursos")
+    @GetMapping(path = "alunos/{idAluno}/cursos")
     @PreAuthorize("hasAuthority('CURSO_READ')")
-    public ResponseEntity<List<CursoSimplifiedDto>> obterCursosExtraDoAluno(@PathVariable Long idAluno) {
+    public ResponseEntity<List<CursoSimplifiedDto>> obterCursosExtrasDoAluno(@PathVariable Long idAluno) {
 
         Aluno aluno = alunoService.obter(idAluno);
 
