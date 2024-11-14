@@ -33,7 +33,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/turmas")
+@RequestMapping
 public class TurmaController {
 
     private final TurmaService turmaService;
@@ -70,7 +70,7 @@ public class TurmaController {
                                     example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
                             )))
     })
-    @GetMapping("/{id}")
+    @GetMapping("/turmas/{id}")
     @PreAuthorize("hasAuthority('TURMA_READ')")
     public ResponseEntity<TurmaDto> obter(@PathVariable Long id) {
         Turma turma = turmaService.obter(id);
@@ -107,7 +107,7 @@ public class TurmaController {
                                     example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
                             )))
     })
-    @GetMapping
+    @GetMapping("/turmas")
     @PreAuthorize("hasAuthority('TURMA_READ')")
     public ResponseEntity<List<TurmaDto>> listar() {
         List<Turma> turmas = turmaService.listar();
@@ -144,7 +144,7 @@ public class TurmaController {
                                     example = "{ \"status\": 400, \"messages\": [{ \"code\": \"json_parse\", \"message\": \"Mensagem inválida\" }] }"
                             )))
     })
-    @PostMapping
+    @PostMapping("/turmas")
     @PreAuthorize("hasAuthority('TURMA_WRITE')")
     public ResponseEntity<TurmaDto> criar(@RequestBody @Valid TurmaDto turmaDto) {
         Turma turma = turmaMapper.toEntity(turmaDto);
@@ -181,7 +181,7 @@ public class TurmaController {
                                     example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
                             )))
     })
-    @PutMapping("/{id}")
+    @PutMapping("/turmas/{id}")
     @PreAuthorize("hasAuthority('TURMA_WRITE')")
     public ResponseEntity<TurmaDto> atualizar(@PathVariable Long id, @RequestBody @Valid TurmaDto turmaDto) {
         Turma turma = turmaMapper.toEntity(turmaDto);
@@ -207,7 +207,7 @@ public class TurmaController {
                                     example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
                             )))
     })
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/turmas/{id}")
     @PreAuthorize("hasAuthority('TURMA_DELETE')")
     public ResponseEntity<Void> excluir(@PathVariable Long id) {
         turmaService.excluir(id);
@@ -328,7 +328,7 @@ public class TurmaController {
                                     example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
                             )))
     })
-    @GetMapping("docentes/{idDocente}/turmas")
+    @GetMapping(path = "docentes/{idDocente}/turmas")
     @PreAuthorize("hasAuthority('TURMA_READ')")
     public ResponseEntity<List<TurmaDto>> pegarTurmasPorDocente(@PathVariable Long idDocente) {
 

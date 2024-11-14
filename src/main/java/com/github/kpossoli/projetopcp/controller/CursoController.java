@@ -35,7 +35,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/cursos")
+@RequestMapping
 public class CursoController {
 
     private final CursoService cursoService;
@@ -74,7 +74,7 @@ public class CursoController {
                                     example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
                             )))
     })
-    @GetMapping("/{id}")
+    @GetMapping("/cursos/{id}")
     @PreAuthorize("hasAuthority('CURSO_READ')")
     public ResponseEntity<CursoDto> obter(@PathVariable Long id) {
         Curso curso = cursoService.obter(id);
@@ -114,7 +114,7 @@ public class CursoController {
                                     example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
                             )))
     })
-    @GetMapping
+    @GetMapping("/cursos")
     @PreAuthorize("hasAuthority('CURSO_READ')")
     public ResponseEntity<List<CursoDto>> listar() {
         List<Curso> cursos = cursoService.listar();
@@ -154,7 +154,7 @@ public class CursoController {
                                     example = "{ \"status\": 400, \"messages\": [{ \"code\": \"json_parse\", \"message\": \"Mensagem inválida\" }] }"
                             )))
     })
-    @PostMapping
+    @PostMapping("/cursos")
     @PreAuthorize("hasAuthority('CURSO_WRITE')")
     public ResponseEntity<CursoDto> criar(@RequestBody @Valid CursoDto cursoDto) {
         Curso curso = cursoMapper.toEntity(cursoDto);
@@ -194,7 +194,7 @@ public class CursoController {
                                     example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
                             )))
     })
-    @PutMapping("/{id}")
+    @PutMapping("/cursos/{id}")
     @PreAuthorize("hasAuthority('CURSO_WRITE')")
     public ResponseEntity<CursoDto> atualizar(@PathVariable Long id, @RequestBody @Valid CursoDto cursoDto) {
         Curso curso = cursoMapper.toEntity(cursoDto);
@@ -237,7 +237,7 @@ public class CursoController {
                             )))
     })
 
-    @GetMapping(params = "idAluno")
+    @GetMapping(value = "/cursos", params = "idAluno")
     @PreAuthorize("hasAuthority('CURSO_READ')")
     public ResponseEntity<CursoDto> obterCursoDoAluno(@RequestParam Long idAluno) {
         return ResponseEntity.ok(cursoMapper.toDto(alunoService.obter(idAluno).getTurma().getCurso()));
@@ -317,7 +317,7 @@ public class CursoController {
                                     example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
                             )))
     })
-    @GetMapping("/{idCurso}/docentes/{idDocente}/materias")
+    @GetMapping("/cursos/{idCurso}/docentes/{idDocente}/materias")
     @PreAuthorize("hasAuthority('MATERIA_READ')")
     public ResponseEntity<List<MateriaDto>> pegarMateriasPorCursoEDocente(@PathVariable Long idCurso, @PathVariable Long idDocente) throws ChangeSetPersister.NotFoundException {
 
@@ -345,7 +345,7 @@ public class CursoController {
                                     example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
                             )))
     })
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/cursos/{id}")
     @PreAuthorize("hasAuthority('CURSO_DELETE')")
     public ResponseEntity<Void> excluir(@PathVariable Long id) {
         cursoService.excluir(id);

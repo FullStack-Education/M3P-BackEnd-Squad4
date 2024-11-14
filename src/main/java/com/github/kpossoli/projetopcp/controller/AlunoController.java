@@ -29,7 +29,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/alunos")
+@RequestMapping
 public class AlunoController {
 
     private final AlunoService alunoService;
@@ -79,7 +79,7 @@ public class AlunoController {
                                     example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
                             )))
     })
-    @GetMapping
+    @GetMapping("/alunos")
     @PreAuthorize("hasAuthority('ALUNO_READ')")
     public ResponseEntity<List<AlunoDto>> listar() {
         List<Aluno> alunos = alunoService.listar();
@@ -131,7 +131,7 @@ public class AlunoController {
                                     example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
                             )))
     })
-    @GetMapping("/{id}")
+    @GetMapping("/alunos/{id}")
     @PreAuthorize("hasAuthority('ALUNO_READ')")
     public ResponseEntity<AlunoDto> obter(@PathVariable Long id) {
         Aluno aluno = alunoService.obter(id);
@@ -183,7 +183,7 @@ public class AlunoController {
                                     example = "{ \"status\": 400, \"messages\": [{ \"code\": \"json_parse\", \"message\": \"Mensagem inválida\" }] }"
                             )))
     })
-    @PostMapping
+    @PostMapping("/alunos")
     @Transactional
     @PreAuthorize("hasAuthority('ALUNO_WRITE')")
     public ResponseEntity<AlunoDto> criar(@RequestBody @Valid AlunoDto alunoDto) {
@@ -236,7 +236,7 @@ public class AlunoController {
                                     example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
                             )))
     })
-    @PutMapping("/{id}")
+    @PutMapping("/alunos/{id}")
     @PreAuthorize("hasAuthority('ALUNO_WRITE')")
     public ResponseEntity<AlunoDto> atualizar(@PathVariable Long id, @RequestBody @Valid AlunoDto alunoDto) {
         Aluno aluno = alunoMapper.toEntity(alunoDto);
@@ -262,7 +262,7 @@ public class AlunoController {
                                     example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
                             )))
     })
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/alunos/{id}")
     @PreAuthorize("hasAuthority('ALUNO_DELETE')")
     public ResponseEntity<Void> excluir(@PathVariable Long id) {
         alunoService.excluir(id);
@@ -289,7 +289,7 @@ public class AlunoController {
                                     example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
                             )))
     })
-    @GetMapping("/{id}/pontuacao")
+    @GetMapping("/alunos/{id}/pontuacao")
     @PreAuthorize("hasAuthority('PONTUACAO_READ')")
     public ResponseEntity<Pontuacao> obterPontuacao(@PathVariable Long id) {
         Pontuacao pontuacao = alunoService.obterPontuacao(id);
@@ -330,10 +330,10 @@ public class AlunoController {
                                     example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
                             )))
     })
-    @GetMapping("/{id}/notas")
+    @GetMapping(value = "/notas", params = "idAluno")
     @PreAuthorize("hasAuthority('NOTA_READ')")
-    public ResponseEntity<List<NotaDto>> listarNotas(@PathVariable Long id) {
-        List<Nota> notas = alunoService.listarNotas(id);
+    public ResponseEntity<List<NotaDto>> listarNotas(@RequestParam Long idAluno) {
+        List<Nota> notas = alunoService.listarNotas(idAluno);
         List<NotaDto> alunosDto = notaMapper.toDto(notas);
 
         return ResponseEntity.ok(alunosDto);
@@ -394,7 +394,7 @@ public class AlunoController {
         return ResponseEntity.ok(alunos);
     }
 
-    @GetMapping("/email")
+    @GetMapping(value = "/alunos", params = "email")
     @PreAuthorize("hasAuthority('ALUNO_READ')")
     public ResponseEntity<AlunoSimplifiedDto> obterAlunoPorEmail(@RequestParam String email) {
         Aluno aluno = alunoService.obterAlunoPorEmail(email);

@@ -24,7 +24,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/materias")
+@RequestMapping
 public class MateriaController {
 
     private final MateriaService materiaService;
@@ -54,7 +54,7 @@ public class MateriaController {
                                     example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
                             )))
     })
-    @GetMapping("/{id}")
+    @GetMapping("/materias/{id}")
     @PreAuthorize("hasAuthority('MATERIA_READ')")
     public ResponseEntity<MateriaDto> obter(@PathVariable Long id) {
         Materia materia = materiaService.obter(id);
@@ -86,7 +86,7 @@ public class MateriaController {
                                     example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
                             )))
     })
-    @GetMapping
+    @GetMapping("/materias")
     @PreAuthorize("hasAuthority('MATERIA_READ')")
     public ResponseEntity<List<MateriaDto>> listar() {
         List<Materia> materias = materiaService.listar();
@@ -183,7 +183,7 @@ public class MateriaController {
                                     example = "{ \"status\": 400, \"messages\": [{ \"code\": \"json_parse\", \"message\": \"Mensagem inválida\" }] }"
                             )))
     })
-    @PostMapping
+    @PostMapping("/materias")
     @PreAuthorize("hasAuthority('MATERIA_WRITE')")
     public ResponseEntity<MateriaDto> criar(@RequestBody @Valid MateriaDto materiaDto) {
         Materia materia = materiaMapper.toEntity(materiaDto);
@@ -215,7 +215,7 @@ public class MateriaController {
                                     example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
                             )))
     })
-    @PutMapping("/{id}")
+    @PutMapping("/materias/{id}")
     @PreAuthorize("hasAuthority('MATERIA_WRITE')")
     public ResponseEntity<MateriaDto> atualizar(@PathVariable Long id, @RequestBody @Valid MateriaDto materiaDto) {
         Materia materia = materiaMapper.toEntity(materiaDto);
@@ -241,7 +241,7 @@ public class MateriaController {
                                     example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
                             )))
     })
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/materias/{id}")
     @PreAuthorize("hasAuthority('MATERIA_DELETE')")
     public ResponseEntity<Void> excluir(@PathVariable Long id) {
         materiaService.excluir(id);
