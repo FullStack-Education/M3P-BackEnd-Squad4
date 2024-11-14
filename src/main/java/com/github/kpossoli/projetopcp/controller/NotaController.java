@@ -23,7 +23,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/notas")
+@RequestMapping
 public class NotaController {
 
     private final NotaService notaService;
@@ -62,7 +62,7 @@ public class NotaController {
                                     example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
                             )))
     })
-    @GetMapping("/{id}")
+    @GetMapping("/notas/{id}")
     @PreAuthorize("hasAuthority('NOTA_READ')")
     public ResponseEntity<NotaDto> obter(@PathVariable Long id) {
         Nota nota = notaService.obter(id);
@@ -104,7 +104,7 @@ public class NotaController {
                                     example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
                             )))
     })
-    @GetMapping
+    @GetMapping("/notas")
     @PreAuthorize("hasAuthority('NOTA_READ')")
     public ResponseEntity<List<NotaDto>> listar() {
         List<Nota> notas = notaService.listar();
@@ -146,7 +146,7 @@ public class NotaController {
                                     example = "{ \"status\": 400, \"messages\": [{ \"code\": \"json_parse\", \"message\": \"Mensagem inválida\" }] }"
                             )))
     })
-    @PostMapping
+    @PostMapping("/notas")
     @PreAuthorize("hasAuthority('NOTA_WRITE')")
     public ResponseEntity<NotaDto> criar(@RequestBody @Valid NotaDto notaDto) {
         Nota nota = notaMapper.toEntity(notaDto);
@@ -188,7 +188,7 @@ public class NotaController {
                                     example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
                             )))
     })
-    @PutMapping("/{id}")
+    @PutMapping("/notas/{id}")
     @PreAuthorize("hasAuthority('NOTA_WRITE')")
     public ResponseEntity<NotaDto> atualizar(@PathVariable Long id, @RequestBody @Valid NotaDto notaDto) {
         Nota nota = notaMapper.toEntity(notaDto);
@@ -214,7 +214,7 @@ public class NotaController {
                                     example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
                             )))
     })
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/notas/{id}")
     @PreAuthorize("hasAuthority('NOTA_DELETE')")
     public ResponseEntity<Void> excluir(@PathVariable Long id) {
         notaService.excluir(id);
@@ -255,13 +255,13 @@ public class NotaController {
                                     example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
                             )))
     })
-    @GetMapping(path = "/alunos/{id_aluno}/notas")
+    @GetMapping(path = "/alunos/{idAluno}/notas")
     @PreAuthorize("hasAuthority('NOTA_READ')")
-    public ResponseEntity<List<NotaDto>> listarNotasPorAluno(@PathVariable Long id) {
+    public ResponseEntity<List<NotaDto>> listarNotasPorAluno(@PathVariable Long idAluno) {
         List<Nota> notas = notaService.listar();
         List<Nota> notasDoAluno = new java.util.ArrayList<>(List.of());
         for (Nota nota : notas){
-            if (nota.getAluno().getId().equals(id)){
+            if (nota.getAluno().getId().equals(idAluno)){
                 notasDoAluno.add(nota);
             }
         }

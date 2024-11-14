@@ -31,7 +31,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/docentes")
+@RequestMapping
 public class DocenteController {
 
     private final DocenteService docenteService;
@@ -83,7 +83,7 @@ public class DocenteController {
                                     example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
                             )))
     })
-    @GetMapping("/{id}")
+    @GetMapping("/docentes/{id}")
     @PreAuthorize("hasAuthority('DOCENTE_READ')")
     public ResponseEntity<DocenteDto> obter(@PathVariable Long id) {
         Docente docente = docenteService.obter(id);
@@ -136,7 +136,7 @@ public class DocenteController {
                                     example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
                             )))
     })
-    @GetMapping
+    @GetMapping("/docentes")
     @PreAuthorize("hasAuthority('DOCENTE_READ')")
     public ResponseEntity<List<DocenteDto>> listar() {
         List<Docente> docentes = docenteService.listar();
@@ -189,7 +189,7 @@ public class DocenteController {
                                     example = "{ \"status\": 400, \"messages\": [{ \"code\": \"json_parse\", \"message\": \"Mensagem inválida\" }] }"
                             )))
     })
-    @PostMapping
+    @PostMapping("/docentes")
     @Transactional
     @PreAuthorize("hasAuthority('DOCENTE_WRITE')")
     public ResponseEntity<DocenteDto> criar(@RequestBody @Valid DocenteDto docenteDto) {
@@ -243,7 +243,7 @@ public class DocenteController {
                                     example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
                             )))
     })
-    @PutMapping("/{id}")
+    @PutMapping("/docentes/{id}")
     @PreAuthorize("hasAuthority('DOCENTE_WRITE')")
     @Transactional
     public Docente atualizar(@PathVariable Long id, @RequestBody DocenteDto docenteAtualizado) {
@@ -279,7 +279,7 @@ public class DocenteController {
                                     example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
                             )))
     })
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/docentes/{id}")
     @PreAuthorize("hasAuthority('DOCENTE_DELETE')")
     public ResponseEntity<Void> excluir(@PathVariable Long id) {
         docenteService.excluir(id);
