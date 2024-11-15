@@ -1,11 +1,14 @@
 package com.github.kpossoli.projetopcp.controller;
 
 import com.github.kpossoli.projetopcp.dto.AlunoSimplifiedDto;
+import com.github.kpossoli.projetopcp.repository.AlunoRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.persistence.EntityNotFoundException;
+import org.springframework.beans.BeanUtils;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,6 +38,7 @@ public class AlunoController {
     private final AlunoService alunoService;
     private final AlunoMapper alunoMapper;
     private final NotaMapper notaMapper;
+    private final AlunoRepository alunoRepository;
 
     @Operation(summary = "Retorna todos os Alunos cadastrados ", method = "GET")
     @ApiResponses(value = {
@@ -238,8 +242,15 @@ public class AlunoController {
     })
     @PutMapping("/alunos/{id}")
     @PreAuthorize("hasAuthority('ALUNO_WRITE')")
+    @Transactional
     public ResponseEntity<AlunoDto> atualizar(@PathVariable Long id, @RequestBody @Valid AlunoDto alunoDto) {
         Aluno aluno = alunoMapper.toEntity(alunoDto);
+
+        Aluno alunoExistente = alunoService.obter(id);
+        if(alunoExistente != null) {
+            aluno.setUsuario(alunoExistente.getUsuario());
+        }
+
         Aluno alunoSalvo = alunoService.atualizar(id, aluno);
         AlunoDto alunoSalvoDto = alunoMapper.toDto(alunoSalvo);
 
