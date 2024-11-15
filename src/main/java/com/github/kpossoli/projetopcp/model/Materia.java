@@ -35,8 +35,8 @@ public class Materia {
 	@JsonManagedReference
 	@JoinTable(
 		name = "curso_materia",
-		joinColumns = @JoinColumn(name = "materia_id"),
-		inverseJoinColumns = @JoinColumn(name = "curso_id")
+		joinColumns = @JoinColumn(name = "id_materia"),
+		inverseJoinColumns = @JoinColumn(name = "id_curso")
 	)
 	private List<Curso> cursos = new ArrayList<>();
 
