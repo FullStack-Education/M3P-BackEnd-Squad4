@@ -47,26 +47,19 @@ public class AlunoDto {
 	@NotBlank
 	private String naturalidade;
 
-
 	private String cep;
-
 
 	private String logradouro;
 
-
 	private String numero;
-
 
 	private String localidade;
 
 	private String bairro;
 
-
 	private String uf;
 
-
 	private String complemento;
-
 
 	private String referencia;
 

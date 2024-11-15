@@ -39,7 +39,7 @@ docker run -d --name postgres -p 5432:5432 --network pgnet -e POSTGRES_USER=post
 docker run -d --name pgadmin -p 8000:80 --network pgnet -e PGADMIN_DEFAULT_EMAIL=postgres -e PGADMIN_DEFAULT_PASSWORD=123456 -d dpage/pgadmin4
 ```
 
-Acesse `http://localhost:8000`, abra o editor que query e cole o conteúdo do arquivo create-db.sql, localizado diretório sql, execute os comando para criar os DDL do projeto.
+Acesse `http://localhost:8000`, abra o editor que query e cole o conteúdo do arquivo data.sql, localizado diretório sql, execute os comando para criar os DDL do projeto.
 
 A senha padrão do usuário admin do sistema é: `senhaSegura123`.
 
