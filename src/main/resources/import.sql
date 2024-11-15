@@ -60,24 +60,24 @@ CREATE TRIGGER after_docente_insert
 EXECUTE FUNCTION create_usuario_for_docente();
 
 INSERT INTO public.docente(nome_completo, genero, data_nascimento, naturalidade, cpf, rg, telefone, email, senha, estado_civil, cep, localidade, uf, logradouro, numero, complemento, bairro, ponto_de_referencia)
-VALUES ('Professor 1', 'Masculino', '1980-01-15', 'Belo Horizonte', 'brasileiro', 'MG-123456', '31987654321', 'professor1@mail.com', 'abc12345', 'Solteiro', '30111-000', 'Belo Horizonte', 'MG', 'Avenida Afonso Pena', '1000', 'Apto 1', 'Centro', 'Próximo ao Mercado Central');
+VALUES ('Professor 1', 'Masculino', '1980-01-15', 'Belo Horizonte', '12345678901', 'MG-123456', '31987654321', 'professor1@mail.com', 'abc12345', 'Solteiro', '30111-000', 'Belo Horizonte', 'MG', 'Avenida Afonso Pena', '1000', 'Apto 1', 'Centro', 'Próximo ao Mercado Central');
 INSERT INTO public.docente_materia(id_docente, id_materia) VALUES ((SELECT id FROM public.docente WHERE email = 'professor1@mail.com'), 1);
 INSERT INTO public.docente(nome_completo, genero, data_nascimento, naturalidade, cpf, rg, telefone, email, senha, estado_civil, cep, localidade, uf, logradouro, numero, complemento, bairro, ponto_de_referencia)
-VALUES ('Professor 2', 'Feminino', '1985-03-20', 'São Paulo', 'brasileiro', 'SP-654321', '31912345678', 'professor2@mail.com', 'abc12345', 'Casado', '30122-000', 'São Paulo', 'SP', 'Rua dos Três Irmãos', '200', 'Casa', 'Vila Progredior', 'Perto da padaria');
+VALUES ('Professor 2', 'Feminino', '1985-03-20', 'São Paulo', '12345678902', 'SP-654321', '31912345678', 'professor2@mail.com', 'abc12345', 'Casado', '30122-000', 'São Paulo', 'SP', 'Rua dos Três Irmãos', '200', 'Casa', 'Vila Progredior', 'Perto da padaria');
 INSERT INTO public.docente_materia(id_docente, id_materia) VALUES ((SELECT id FROM public.docente WHERE email = 'professor2@mail.com'), 2);
 INSERT INTO public.docente_materia(id_docente, id_materia) VALUES ((SELECT id FROM public.docente WHERE email = 'professor2@mail.com'), 3);
 INSERT INTO public.docente(nome_completo, genero, data_nascimento, naturalidade, cpf, rg, telefone, email, senha, estado_civil, cep, localidade, uf, logradouro, numero, complemento, bairro, ponto_de_referencia)
-VALUES ('Professor 3', 'Masculino', '1975-07-10', 'Rio de Janeiro', 'brasileiro', 'RJ-789012', '31911223344', 'professor3@mail.com', 'abc12345', 'Solteiro', '30133-000', 'Rio de Janeiro', 'RJ', 'Rua Marquês de São Vicente', '300', 'Apto 3', 'Bairro Flamengo', 'Próximo ao parque');
+VALUES ('Professor 3', 'Masculino', '1975-07-10', 'Rio de Janeiro', '12345678903', 'RJ-789012', '31911223344', 'professor3@mail.com', 'abc12345', 'Solteiro', '30133-000', 'Rio de Janeiro', 'RJ', 'Rua Marquês de São Vicente', '300', 'Apto 3', 'Bairro Flamengo', 'Próximo ao parque');
 INSERT INTO public.docente_materia(id_docente, id_materia) VALUES ((SELECT id FROM public.docente WHERE email = 'professor3@mail.com'), 4);
 INSERT INTO public.docente(nome_completo, genero, data_nascimento, naturalidade, cpf, rg, telefone, email, senha, estado_civil, cep, localidade, uf, logradouro, numero, complemento, bairro, ponto_de_referencia)
-VALUES ('Professor 4', 'Feminino', '1990-09-25', 'Salvador', 'brasileiro', 'BA-987654', '31933445566', 'professor4@mail.com', 'abc12345', 'Casado', '30144-000', 'Salvador', 'BA', 'Rua das Laranjeiras', '400', 'Casa', 'Laranjeiras', 'Próximo à escola');
+VALUES ('Professor 4', 'Feminino', '1990-09-25', 'Salvador', '12345678904', 'BA-987654', '31933445566', 'professor4@mail.com', 'abc12345', 'Casado', '30144-000', 'Salvador', 'BA', 'Rua das Laranjeiras', '400', 'Casa', 'Laranjeiras', 'Próximo à escola');
 INSERT INTO public.docente_materia(id_docente, id_materia) VALUES ((SELECT id FROM public.docente WHERE email = 'professor4@mail.com'), 5);
 INSERT INTO public.docente_materia(id_docente, id_materia) VALUES ((SELECT id FROM public.docente WHERE email = 'professor4@mail.com'), 6);
 INSERT INTO public.docente(nome_completo, genero, data_nascimento, naturalidade, cpf, rg, telefone, email, senha, estado_civil, cep, localidade, uf, logradouro, numero, complemento, bairro, ponto_de_referencia)
-VALUES ('Professor 5', 'Masculino', '1982-11-30', 'Florianópolis', 'brasileiro', 'SC-321654', '31944556677', 'professor5@mail.com', 'abc12345', 'Solteiro', '30155-000', 'Florianópolis', 'SC', 'Rua Silva Jardim', '500', 'Apto 5', 'Centro', 'Próximo ao shopping');
+VALUES ('Professor 5', 'Masculino', '1982-11-30', 'Florianópolis', '12345678905', 'SC-321654', '31944556677', 'professor5@mail.com', 'abc12345', 'Solteiro', '30155-000', 'Florianópolis', 'SC', 'Rua Silva Jardim', '500', 'Apto 5', 'Centro', 'Próximo ao shopping');
 INSERT INTO public.docente_materia(id_docente, id_materia) VALUES ((SELECT id FROM public.docente WHERE email = 'professor5@mail.com'), 1);
 INSERT INTO public.docente(nome_completo, genero, data_nascimento, naturalidade, cpf, rg, telefone, email, senha, estado_civil, cep, localidade, uf, logradouro, numero, complemento, bairro, ponto_de_referencia)
-VALUES ('Professor 6', 'Feminino', '1995-06-18', 'Vitória', 'brasileiro', 'ES-654123', '31955667788', 'professor6@mail.com', 'abc12345', 'Casado', '30166-000', 'Vitória', 'ES', 'Avenida Nossa Senhora da Penha', '600', 'Casa', 'Bairro da Penha', 'Perto da praça');
+VALUES ('Professor 6', 'Feminino', '1995-06-18', 'Vitória', '12345678906', 'ES-654123', '31955667788', 'professor6@mail.com', 'abc12345', 'Casado', '30166-000', 'Vitória', 'ES', 'Avenida Nossa Senhora da Penha', '600', 'Casa', 'Bairro da Penha', 'Perto da praça');
 INSERT INTO public.docente_materia(id_docente, id_materia) VALUES ((SELECT id FROM public.docente WHERE email = 'professor6@mail.com'), 2);
 INSERT INTO public.docente_materia(id_docente, id_materia) VALUES ((SELECT id FROM public.docente WHERE email = 'professor6@mail.com'), 3);
 
