@@ -37,49 +37,64 @@ VALUES ('Turma Inicializada E', '2024-05-01', '2024-11-15', '14:00 - 18:00', 2);
 INSERT INTO public.turma(nome_turma, data_inicio, data_termino, horario, id_curso)
 VALUES ('Turma Inicializada F', '2024-06-10', '2024-12-10', '19:00 - 23:00', 3);
 
-CREATE OR REPLACE FUNCTION create_usuario_for_docente()
-    RETURNS trigger AS $$
-DECLARE
-    usuario_id INT;
-BEGIN
-    INSERT INTO public.usuario(email, senha, nome, id_papel)
-    VALUES (NEW.email, NEW.senha, NEW.nome_completo, 4)
-    RETURNING id INTO usuario_id;
+INSERT INTO public.usuario(email, nome, senha, id_papel)
+VALUES ('professor1@mail.com', 'Professor 1', '$2a$10$yLsrjeOc5hUYJKFxgO13XejuUi3AWR26MmFSF9JH57EFwMb/i7OVW', 4)
+ON CONFLICT (email) DO NOTHING;
+INSERT INTO public.docente(nome_completo, genero, data_nascimento, naturalidade, cpf, rg, telefone, email, senha, estado_civil, cep, localidade, uf, logradouro, numero, complemento, bairro, ponto_de_referencia, id_usuario)
+VALUES ('Professor 1', 'Masculino', '1980-01-15', 'Belo Horizonte', '12345678901', 'MG-123456', '31987654321', 'professor1@mail.com', '$2a$10$yLsrjeOc5hUYJKFxgO13XejuUi3AWR26MmFSF9JH57EFwMb/i7OVW', 'Solteiro', '30111-000', 'Belo Horizonte', 'MG', 'Avenida Afonso Pena', '1000', 'Apto 1', 'Centro', 'Próximo ao Mercado Central',
+        (SELECT id FROM public.usuario WHERE email = 'professor1@mail.com'))
+ON CONFLICT (email) DO NOTHING;
+INSERT INTO public.docente_materia(id_docente, id_materia)
+VALUES ((SELECT id FROM public.docente WHERE email = 'professor1@mail.com'), 1);
+INSERT INTO public.usuario(email, nome, senha, id_papel)
+VALUES ('professor2@mail.com', 'Professor 2', '$2a$10$yLsrjeOc5hUYJKFxgO13XejuUi3AWR26MmFSF9JH57EFwMb/i7OVW', 4)
+ON CONFLICT (email) DO NOTHING;
+INSERT INTO public.docente(nome_completo, genero, data_nascimento, naturalidade, cpf, rg, telefone, email, senha, estado_civil, cep, localidade, uf, logradouro, numero, complemento, bairro, ponto_de_referencia, id_usuario)
+VALUES ('Professor 2', 'Feminino', '1985-03-20', 'São Paulo', '12345678902', 'SP-654321', '31912345678', 'professor2@mail.com', '$2a$10$yLsrjeOc5hUYJKFxgO13XejuUi3AWR26MmFSF9JH57EFwMb/i7OVW', 'Casado', '30122-000', 'São Paulo', 'SP', 'Rua dos Três Irmãos', '200', 'Casa', 'Vila Progredior', 'Perto da padaria',
+        (SELECT id FROM public.usuario WHERE email = 'professor2@mail.com'))
+ON CONFLICT (email) DO NOTHING;
+INSERT INTO public.docente_materia(id_docente, id_materia)
+VALUES ((SELECT id FROM public.docente WHERE email = 'professor2@mail.com'), 2),
+       ((SELECT id FROM public.docente WHERE email = 'professor2@mail.com'), 3);
+INSERT INTO public.usuario(email, nome, senha, id_papel)
+VALUES ('professor3@mail.com', 'Professor 3', '$2a$10$yLsrjeOc5hUYJKFxgO13XejuUi3AWR26MmFSF9JH57EFwMb/i7OVW', 4)
+ON CONFLICT (email) DO NOTHING;
+INSERT INTO public.docente(nome_completo, genero, data_nascimento, naturalidade, cpf, rg, telefone, email, senha, estado_civil, cep, localidade, uf, logradouro, numero, complemento, bairro, ponto_de_referencia, id_usuario)
+VALUES ('Professor 3', 'Masculino', '1975-07-10', 'Rio de Janeiro', '12345678903', 'RJ-789012', '31911223344', 'professor3@mail.com', '$2a$10$yLsrjeOc5hUYJKFxgO13XejuUi3AWR26MmFSF9JH57EFwMb/i7OVW', 'Solteiro', '30133-000', 'Rio de Janeiro', 'RJ', 'Rua Marquês de São Vicente', '300', 'Apto 3', 'Bairro Flamengo', 'Próximo ao parque',
+        (SELECT id FROM public.usuario WHERE email = 'professor3@mail.com'))
+ON CONFLICT (email) DO NOTHING;
+INSERT INTO public.docente_materia(id_docente, id_materia)
+VALUES ((SELECT id FROM public.docente WHERE email = 'professor3@mail.com'), 4);
+INSERT INTO public.usuario(email, nome, senha, id_papel)
+VALUES ('professor4@mail.com', 'Professor 4', '$2a$10$yLsrjeOc5hUYJKFxgO13XejuUi3AWR26MmFSF9JH57EFwMb/i7OVW', 4)
+ON CONFLICT (email) DO NOTHING;
+INSERT INTO public.docente(nome_completo, genero, data_nascimento, naturalidade, cpf, rg, telefone, email, senha, estado_civil, cep, localidade, uf, logradouro, numero, complemento, bairro, ponto_de_referencia, id_usuario)
+VALUES ('Professor 4', 'Feminino', '1990-09-25', 'Salvador', '12345678904', 'BA-987654', '31933445566', 'professor4@mail.com', '$2a$10$yLsrjeOc5hUYJKFxgO13XejuUi3AWR26MmFSF9JH57EFwMb/i7OVW', 'Casado', '30144-000', 'Salvador', 'BA', 'Rua das Laranjeiras', '400', 'Casa', 'Laranjeiras', 'Próximo à escola',
+        (SELECT id FROM public.usuario WHERE email = 'professor4@mail.com'))
+ON CONFLICT (email) DO NOTHING;
+INSERT INTO public.docente_materia(id_docente, id_materia)
+VALUES ((SELECT id FROM public.docente WHERE email = 'professor4@mail.com'), 5),
+       ((SELECT id FROM public.docente WHERE email = 'professor4@mail.com'), 6);
+INSERT INTO public.usuario(email, nome, senha, id_papel)
+VALUES ('professor5@mail.com', 'Professor 5', '$2a$10$yLsrjeOc5hUYJKFxgO13XejuUi3AWR26MmFSF9JH57EFwMb/i7OVW', 4)
+ON CONFLICT (email) DO NOTHING;
+INSERT INTO public.docente(nome_completo, genero, data_nascimento, naturalidade, cpf, rg, telefone, email, senha, estado_civil, cep, localidade, uf, logradouro, numero, complemento, bairro, ponto_de_referencia, id_usuario)
+VALUES ('Professor 5', 'Masculino', '1982-11-30', 'Florianópolis', '12345678905', 'SC-321654', '31944556677', 'professor5@mail.com', '$2a$10$yLsrjeOc5hUYJKFxgO13XejuUi3AWR26MmFSF9JH57EFwMb/i7OVW', 'Solteiro', '30155-000', 'Florianópolis', 'SC', 'Rua Silva Jardim', '500', 'Apto 5', 'Centro', 'Próximo ao shopping',
+        (SELECT id FROM public.usuario WHERE email = 'professor5@mail.com'))
+ON CONFLICT (email) DO NOTHING;
+INSERT INTO public.docente_materia(id_docente, id_materia)
+VALUES ((SELECT id FROM public.docente WHERE email = 'professor5@mail.com'), 1);
+INSERT INTO public.usuario(email, nome, senha, id_papel)
+VALUES ('professor6@mail.com', 'Professor 6', '$2a$10$yLsrjeOc5hUYJKFxgO13XejuUi3AWR26MmFSF9JH57EFwMb/i7OVW', 4)
+ON CONFLICT (email) DO NOTHING;
+INSERT INTO public.docente(nome_completo, genero, data_nascimento, naturalidade, cpf, rg, telefone, email, senha, estado_civil, cep, localidade, uf, logradouro, numero, complemento, bairro, ponto_de_referencia, id_usuario)
+VALUES ('Professor 6', 'Feminino', '1995-06-18', 'Vitória', '12345678906', 'ES-654123', '31955667788', 'professor6@mail.com', '$2a$10$yLsrjeOc5hUYJKFxgO13XejuUi3AWR26MmFSF9JH57EFwMb/i7OVW', 'Casado', '30166-000', 'Vitória', 'ES', 'Avenida Nossa Senhora da Penha', '600', 'Casa', 'Bairro da Penha', 'Perto da praça',
+        (SELECT id FROM public.usuario WHERE email = 'professor6@mail.com'))
+ON CONFLICT (email) DO NOTHING;
+INSERT INTO public.docente_materia(id_docente, id_materia)
+VALUES ((SELECT id FROM public.docente WHERE email = 'professor6@mail.com'), 2),
+       ((SELECT id FROM public.docente WHERE email = 'professor6@mail.com'), 3);
 
-    UPDATE public.docente
-    SET id_usuario = usuario_id
-    WHERE id = NEW.id;
-
-    RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
-CREATE TRIGGER after_docente_insert
-    AFTER INSERT ON public.docente
-    FOR EACH ROW
-EXECUTE FUNCTION create_usuario_for_docente();
-
-INSERT INTO public.docente(nome_completo, genero, data_nascimento, naturalidade, cpf, rg, telefone, email, senha, estado_civil, cep, localidade, uf, logradouro, numero, complemento, bairro, ponto_de_referencia)
-VALUES ('Professor 1', 'Masculino', '1980-01-15', 'Belo Horizonte', '12345678901', 'MG-123456', '31987654321', 'professor1@mail.com', 'abc12345', 'Solteiro', '30111-000', 'Belo Horizonte', 'MG', 'Avenida Afonso Pena', '1000', 'Apto 1', 'Centro', 'Próximo ao Mercado Central');
-INSERT INTO public.docente_materia(id_docente, id_materia) VALUES ((SELECT id FROM public.docente WHERE email = 'professor1@mail.com'), 1);
-INSERT INTO public.docente(nome_completo, genero, data_nascimento, naturalidade, cpf, rg, telefone, email, senha, estado_civil, cep, localidade, uf, logradouro, numero, complemento, bairro, ponto_de_referencia)
-VALUES ('Professor 2', 'Feminino', '1985-03-20', 'São Paulo', '12345678902', 'SP-654321', '31912345678', 'professor2@mail.com', 'abc12345', 'Casado', '30122-000', 'São Paulo', 'SP', 'Rua dos Três Irmãos', '200', 'Casa', 'Vila Progredior', 'Perto da padaria');
-INSERT INTO public.docente_materia(id_docente, id_materia) VALUES ((SELECT id FROM public.docente WHERE email = 'professor2@mail.com'), 2);
-INSERT INTO public.docente_materia(id_docente, id_materia) VALUES ((SELECT id FROM public.docente WHERE email = 'professor2@mail.com'), 3);
-INSERT INTO public.docente(nome_completo, genero, data_nascimento, naturalidade, cpf, rg, telefone, email, senha, estado_civil, cep, localidade, uf, logradouro, numero, complemento, bairro, ponto_de_referencia)
-VALUES ('Professor 3', 'Masculino', '1975-07-10', 'Rio de Janeiro', '12345678903', 'RJ-789012', '31911223344', 'professor3@mail.com', 'abc12345', 'Solteiro', '30133-000', 'Rio de Janeiro', 'RJ', 'Rua Marquês de São Vicente', '300', 'Apto 3', 'Bairro Flamengo', 'Próximo ao parque');
-INSERT INTO public.docente_materia(id_docente, id_materia) VALUES ((SELECT id FROM public.docente WHERE email = 'professor3@mail.com'), 4);
-INSERT INTO public.docente(nome_completo, genero, data_nascimento, naturalidade, cpf, rg, telefone, email, senha, estado_civil, cep, localidade, uf, logradouro, numero, complemento, bairro, ponto_de_referencia)
-VALUES ('Professor 4', 'Feminino', '1990-09-25', 'Salvador', '12345678904', 'BA-987654', '31933445566', 'professor4@mail.com', 'abc12345', 'Casado', '30144-000', 'Salvador', 'BA', 'Rua das Laranjeiras', '400', 'Casa', 'Laranjeiras', 'Próximo à escola');
-INSERT INTO public.docente_materia(id_docente, id_materia) VALUES ((SELECT id FROM public.docente WHERE email = 'professor4@mail.com'), 5);
-INSERT INTO public.docente_materia(id_docente, id_materia) VALUES ((SELECT id FROM public.docente WHERE email = 'professor4@mail.com'), 6);
-INSERT INTO public.docente(nome_completo, genero, data_nascimento, naturalidade, cpf, rg, telefone, email, senha, estado_civil, cep, localidade, uf, logradouro, numero, complemento, bairro, ponto_de_referencia)
-VALUES ('Professor 5', 'Masculino', '1982-11-30', 'Florianópolis', '12345678905', 'SC-321654', '31944556677', 'professor5@mail.com', 'abc12345', 'Solteiro', '30155-000', 'Florianópolis', 'SC', 'Rua Silva Jardim', '500', 'Apto 5', 'Centro', 'Próximo ao shopping');
-INSERT INTO public.docente_materia(id_docente, id_materia) VALUES ((SELECT id FROM public.docente WHERE email = 'professor5@mail.com'), 1);
-INSERT INTO public.docente(nome_completo, genero, data_nascimento, naturalidade, cpf, rg, telefone, email, senha, estado_civil, cep, localidade, uf, logradouro, numero, complemento, bairro, ponto_de_referencia)
-VALUES ('Professor 6', 'Feminino', '1995-06-18', 'Vitória', '12345678906', 'ES-654123', '31955667788', 'professor6@mail.com', 'abc12345', 'Casado', '30166-000', 'Vitória', 'ES', 'Avenida Nossa Senhora da Penha', '600', 'Casa', 'Bairro da Penha', 'Perto da praça');
-INSERT INTO public.docente_materia(id_docente, id_materia) VALUES ((SELECT id FROM public.docente WHERE email = 'professor6@mail.com'), 2);
-INSERT INTO public.docente_materia(id_docente, id_materia) VALUES ((SELECT id FROM public.docente WHERE email = 'professor6@mail.com'), 3);
 
 UPDATE public.turma
 SET id_docente = (SELECT id FROM public.docente WHERE email = 'professor1@mail.com')
@@ -100,47 +115,60 @@ UPDATE public.turma
 SET id_docente = (SELECT id FROM public.docente WHERE email = 'professor6@mail.com')
 WHERE nome_turma = 'Turma Inicializada F';
 
-CREATE OR REPLACE FUNCTION create_usuario_for_aluno()
-    RETURNS TRIGGER AS $$
-DECLARE
-    usuario_id INT;
-BEGIN
-    INSERT INTO public.usuario (email, senha, nome, id_papel)
-    VALUES (NEW.email, NEW.senha, NEW.nome_completo, 5)
-    RETURNING id INTO usuario_id;
-
-    UPDATE public.aluno
-    SET id_usuario = usuario_id
-    WHERE id = NEW.id;
-
-    RETURN NEW;
-END;
-$$
-    LANGUAGE plpgsql;
-
-CREATE TRIGGER after_aluno_insert
-    AFTER INSERT ON public.aluno
-    FOR EACH ROW
-EXECUTE FUNCTION create_usuario_for_aluno();
-
-INSERT INTO public.aluno(nome_completo, telefone, genero, id_turma, data_nascimento, email, senha, cpf, rg, naturalidade, cep, logradouro, numero, localidade, bairro, uf, complemento, referencia)
-VALUES ('Aluno 1', '31999999999', 'Masculino', 1, '2000-05-01', 'aluno1@mail.com', 'senha123', '12345678901', 'MG-123456', 'Belo Horizonte', '30111-001', 'Rua A', '100', 'Belo Horizonte', 'Centro', 'MG', 'Apto 101', 'Próximo ao Mercado Central');
-INSERT INTO public.aluno(nome_completo, telefone, genero, id_turma, data_nascimento, email, senha, cpf, rg, naturalidade, cep, logradouro, numero, localidade, bairro, uf, complemento, referencia)
-VALUES ('Aluno 2', '31988888888', 'Feminino', 1, '2001-08-15', 'aluno2@mail.com', 'senha123', '12345678902', 'MG-654321', 'Contagem', '30111-002', 'Rua B', '200', 'Contagem', 'Centro', 'MG', 'Apto 202', 'Próximo ao Shopping');
-INSERT INTO public.aluno(nome_completo, telefone, genero, id_turma, data_nascimento, email, senha, cpf, rg, naturalidade, cep, logradouro, numero, localidade, bairro, uf, complemento, referencia)
-VALUES ('Aluno 3', '31977777777', 'Masculino', 1, '2002-02-10', 'aluno3@mail.com', 'senha123', '12345678903', 'MG-987654', 'Belo Horizonte', '30111-003', 'Rua C', '300', 'Belo Horizonte', 'Centro', 'MG', 'Apto 303', 'Próximo à praça');
-INSERT INTO public.aluno(nome_completo, telefone, genero, id_turma, data_nascimento, email, senha, cpf, rg, naturalidade, cep, logradouro, numero, localidade, bairro, uf, complemento, referencia)
-VALUES ('Aluno 4', '31966666666', 'Feminino', 2, '2000-06-18', 'aluno4@mail.com', 'senha123', '12345678904', 'SP-123456', 'São Paulo', '30122-001', 'Rua D', '400', 'São Paulo', 'Vila Mariana', 'SP', 'Casa 1', 'Próximo ao Shopping');
-INSERT INTO public.aluno(nome_completo, telefone, genero, id_turma, data_nascimento, email, senha, cpf, rg, naturalidade, cep, logradouro, numero, localidade, bairro, uf, complemento, referencia)
-VALUES ('Aluno 5', '31955555555', 'Masculino', 2, '2001-09-12', 'aluno5@mail.com', 'senha123', '12345678905', 'SP-654321', 'Campinas', '30122-002', 'Rua E', '500', 'Campinas', 'Centro', 'SP', 'Casa 2', 'Perto do Parque');
-INSERT INTO public.aluno(nome_completo, telefone, genero, id_turma, data_nascimento, email, senha, cpf, rg, naturalidade, cep, logradouro, numero, localidade, bairro, uf, complemento, referencia)
-VALUES ('Aluno 6', '31944444444', 'Feminino', 2, '2002-03-25', 'aluno6@mail.com', 'senha123', '12345678906', 'SP-987654', 'São Paulo', '30122-003', 'Rua F', '600', 'São Paulo', 'Vila Madalena', 'SP', 'Casa 3', 'Próximo ao metrô');
-INSERT INTO public.aluno(nome_completo, telefone, genero, id_turma, data_nascimento, email, senha, cpf, rg, naturalidade, cep, logradouro, numero, localidade, bairro, uf, complemento, referencia)
-VALUES ('Aluno 7', '31933333333', 'Masculino', 3, '2000-07-20', 'aluno7@mail.com', 'senha123', '12345678907', 'RJ-123456', 'Rio de Janeiro', '30133-001', 'Rua G', '700', 'Rio de Janeiro', 'Copacabana', 'RJ', 'Apto 701', 'Perto da praia');
-INSERT INTO public.aluno(nome_completo, telefone, genero, id_turma, data_nascimento, email, senha, cpf, rg, naturalidade, cep, logradouro, numero, localidade, bairro, uf, complemento, referencia)
-VALUES ('Aluno 8', '31922222222', 'Feminino', 3, '2001-04-17', 'aluno8@mail.com', 'senha123', '12345678908', 'RJ-654321', 'Niterói', '30133-002', 'Rua H', '800', 'Niterói', 'Centro', 'RJ', 'Apto 802', 'Próximo ao teatro');
-INSERT INTO public.aluno(nome_completo, telefone, genero, id_turma, data_nascimento, email, senha, cpf, rg, naturalidade, cep, logradouro, numero, localidade, bairro, uf, complemento, referencia)
-VALUES ('Aluno 9', '31911111111', 'Masculino', 3, '2002-05-22', 'aluno9@mail.com', 'senha123', '12345678909', 'RJ-987654', 'Rio de Janeiro', '30133-003', 'Rua I', '900', 'Rio de Janeiro', 'Ipanema', 'RJ', 'Apto 903', 'Próximo à praia');
+INSERT INTO public.usuario(email, nome, senha, id_papel) VALUES ('aluno1@mail.com', 'Aluno 1', '$2a$10$yLsrjeOc5hUYJKFxgO13XejuUi3AWR26MmFSF9JH57EFwMb/i7OVW', 5)
+on conflict (email) do nothing;
+INSERT INTO public.aluno(nome_completo, telefone, genero, id_turma, data_nascimento, email, senha, cpf, rg, naturalidade, cep, logradouro, numero, localidade, bairro, uf, complemento, referencia, id_usuario)
+VALUES ('Aluno 1', '31999999999', 'Masculino', 1, '2000-05-01', 'aluno1@mail.com', '$2a$10$yLsrjeOc5hUYJKFxgO13XejuUi3AWR26MmFSF9JH57EFwMb/i7OVW', '12345678901', 'MG-123456', 'Belo Horizonte', '30111-001', 'Rua A', '100', 'Belo Horizonte', 'Centro', 'MG', 'Apto 101', 'Próximo ao Mercado Central',
+        (SELECT id FROM public.usuario WHERE email = 'aluno1@mail.com'))
+ON CONFLICT (email) DO NOTHING;
+INSERT INTO public.usuario(email, nome, senha, id_papel) VALUES ('aluno2@mail.com', 'Aluno 2', '$2a$10$yLsrjeOc5hUYJKFxgO13XejuUi3AWR26MmFSF9JH57EFwMb/i7OVW', 5)
+on conflict (email) do nothing;
+INSERT INTO public.aluno(nome_completo, telefone, genero, id_turma, data_nascimento, email, senha, cpf, rg, naturalidade, cep, logradouro, numero, localidade, bairro, uf, complemento, referencia, id_usuario)
+VALUES ('Aluno 2', '31988888888', 'Feminino', 1, '2001-08-15', 'aluno2@mail.com', '$2a$10$yLsrjeOc5hUYJKFxgO13XejuUi3AWR26MmFSF9JH57EFwMb/i7OVW', '12345678902', 'MG-654321', 'Contagem', '30111-002', 'Rua B', '200', 'Contagem', 'Centro', 'MG', 'Apto 202', 'Próximo ao Shopping',
+        (SELECT id FROM public.usuario WHERE email = 'aluno2@mail.com'))
+ON CONFLICT (email) DO NOTHING;
+INSERT INTO public.usuario(email, nome, senha, id_papel) VALUES ('aluno3@mail.com', 'Aluno 3', '$2a$10$yLsrjeOc5hUYJKFxgO13XejuUi3AWR26MmFSF9JH57EFwMb/i7OVW', 5)
+on conflict (email) do nothing;
+INSERT INTO public.aluno(nome_completo, telefone, genero, id_turma, data_nascimento, email, senha, cpf, rg, naturalidade, cep, logradouro, numero, localidade, bairro, uf, complemento, referencia, id_usuario)
+VALUES ('Aluno 3', '31977777777', 'Masculino', 1, '2002-02-10', 'aluno3@mail.com', '$2a$10$yLsrjeOc5hUYJKFxgO13XejuUi3AWR26MmFSF9JH57EFwMb/i7OVW', '12345678903', 'MG-987654', 'Belo Horizonte', '30111-003', 'Rua C', '300', 'Belo Horizonte', 'Centro', 'MG', 'Apto 303', 'Próximo à praça',
+        (SELECT id FROM public.usuario WHERE email = 'aluno3@mail.com'))
+ON CONFLICT (email) DO NOTHING;
+INSERT INTO public.usuario(email, nome, senha, id_papel) VALUES ('aluno4@mail.com', 'Aluno 4', '$2a$10$yLsrjeOc5hUYJKFxgO13XejuUi3AWR26MmFSF9JH57EFwMb/i7OVW', 5)
+on conflict (email) do nothing;
+INSERT INTO public.aluno(nome_completo, telefone, genero, id_turma, data_nascimento, email, senha, cpf, rg, naturalidade, cep, logradouro, numero, localidade, bairro, uf, complemento, referencia, id_usuario)
+VALUES ('Aluno 4', '31966666666', 'Feminino', 2, '2000-06-18', 'aluno4@mail.com', '$2a$10$yLsrjeOc5hUYJKFxgO13XejuUi3AWR26MmFSF9JH57EFwMb/i7OVW', '12345678904', 'SP-123456', 'São Paulo', '30122-001', 'Rua D', '400', 'São Paulo', 'Vila Mariana', 'SP', 'Casa 1', 'Próximo ao Shopping',
+        (SELECT id FROM public.usuario WHERE email = 'aluno4@mail.com'))
+ON CONFLICT (email) DO NOTHING;
+INSERT INTO public.usuario(email, nome, senha, id_papel) VALUES ('aluno5@mail.com', 'Aluno 5', '$2a$10$yLsrjeOc5hUYJKFxgO13XejuUi3AWR26MmFSF9JH57EFwMb/i7OVW', 5)
+on conflict (email) do nothing;
+INSERT INTO public.aluno(nome_completo, telefone, genero, id_turma, data_nascimento, email, senha, cpf, rg, naturalidade, cep, logradouro, numero, localidade, bairro, uf, complemento, referencia, id_usuario)
+VALUES ('Aluno 5', '31955555555', 'Masculino', 2, '2001-09-12', 'aluno5@mail.com', '$2a$10$yLsrjeOc5hUYJKFxgO13XejuUi3AWR26MmFSF9JH57EFwMb/i7OVW', '12345678905', 'SP-654321', 'Campinas', '30122-002', 'Rua E', '500', 'Campinas', 'Centro', 'SP', 'Casa 2', 'Perto do Parque',
+        (SELECT id FROM public.usuario WHERE email = 'aluno5@mail.com'))
+ON CONFLICT (email) DO NOTHING;
+INSERT INTO public.usuario(email, nome, senha, id_papel) VALUES ('aluno6@mail.com', 'Aluno 6', '$2a$10$yLsrjeOc5hUYJKFxgO13XejuUi3AWR26MmFSF9JH57EFwMb/i7OVW', 5)
+on conflict (email) do nothing;
+INSERT INTO public.aluno(nome_completo, telefone, genero, id_turma, data_nascimento, email, senha, cpf, rg, naturalidade, cep, logradouro, numero, localidade, bairro, uf, complemento, referencia, id_usuario)
+VALUES ('Aluno 6', '31944444444', 'Feminino', 2, '2002-03-25', 'aluno6@mail.com', '$2a$10$yLsrjeOc5hUYJKFxgO13XejuUi3AWR26MmFSF9JH57EFwMb/i7OVW', '12345678906', 'SP-987654', 'São Paulo', '30122-003', 'Rua F', '600', 'São Paulo', 'Vila Madalena', 'SP', 'Casa 3', 'Próximo ao metrô',
+        (SELECT id FROM public.usuario WHERE email = 'aluno6@mail.com'))
+ON CONFLICT (email) DO NOTHING;
+INSERT INTO public.usuario(email, nome, senha, id_papel) VALUES ('aluno7@mail.com', 'Aluno 7', '$2a$10$yLsrjeOc5hUYJKFxgO13XejuUi3AWR26MmFSF9JH57EFwMb/i7OVW', 5)
+on conflict (email) do nothing;
+INSERT INTO public.aluno(nome_completo, telefone, genero, id_turma, data_nascimento, email, senha, cpf, rg, naturalidade, cep, logradouro, numero, localidade, bairro, uf, complemento, referencia, id_usuario)
+VALUES ('Aluno 7', '31933333333', 'Masculino', 3, '2000-07-20', 'aluno7@mail.com', '$2a$10$yLsrjeOc5hUYJKFxgO13XejuUi3AWR26MmFSF9JH57EFwMb/i7OVW', '12345678907', 'RJ-123456', 'Rio de Janeiro', '30133-001', 'Rua G', '700', 'Rio de Janeiro', 'Copacabana', 'RJ', 'Apto 701', 'Perto da praia',
+        (SELECT id FROM public.usuario WHERE email = 'aluno7@mail.com'))
+ON CONFLICT (email) DO NOTHING;
+INSERT INTO public.usuario(email, nome, senha, id_papel) VALUES ('aluno8@mail.com', 'Aluno 8', '$2a$10$yLsrjeOc5hUYJKFxgO13XejuUi3AWR26MmFSF9JH57EFwMb/i7OVW', 5)
+on conflict (email) do nothing;
+INSERT INTO public.aluno(nome_completo, telefone, genero, id_turma, data_nascimento, email, senha, cpf, rg, naturalidade, cep, logradouro, numero, localidade, bairro, uf, complemento, referencia, id_usuario)
+VALUES ('Aluno 8', '31922222222', 'Feminino', 3, '2001-04-17', 'aluno8@mail.com', '$2a$10$yLsrjeOc5hUYJKFxgO13XejuUi3AWR26MmFSF9JH57EFwMb/i7OVW', '12345678908', 'RJ-654321', 'Niterói', '30133-002', 'Rua H', '800', 'Niterói', 'Centro', 'RJ', 'Apto 802', 'Próximo ao teatro',
+        (SELECT id FROM public.usuario WHERE email = 'aluno8@mail.com'))
+ON CONFLICT (email) DO NOTHING;
+INSERT INTO public.usuario(email, nome, senha, id_papel) VALUES ('aluno9@mail.com', 'Aluno 9', '$2a$10$yLsrjeOc5hUYJKFxgO13XejuUi3AWR26MmFSF9JH57EFwMb/i7OVW', 5)
+on conflict (email) do nothing;
+INSERT INTO public.aluno(nome_completo, telefone, genero, id_turma, data_nascimento, email, senha, cpf, rg, naturalidade, cep, logradouro, numero, localidade, bairro, uf, complemento, referencia, id_usuario)
+VALUES ('Aluno 9', '31911111111', 'Masculino', 3, '2002-05-22', 'aluno9@mail.com', '$2a$10$yLsrjeOc5hUYJKFxgO13XejuUi3AWR26MmFSF9JH57EFwMb/i7OVW', '12345678909', 'RJ-987654', 'Rio de Janeiro', '30133-003', 'Rua I', '900', 'Rio de Janeiro', 'Ipanema', 'RJ', 'Apto 903', 'Próximo à praia',
+        (SELECT id FROM public.usuario WHERE email = 'aluno9@mail.com'))
+ON CONFLICT (email) DO NOTHING;
 
 INSERT INTO public.nota(avaliacao, nota, data, id_aluno, id_docente, id_materia)
 VALUES
