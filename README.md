@@ -99,7 +99,7 @@ Mais detalhes também podem ser encontrados no arquivo do Postman em anexo ou no
 A senha padrão do usuário admin do sistema é: `senhaSegura123`.
 
 ## Anexos:
-- [Documentação do Projeto](FullStack%20%5BEducation%5D%20-%20Módulo%203%20-%20Projeto%20Avaliativo.pdf)
-- [Postman Collection](projeto-pcp.postman_collection.json)
+- [Documentação do Projeto](/doc/FullStack%20%5BEducation%5D%20-%20Módulo%203%20-%20Projeto%20Avaliativo.pdf)
+- [Postman Collection](/doc/projeto-pcp.postman_collection.json)
 - [Quadro de Atividades do Trello](https://trello.com/invite/b/67099647c7849f4b1cfa0b50/ATTIea929e55956831ad8f9777005e12c02f4019421E/m3p-backend-squad-4)
 - [Repositório de Frontend](https://github.com/FullStack-Education/M3P-FrontEnd-Squad4.git)
