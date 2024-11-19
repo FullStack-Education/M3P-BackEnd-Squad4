@@ -2,6 +2,12 @@ package com.github.kpossoli.projetopcp.service;
 
 import java.util.List;
 
+import com.github.kpossoli.projetopcp.dto.AlunoDto;
+import com.github.kpossoli.projetopcp.mapper.AlunoMapper;
+import com.github.kpossoli.projetopcp.mapper.TurmaMapper;
+import com.github.kpossoli.projetopcp.model.Usuario;
+import com.github.kpossoli.projetopcp.repository.PapelRepository;
+import com.github.kpossoli.projetopcp.repository.TurmaRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
@@ -11,7 +17,6 @@ import com.github.kpossoli.projetopcp.model.Nota;
 import com.github.kpossoli.projetopcp.model.Pontuacao;
 import com.github.kpossoli.projetopcp.repository.AlunoRepository;
 import com.github.kpossoli.projetopcp.repository.NotaRepository;
-import com.github.kpossoli.projetopcp.repository.UsuarioRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,8 +28,12 @@ import java.math.BigDecimal;
 public class AlunoServiceImpl implements AlunoService {
 
     private final AlunoRepository alunoRepository;
-    private final UsuarioRepository usuarioRepository;
     private final NotaRepository notaRepository;
+    private final PapelRepository papelRepository;
+    private final UsuarioService usuarioService;
+    private final TurmaMapper turmaMapper;
+    private final TurmaRepository turmaRepository;
+    private final AlunoMapper alunoMapper;
 
     @Override
     public Aluno obter(Long id) {
@@ -37,16 +46,28 @@ public class AlunoServiceImpl implements AlunoService {
         return alunoRepository.findAll();
     }
 
+
     @Override
     public Aluno criar(Aluno aluno) {
         log.info("Criando aluno", aluno);
 
-        var usuario = usuarioRepository.findById(aluno.getUsuario().getId())
-                .orElseThrow(() -> new EmptyResultDataAccessException(1));
+        Usuario novoUsuario = new Usuario();
+        novoUsuario.setNome(aluno.getNomeCompleto());
+        novoUsuario.setEmail(aluno.getEmail());
+        novoUsuario.setSenha(aluno.getSenha());
+        novoUsuario.setPapel(papelRepository.findByNome("ALUNO").orElseThrow(() -> new RuntimeException("Papel não encontrado")));
 
-        aluno.setUsuario(usuario);
+        Usuario usuarioSalvo = usuarioService.criarUsuario(novoUsuario);
+
+        aluno.setUsuario(usuarioSalvo);
 
         return alunoRepository.save(aluno);
+    }
+
+    @Override
+    public Aluno obterAlunoPorEmail(String email) {
+        return alunoRepository.findByEmail(email)
+                .orElseThrow(() -> new EmptyResultDataAccessException(1));
     }
 
     @Override
@@ -62,6 +83,12 @@ public class AlunoServiceImpl implements AlunoService {
     public void excluir(Long id) {
         log.info("Excluindo aluno de id: {}", id);
 
+        Aluno aluno = obter(id);
+
+        if(aluno.getUsuario() != null) {
+            usuarioService.excluir(aluno.getUsuario().getId());
+        }
+
         alunoRepository.deleteById(id);
     }
 
@@ -72,7 +99,7 @@ public class AlunoServiceImpl implements AlunoService {
         BigDecimal totalNotas = BigDecimal.valueOf(notas.size());
 
         BigDecimal somaNotas = notas.stream()
-                .map(Nota::getValor)
+                .map(Nota::getNota)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         BigDecimal pontuacao = somaNotas
@@ -86,9 +113,15 @@ public class AlunoServiceImpl implements AlunoService {
     }
 
     @Override
-    public List<Nota> notas(Long id) {
+    public List<Nota> listarNotas(Long id) {
         Aluno aluno = obter(id);
         return notaRepository.findByAlunoId(aluno.getId());
+    }
+
+    @Override
+    public List<AlunoDto> pegarAlunosPorTurma(Long idTurma) {
+        List<Aluno> alunos = alunoRepository.findByTurmaId(idTurma);
+        return alunoMapper.toDto(alunos);
     }
 
 }

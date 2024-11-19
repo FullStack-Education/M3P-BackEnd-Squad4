@@ -1,5 +1,16 @@
 package com.github.kpossoli.projetopcp.controller;
 
+import com.github.kpossoli.projetopcp.model.Materia;
+import com.github.kpossoli.projetopcp.repository.DocenteRepository;
+import com.github.kpossoli.projetopcp.repository.MateriaRepository;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.persistence.EntityNotFoundException;
+import org.springframework.beans.BeanUtils;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import com.github.kpossoli.projetopcp.dto.DocenteDto;
@@ -10,7 +21,9 @@ import com.github.kpossoli.projetopcp.service.DocenteService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,13 +31,59 @@ import org.springframework.security.access.prepost.PreAuthorize;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/docentes")
+@RequestMapping
 public class DocenteController {
 
     private final DocenteService docenteService;
     private final DocenteMapper docenteMapper;
+    private final DocenteRepository docenteRepository;
+    private final MateriaRepository materiaRepository;
 
-    @GetMapping("/{id}")
+    @Operation(summary = "Realiza a busca do Docente pelo ID ", method = "GET")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Docente encontrado com sucesso.",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    example = "{\n" +
+                                            "  \"id\": 2,\n" +
+                                            "  \"nomeCompleto\": \"Prof. Pedro H\",\n" +
+                                            "  \"genero\": \"Masculino\",\n" +
+                                            "  \"nascimento\": \"1993-05-12\",\n" +
+                                            "  \"naturalidade\": \"Florianópolis-SC\",\n" +
+                                            "  \"cpf\": \"99999999999\",\n" +
+                                            "  \"rg\": \"9999999-SSP/SC\",\n" +
+                                            "  \"telefone\": \"99999999999\",\n" +
+                                            "  \"email\": \"pedrodmh@mail.com\",\n" +
+                                            "  \"senha\": \"1234\",\n" +
+                                            "  \"estadoCivil\": \"Casado\",\n" +
+                                            "  \"materias\": [\n" +
+                                            "    { \"id\": 2 },\n" +
+                                            "    { \"id\": 3 }\n" +
+                                            "  ],\n" +
+                                            "  \"cep\": \"88888888\",\n" +
+                                            "  \"localidade\": \"Florianópolis\",\n" +
+                                            "  \"uf\": \"Santa Catarina\",\n" +
+                                            "  \"logradouro\": \"Rua dos Manezinhos\",\n" +
+                                            "  \"numero\": 100,\n" +
+                                            "  \"complemento\": \"Não há\",\n" +
+                                            "  \"bairro\": \"Centro\",\n" +
+                                            "  \"referencia\": \"Não há\"\n" +
+                                            "}"
+                            )
+                    )),
+            @ApiResponse(responseCode = "401", description = "Credenciais inválidas. O usuário não está autorizado a acessar o sistema.",
+                    content = @Content
+            ),
+            @ApiResponse(responseCode = "404", description = "Docente não encontrado.",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    type = "object",
+                                    example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
+                            )))
+    })
+    @GetMapping("/docentes/{id}")
     @PreAuthorize("hasAuthority('DOCENTE_READ')")
     public ResponseEntity<DocenteDto> obter(@PathVariable Long id) {
         Docente docente = docenteService.obter(id);
@@ -33,7 +92,51 @@ public class DocenteController {
         return ResponseEntity.ok(docenteDto);
     }
 
-    @GetMapping
+    @Operation(summary = "Retorna todos os Docentes cadastrados", method = "GET")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Docentes encontrados com sucesso.",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    example = "[\n"+ "{\n" +
+                                            "  \"id\": 2,\n" +
+                                            "  \"nomeCompleto\": \"Prof. Castro de Castro\",\n" +
+                                            "  \"genero\": \"Masculino\",\n" +
+                                            "  \"nascimento\": \"1993-05-12\",\n" +
+                                            "  \"naturalidade\": \"Florianópolis-SC\",\n" +
+                                            "  \"cpf\": \"99999999999\",\n" +
+                                            "  \"rg\": \"9999999-SSP/SC\",\n" +
+                                            "  \"telefone\": \"99999999999\",\n" +
+                                            "  \"email\": \"mcastrodcastro@mail.com\",\n" +
+                                            "  \"senha\": \"1234\",\n" +
+                                            "  \"estadoCivil\": \"Casado\",\n" +
+                                            "  \"materias\": [\n" +
+                                            "    { \"id\": 2 },\n" +
+                                            "    { \"id\": 3 }\n" +
+                                            "  ],\n" +
+                                            "  \"cep\": \"88888888\",\n" +
+                                            "  \"localidade\": \"Florianópolis\",\n" +
+                                            "  \"uf\": \"Santa Catarina\",\n" +
+                                            "  \"logradouro\": \"Rua dos Manezinhos\",\n" +
+                                            "  \"numero\": 100,\n" +
+                                            "  \"complemento\": \"Não há\",\n" +
+                                            "  \"bairro\": \"Centro\",\n" +
+                                            "  \"referencia\": \"Não há\"\n" +
+                                            "}\n" + "]"
+                            )
+                    )),
+            @ApiResponse(responseCode = "401", description = "Credenciais inválidas. O usuário não está autorizado a acessar o sistema.",
+                    content = @Content
+            ),
+            @ApiResponse(responseCode = "404", description = "Não há docentes cadastrados",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    type = "object",
+                                    example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
+                            )))
+    })
+    @GetMapping("/docentes")
     @PreAuthorize("hasAuthority('DOCENTE_READ')")
     public ResponseEntity<List<DocenteDto>> listar() {
         List<Docente> docentes = docenteService.listar();
@@ -42,7 +145,52 @@ public class DocenteController {
         return ResponseEntity.ok(docentesDto);
     }
 
-    @PostMapping
+    @Operation(summary = "Cadastra Docente no sistema", method = "POST")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Docentes criado com sucesso.",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    example = "{\n" +
+                                            "  \"id\": 2,\n" +
+                                            "  \"nomeCompleto\": \"Prof. Matheus R\",\n" +
+                                            "  \"genero\": \"Masculino\",\n" +
+                                            "  \"nascimento\": \"1993-05-12\",\n" +
+                                            "  \"naturalidade\": \"Florianópolis-SC\",\n" +
+                                            "  \"cpf\": \"99999999999\",\n" +
+                                            "  \"rg\": \"9999999-SSP/SC\",\n" +
+                                            "  \"telefone\": \"99999999999\",\n" +
+                                            "  \"email\": \"mrs@mail.com\",\n" +
+                                            "  \"senha\": \"1234\",\n" +
+                                            "  \"estadoCivil\": \"Casado\",\n" +
+                                            "  \"materias\": [\n" +
+                                            "    { \"id\": 2 },\n" +
+                                            "    { \"id\": 3 }\n" +
+                                            "  ],\n" +
+                                            "  \"cep\": \"88888888\",\n" +
+                                            "  \"localidade\": \"Florianópolis\",\n" +
+                                            "  \"uf\": \"Santa Catarina\",\n" +
+                                            "  \"logradouro\": \"Rua dos Manezinhos\",\n" +
+                                            "  \"numero\": 100,\n" +
+                                            "  \"complemento\": \"Não há\",\n" +
+                                            "  \"bairro\": \"Centro\",\n" +
+                                            "  \"referencia\": \"Não há\"\n" +
+                                            "}\n"
+                            )
+                    )),
+            @ApiResponse(responseCode = "401", description = "Credenciais inválidas. O usuário não está autorizado a acessar o sistema.",
+                    content = @Content
+            ),
+            @ApiResponse(responseCode = "400", description = "Requisição inválida, por exemplo, dados ausentes ou incorretos.",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    type = "object",
+                                    example = "{ \"status\": 400, \"messages\": [{ \"code\": \"json_parse\", \"message\": \"Mensagem inválida\" }] }"
+                            )))
+    })
+    @PostMapping("/docentes")
+    @Transactional
     @PreAuthorize("hasAuthority('DOCENTE_WRITE')")
     public ResponseEntity<DocenteDto> criar(@RequestBody @Valid DocenteDto docenteDto) {
         Docente docente = docenteMapper.toEntity(docenteDto);
@@ -52,17 +200,86 @@ public class DocenteController {
         return ResponseEntity.status(HttpStatus.CREATED).body(docenteSalvoDto);
     }
 
-    @PutMapping("/{id}")
+    @Operation(summary = "Atualiza o Docente pelo ID", method = "PUT")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Docentes atualizado com sucesso.",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    example = "{\n" +
+                                            "  \"id\": 2,\n" +
+                                            "  \"nomeCompleto\": \"Prof. Caio Pizza\",\n" +
+                                            "  \"genero\": \"Masculino\",\n" +
+                                            "  \"nascimento\": \"1993-05-12\",\n" +
+                                            "  \"naturalidade\": \"Florianópolis-SC\",\n" +
+                                            "  \"cpf\": \"99999999999\",\n" +
+                                            "  \"rg\": \"9999999-SSP/SC\",\n" +
+                                            "  \"telefone\": \"99999999999\",\n" +
+                                            "  \"email\": \"cnpizza@mail.com\",\n" +
+                                            "  \"senha\": \"1234\",\n" +
+                                            "  \"estadoCivil\": \"Casado\",\n" +
+                                            "  \"materias\": [\n" +
+                                            "    { \"id\": 2 },\n" +
+                                            "    { \"id\": 3 }\n" +
+                                            "  ],\n" +
+                                            "  \"cep\": \"88888888\",\n" +
+                                            "  \"localidade\": \"Florianópolis\",\n" +
+                                            "  \"uf\": \"Santa Catarina\",\n" +
+                                            "  \"logradouro\": \"Rua dos Manezinhos\",\n" +
+                                            "  \"numero\": 100,\n" +
+                                            "  \"complemento\": \"Não há\",\n" +
+                                            "  \"bairro\": \"Centro\",\n" +
+                                            "  \"referencia\": \"Não há\"\n" +
+                                            "}\n"
+                            ))),
+            @ApiResponse(responseCode = "401", description = "Credenciais inválidas. O usuário não está autorizado a acessar o sistema.",
+                    content = @Content
+            ),
+            @ApiResponse(responseCode = "404", description = "Docente não encontrado.",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    type = "object",
+                                    example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
+                            )))
+    })
+    @PutMapping("/docentes/{id}")
     @PreAuthorize("hasAuthority('DOCENTE_WRITE')")
-    public ResponseEntity<DocenteDto> atualizar(@PathVariable Long id, @RequestBody @Valid DocenteDto docenteDto) {
-        Docente docente = docenteMapper.toEntity(docenteDto);
-        Docente docenteSalvo = docenteService.atualizar(id, docente);
-        DocenteDto docenteSalvoDto = docenteMapper.toDto(docenteSalvo);
+    @Transactional
+    public Docente atualizar(@PathVariable Long id, @RequestBody DocenteDto docenteAtualizado) {
+        Docente docenteExistente = docenteRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Docente não encontrado"));
 
-        return ResponseEntity.ok(docenteSalvoDto);
+        BeanUtils.copyProperties(docenteAtualizado, docenteExistente, "id", "materias", "usuario");
+
+        if (docenteAtualizado.getMaterias() != null && !docenteAtualizado.getMaterias().isEmpty()) {
+            List<Long> materiaIds = docenteAtualizado.getMaterias();
+
+            List<Materia> materiasAssociadas = materiaRepository.findAllById(materiaIds);
+
+            docenteExistente.setMaterias(materiasAssociadas);
+        }
+
+        return docenteRepository.save(docenteExistente);
     }
 
-    @DeleteMapping("/{id}")
+    @Operation(summary = "Exclui Docentes pelo ID", method = "DELETE")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Docentes excluido com sucesso.",
+                    content = @Content
+            ),
+            @ApiResponse(responseCode = "401", description = "Credenciais inválidas. O usuário não está autorizado a acessar o sistema.",
+                    content = @Content
+            ),
+            @ApiResponse(responseCode = "404", description = "Docente não encontrado.",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    type = "object",
+                                    example = "{ \"status\": 404, \"messages\": [{ \"code\": \"not-found\", \"message\": \"Recurso não encontrado\" }] }"
+                            )))
+    })
+    @DeleteMapping("/docentes/{id}")
     @PreAuthorize("hasAuthority('DOCENTE_DELETE')")
     public ResponseEntity<Void> excluir(@PathVariable Long id) {
         docenteService.excluir(id);

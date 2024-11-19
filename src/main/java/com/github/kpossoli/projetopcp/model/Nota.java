@@ -27,7 +27,10 @@ public class Nota {
 	private Long id;
 
 	@Getter @Setter
-	private BigDecimal valor;
+	private String avaliacao;
+
+	@Getter @Setter
+	private BigDecimal nota;
 
 	@Getter @Setter
 	private LocalDate data;
@@ -36,7 +39,6 @@ public class Nota {
 	@JoinColumn(name = "id_aluno")
 	@Getter @Setter
 	private Aluno aluno;
-
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_docente")
 	@Getter @Setter

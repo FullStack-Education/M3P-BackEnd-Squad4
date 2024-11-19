@@ -11,4 +11,9 @@ public class MateriaDto {
 	@NotNull
 	private String nome;
 
+	private Long docenteId;
+
+	@NotNull
+	private Long cursoId;
+
 }

@@ -2,6 +2,10 @@ package com.github.kpossoli.projetopcp.service;
 
 import java.util.List;
 
+import com.github.kpossoli.projetopcp.model.Turma;
+import com.github.kpossoli.projetopcp.model.Usuario;
+import com.github.kpossoli.projetopcp.repository.PapelRepository;
+import com.github.kpossoli.projetopcp.repository.TurmaRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
@@ -19,7 +23,9 @@ import lombok.extern.slf4j.Slf4j;
 public class DocenteServiceImpl implements DocenteService {
 
     private final DocenteRepository docenteRepository;
-    private final UsuarioRepository usuarioRepository;
+    private final UsuarioService usuarioService;
+    private final PapelRepository papelRepository;
+    private final TurmaRepository turmaRepository;
 
     @Override
     public Docente obter(Long id) {
@@ -36,10 +42,15 @@ public class DocenteServiceImpl implements DocenteService {
     public Docente criar(Docente docente) {
         log.info("Criando docente", docente);
 
-        var usuario = usuarioRepository.findById(docente.getUsuario().getId())
-            .orElseThrow(() -> new EmptyResultDataAccessException(1));
-            
-        docente.setUsuario(usuario);
+        Usuario novoUsuario = new Usuario();
+        novoUsuario.setNome(docente.getNomeCompleto());
+        novoUsuario.setEmail(docente.getEmail());
+        novoUsuario.setSenha(docente.getSenha());
+        novoUsuario.setPapel(papelRepository.findByNome("PROFESSOR").orElseThrow(() -> new RuntimeException("Papel não encontrado")));
+
+        Usuario usuarioSalvo = usuarioService.criarUsuario(novoUsuario);
+
+        docente.setUsuario(usuarioSalvo);
 
         return docenteRepository.save(docente);
     }
@@ -56,6 +67,18 @@ public class DocenteServiceImpl implements DocenteService {
     @Override
     public void excluir(Long id) {
         log.info("Excluindo docente de id: {}", id);
+
+        Docente docente = obter(id);
+
+        List<Turma> turmasAssociadas = turmaRepository.findByDocenteId(docente.getId());
+        for (Turma turma : turmasAssociadas) {
+            turma.setDocente(null);
+            turmaRepository.save(turma);
+        }
+
+        if(docente.getUsuario() != null) {
+            usuarioService.excluir(docente.getUsuario().getId());
+        }
 
         docenteRepository.deleteById(id);
     }

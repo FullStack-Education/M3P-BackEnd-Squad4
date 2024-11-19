@@ -2,7 +2,9 @@ package com.github.kpossoli.projetopcp.dto;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
@@ -11,19 +13,22 @@ public class NotaDto {
 
 	private Long id;
 
+	@NotBlank
+	private String avaliacao;
+
 	@NotNull
-	private BigDecimal valor;
+	private BigDecimal nota;
 
 	@NotNull
 	private LocalDate data;
 
 	@NotNull
-	private AlunoDto aluno;
+	private Long aluno;
 
 	@NotNull
-	private DocenteDto docente;
+	private Long docente;
 
 	@NotNull
-	private MateriaDto materia;
+	private Long materia;
 
 }

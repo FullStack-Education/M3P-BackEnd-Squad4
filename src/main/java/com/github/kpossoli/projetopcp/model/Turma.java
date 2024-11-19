@@ -1,16 +1,13 @@
 package com.github.kpossoli.projetopcp.model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -18,7 +15,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@ToString
+@ToString(onlyExplicitlyIncluded = true)
 @EqualsAndHashCode(of = "id")
 public class Turma {
 
@@ -27,16 +24,33 @@ public class Turma {
 	@Getter @Setter
 	private Long id;
 
+	@Column(unique = true)
 	@Getter @Setter
-	private String nome;
+	@ToString.Include
+	private String nomeTurma;
+
+	@Getter @Setter
+	@ToString.Include
+	private LocalDate dataInicio;
+
+	@Getter @Setter
+	@ToString.Include
+	private LocalDate dataTermino;
+
+	@Getter @Setter
+	@ToString.Include
+	private String horario;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_docente")
 	@Getter @Setter
+	@JsonManagedReference
 	private Docente docente;
 
-	@OneToMany(fetch = FetchType.EAGER, orphanRemoval = true)
-	@JoinColumn(name = "id_turma")
-	private List<Aluno> alunos = new ArrayList<>();
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_curso")
+	@Getter @Setter
+	@JsonManagedReference
+	private Curso curso;
 
 }

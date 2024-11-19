@@ -40,7 +40,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/login").permitAll())
+                        .requestMatchers("/login", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll())// Libera os endpoints do Swagger
                 .authorizeHttpRequests(requests -> requests.requestMatchers("/**")
                         .authenticated())
                 .sessionManagement(management -> management

@@ -1,16 +1,16 @@
 {
 	"info": {
-		"_postman_id": "7dd6687f-b853-4d7f-b8e7-3f3f2eebee7c",
+		"_postman_id": "f3c56fd3-2629-47f2-a528-85919ebe097e",
 		"name": "Projeto PCP",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "33277061"
+		"_exporter_id": "33277051"
 	},
 	"item": [
 		{
 			"name": "Alunos",
 			"item": [
 				{
-					"name": "alunos",
+					"name": "Pegar Alunos",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -37,7 +37,7 @@
 					"response": []
 				},
 				{
-					"name": "alunos/:id",
+					"name": "Pegar Aluno por id",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -65,7 +65,7 @@
 					"response": []
 				},
 				{
-					"name": "alunos",
+					"name": "Criar Alunos",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -81,7 +81,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nome\": \"aluno2\",\r\n    \"dataNascimento\": \"1995-03-03\",\r\n    \"usuario\": {\r\n        \"id\": 2\r\n    }\r\n}",
+							"raw": "{\r\n    \"nomeCompleto\": \"Aluno 6\",\r\n    \"telefone\": \"99999999999\",\r\n    \"genero\": \"Masculino\",\r\n    \"turma\": {\r\n        \"id\": 1\r\n    },\r\n    \"nascimento\": \"1995-03-03\",\r\n    \"email\": \"aluno6@mail.com\",\r\n    \"senha\": \"abc12345\",\r\n    \"cpf\": \"99999999999\",\r\n    \"rg\": \"9999999-SSP/SC\",\r\n    \"naturalidade\": \"São Paulo - SP\",\r\n    \"cep\": \"99999999\",\r\n    \"logradouro\": \"Rua das Tainhas\",\r\n    \"numero\": \"50\",\r\n    \"localidade\": \"São José\",\r\n    \"uf\": \"Santa Catarina\",\r\n    \"complemento\": \"não há\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -101,7 +101,7 @@
 					"response": []
 				},
 				{
-					"name": "alunos/:id",
+					"name": "Atualizar Aluno",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -138,7 +138,7 @@
 					"response": []
 				},
 				{
-					"name": "alunos/:id",
+					"name": "Deletar Aluno",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -166,7 +166,7 @@
 					"response": []
 				},
 				{
-					"name": "pontuacao",
+					"name": "Pegar Alunos da Turma",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -181,21 +181,21 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BaseUrl}}/alunos/2/pontuacao",
+							"raw": "{{BaseUrl}}/turmas/1/alunos",
 							"host": [
 								"{{BaseUrl}}"
 							],
 							"path": [
-								"alunos",
-								"2",
-								"pontuacao"
+								"turmas",
+								"1",
+								"alunos"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Notas",
+					"name": "Pegar Pontuação do Aluno",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -210,14 +210,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BaseUrl}}/alunos/2/notas",
+							"raw": "{{BaseUrl}}/alunos/1/pontuacao",
 							"host": [
 								"{{BaseUrl}}"
 							],
 							"path": [
 								"alunos",
-								"2",
-								"notas"
+								"1",
+								"pontuacao"
 							]
 						}
 					},
@@ -229,7 +229,10 @@
 			"name": "Docentes",
 			"item": [
 				{
-					"name": "docentes",
+					"name": "Pegar Docentes",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -243,6 +246,15 @@
 						},
 						"method": "GET",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "{{BaseUrl}}/docentes",
 							"host": [
@@ -256,7 +268,7 @@
 					"response": []
 				},
 				{
-					"name": "docentes/:id",
+					"name": "Pegar Docente por id",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -284,7 +296,7 @@
 					"response": []
 				},
 				{
-					"name": "docentes",
+					"name": "Criar Docente",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -300,7 +312,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nome\": \"Prof. João Silva\",\r\n    \"dataEntrada\": \"2022-01-01\",\r\n    \"usuario\": {\r\n        \"id\": 2\r\n    }\r\n}",
+							"raw": "{\r\n    \"nome\": 1234#@!$!@$,\r\n    \"genero\": \"Masculino\",\r\n    \"dataNascimento\": \"1993-05-12\",\r\n    \"naturalidade\": \"Florianópolis-SC\",\r\n    \"cpf\": \"99999999999\",\r\n    \"rg\": \"9999999-SSP/SC\",\r\n    \"telefone\": \"99999999999\",\r\n    \"email\": \"maya@mail.com\",\r\n    \"senha\": \"abc12345\",\r\n    \"estadoCivil\": \"Casado\",\r\n    \"materias\": [\r\n        {\"id\": \"2\"}, {\"id\": \"3\"}\r\n    ],\r\n    \"cep\": \"88888888\",\r\n    \"cidade\": \"Florianópolis\",\r\n    \"estado\": \"Santa Catarina\",\r\n    \"logradouro\": \"Rua dos Manezinhos\",\r\n    \"numero\": \"100\",\r\n    \"complemento\": \"Não há\",\r\n    \"bairro\": \"Centro\",\r\n    \"pontoDeReferencia\": \"Não há\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -320,7 +332,7 @@
 					"response": []
 				},
 				{
-					"name": "docentes/:id",
+					"name": "Atualizar Docente",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -336,7 +348,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\": 1,\r\n    \"nome\": \"João Silva\",\r\n    \"dataEntrada\": \"2022-01-01\",\r\n    \"usuario\": {\r\n        \"id\": 14,\r\n        \"nome\": \"Teste\",\r\n        \"login\": \"joaosilva\",\r\n        \"senha\": \"senhaSegura123\",\r\n        \"papel\": {\r\n            \"id\": 4,\r\n            \"nome\": \"PROFESSOR\"\r\n        }\r\n    }\r\n}",
+							"raw": "{\r\n    \"nome\": \"Prof. Caio Pizza\",\r\n    \"genero\": \"Masculino\",\r\n    \"dataNascimento\": \"1993-05-12\",\r\n    \"naturalidade\": \"Florianópolis-SC\",\r\n    \"cpf\": \"99999999999\",\r\n    \"rg\": \"9999999-SSP/SC\",\r\n    \"telefone\": \"99999999999\",\r\n    \"email\": \"maya@mail.com\",\r\n    \"senha\": \"abc12345\",\r\n    \"estadoCivil\": \"Casado\",\r\n    \"materias\": [\r\n        {\"id\": \"2\"}, {\"id\": \"1\"}\r\n    ],\r\n    \"cep\": \"88888888\",\r\n    \"cidade\": \"Florianópolis\",\r\n    \"estado\": \"Santa Catarina\",\r\n    \"logradouro\": \"Rua dos Manezinhos\",\r\n    \"numero\": \"100\",\r\n    \"complemento\": \"Não há\",\r\n    \"bairro\": \"Centro\",\r\n    \"pontoDeReferencia\": \"Não há\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -344,20 +356,20 @@
 							}
 						},
 						"url": {
-							"raw": "{{BaseUrl}}/docentes/1",
+							"raw": "{{BaseUrl}}/docentes/2",
 							"host": [
 								"{{BaseUrl}}"
 							],
 							"path": [
 								"docentes",
-								"1"
+								"2"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "docentes/:id",
+					"name": "Deletar Docente",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -390,7 +402,7 @@
 			"name": "Notas",
 			"item": [
 				{
-					"name": "notas",
+					"name": "Pegar Notas",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -417,7 +429,7 @@
 					"response": []
 				},
 				{
-					"name": "notas/:id",
+					"name": "Pegar Nota por id",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -445,7 +457,7 @@
 					"response": []
 				},
 				{
-					"name": "notas",
+					"name": "Criar Nota",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -461,7 +473,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"valor\": 8.5,\r\n    \"data\": \"2022-03-01\",\r\n    \"aluno\": {\r\n        \"id\": 2\r\n    },\r\n    \"materia\": {\r\n        \"id\": 2\r\n    },\r\n    \"docente\": {\r\n        \"id\": 2\r\n    }\r\n}",
+							"raw": "{\r\n    \"valor\": 8.5,\r\n    \"data\": \"2022-03-01\",\r\n    \"aluno\": {\r\n        \"id\": 1\r\n    },\r\n    \"materia\": {\r\n        \"id\": 2\r\n    },\r\n    \"docente\": {\r\n        \"id\": 1\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -481,7 +493,7 @@
 					"response": []
 				},
 				{
-					"name": "notas/:id",
+					"name": "Atualizar Nota",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -518,7 +530,7 @@
 					"response": []
 				},
 				{
-					"name": "notas/:id",
+					"name": "Deletar Nota",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -544,6 +556,35 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Pegar Notas do Aluno",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/alunos/1/notas",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"alunos",
+								"1",
+								"notas"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -551,7 +592,10 @@
 			"name": "Turma",
 			"item": [
 				{
-					"name": "turmas",
+					"name": "Pegar Turmas",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -564,65 +608,10 @@
 							]
 						},
 						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{BaseUrl}}/turmas",
-							"host": [
-								"{{BaseUrl}}"
-							],
-							"path": [
-								"turmas"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "turmas/:id",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{BaseUrl}}/turmas/4",
-							"host": [
-								"{{BaseUrl}}"
-							],
-							"path": [
-								"turmas",
-								"4"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "turmas",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nome\": \"Turma A\",\r\n    \"docente\": {\r\n        \"id\": 2\r\n    },\r\n    \"alunos\": [\r\n        {\r\n            \"id\": 1\r\n        }\r\n    ]\r\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -642,7 +631,71 @@
 					"response": []
 				},
 				{
-					"name": "turmas/:id",
+					"name": "Pegar Turma por id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/turmas/1",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"turmas",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Criar Turma",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 1,\r\n  \"nomeTurma\": \"Turma A\",\r\n  \"dataInicio\": \"2024-01-15\",\r\n  \"dataTermino\": \"2024-06-15\",\r\n  \"horario\": \"08:00 - 12:00\",\r\n  \"docenteId\": 2,\r\n  \"cursoId\": 3\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/turmas",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"turmas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar Turma",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -666,20 +719,20 @@
 							}
 						},
 						"url": {
-							"raw": "{{BaseUrl}}/turmas/4",
+							"raw": "{{BaseUrl}}/turmas/1",
 							"host": [
 								"{{BaseUrl}}"
 							],
 							"path": [
 								"turmas",
-								"4"
+								"1"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "turmas/:id",
+					"name": "Deletar Turma",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -694,13 +747,100 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{BaseUrl}}/turmas/4",
+							"raw": "{{BaseUrl}}/turmas/1",
 							"host": [
 								"{{BaseUrl}}"
 							],
 							"path": [
 								"turmas",
-								"4"
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pegar Turma por Docente",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/docentes/1/turmas",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"docentes",
+								"1",
+								"turmas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pegar Curso por Docente",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/docentes/1/cursos",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"docentes",
+								"1",
+								"cursos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pegar Docentes do Curso",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/cursos/1/docentes",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"cursos",
+								"1",
+								"docentes"
 							]
 						}
 					},
@@ -712,7 +852,7 @@
 			"name": "Materia",
 			"item": [
 				{
-					"name": "materias",
+					"name": "Pegar Materias",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -739,7 +879,7 @@
 					"response": []
 				},
 				{
-					"name": "materias/:id",
+					"name": "Pegar Materia por id",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -767,7 +907,7 @@
 					"response": []
 				},
 				{
-					"name": "materias",
+					"name": "Criar Materia",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -783,7 +923,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nome\": \"Inglês 1\"\r\n}",
+							"raw": "{\r\n    \"nome\": \"Inglês 1\",\r\n    \"docenteId\": \"3\",\r\n    \"cursoId\": \"3\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -803,7 +943,7 @@
 					"response": []
 				},
 				{
-					"name": "materias/:id",
+					"name": "Atualizar Materia",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -840,7 +980,7 @@
 					"response": []
 				},
 				{
-					"name": "materias/:id",
+					"name": "Deletar Materia",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -866,6 +1006,64 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Pegar Materias do Docente",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/docentes/1/materias",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"docentes",
+								"1",
+								"materias"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pegar Materias do Curso",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/cursos/1/materias",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"cursos",
+								"1",
+								"materias"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -873,7 +1071,7 @@
 			"name": "Curso",
 			"item": [
 				{
-					"name": "cursos",
+					"name": "Pegar Cursos",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -900,7 +1098,7 @@
 					"response": []
 				},
 				{
-					"name": "cursos/:id",
+					"name": "Pegar Curso por id",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -928,7 +1126,7 @@
 					"response": []
 				},
 				{
-					"name": "cursos",
+					"name": "Criar Curso",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -944,7 +1142,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nome\": \"Engenharia de Software\",\r\n    \"turmas\": [\r\n        {\r\n            \"id\": 3\r\n        }\r\n    ],\r\n    \"materias\": [\r\n        {\r\n            \"id\": 1\r\n        }\r\n    ]\r\n}",
+							"raw": "{\r\n    \"nome\": \"Musica\",\r\n    \"turmas\": [\r\n        {\r\n            \"id\": 1\r\n        }\r\n    ],\r\n    \"materias\": [\r\n        {\r\n            \"id\": 1\r\n        }\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -964,7 +1162,7 @@
 					"response": []
 				},
 				{
-					"name": "cursos/:id",
+					"name": "Atualizar Curso",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -1001,7 +1199,7 @@
 					"response": []
 				},
 				{
-					"name": "cursos/:id",
+					"name": "Deletar Curso",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -1029,7 +1227,7 @@
 					"response": []
 				},
 				{
-					"name": "cursos/:id/metarias",
+					"name": "Pegar Materias por Curso e Docente",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -1044,26 +1242,23 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BaseUrl}}/cursos/3/materias",
+							"raw": "{{BaseUrl}}/cursos/1/docentes/1/materias",
 							"host": [
 								"{{BaseUrl}}"
 							],
 							"path": [
 								"cursos",
-								"3",
+								"1",
+								"docentes",
+								"1",
 								"materias"
 							]
 						}
 					},
 					"response": []
-				}
-			]
-		},
-		{
-			"name": "Notas",
-			"item": [
+				},
 				{
-					"name": "notas/:id",
+					"name": "Pegar Cursos que Aluno não esta cadastrado",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -1078,104 +1273,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BaseUrl}}/notas/1",
+							"raw": "{{BaseUrl}}/alunos/1/cursos",
 							"host": [
 								"{{BaseUrl}}"
 							],
 							"path": [
-								"notas",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "notas",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"materia\": {\r\n        \"id\": 2\r\n    },\r\n    \"docente\": {\r\n        \"id\": 2\r\n    },\r\n    \"aluno\":{\r\n        \"id\":2\r\n    },\r\n    \"valor\": 2.5,\r\n    \"data\": \"2022-04-04\"\r\n}\r\n ",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{BaseUrl}}/notas",
-							"host": [
-								"{{BaseUrl}}"
-							],
-							"path": [
-								"notas"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "notas/:id",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"disciplinaMatricula\": {\r\n        \"id\": 1\r\n    },\r\n    \"professor\": {\r\n        \"id\": 1\r\n    },\r\n    \"nota\": 0.0,\r\n    \"coeficiente\": 0.0\r\n}\r\n",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{BaseUrl}}/notas/1",
-							"host": [
-								"{{BaseUrl}}"
-							],
-							"path": [
-								"notas",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "notas/:id",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{BaseUrl}}/notas/3",
-							"host": [
-								"{{BaseUrl}}"
-							],
-							"path": [
-								"notas",
-								"3"
+								"alunos",
+								"1",
+								"cursos"
 							]
 						}
 					},
@@ -1184,7 +1289,7 @@
 			]
 		},
 		{
-			"name": "usuario",
+			"name": "Usuario",
 			"item": [
 				{
 					"name": "Criar Usuário",
@@ -1203,7 +1308,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"nome\": \"admin\",\n    \"login\": \"admin123\",\n    \"senha\": \"senhaSegura123\",\n    \"papel\": {\n        \"id\": 1\n    }\n}",
+							"raw": "{\n    \"nome\": \"user1\",\n    \"email\": \"user@email.com\",\n    \"senha\": \"123\",\n    \"papel\": {\n        \"id\": 5\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1211,11 +1316,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{BaseUrl}}/cadastro",
+							"raw": "{{BaseUrl}}/usuarios/cadastro",
 							"host": [
 								"{{BaseUrl}}"
 							],
 							"path": [
+								"usuarios",
 								"cadastro"
 							]
 						}
@@ -1255,7 +1361,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"usuario\": \"admin\",\n    \"senha\": \"senhaSegura123\"\n}",
+							"raw": "{\n    \"email\": \"admin@mail.com\",\n    \"senha\": \"senhaSegura123\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1269,6 +1375,84 @@
 							],
 							"path": [
 								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pegar por email",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/usuarios/buscar?email=admin@mail.com",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"usuarios",
+								"buscar"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "admin@mail.com"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Dashboard",
+			"item": [
+				{
+					"name": "Pegar Estatisticas",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/dashboard",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"dashboard"
 							]
 						}
 					},
