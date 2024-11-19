@@ -22,6 +22,25 @@ services:
       - PGADMIN_DEFAULT_PASSWORD=123456
     networks:
       - postgres
+  app-projeto-pcp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: projeto-pcp-app
+    volumes:
+      - ./src:/app/src
+    ports:
+      - 8080:8080
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://projeto-pcp:5432/projeto-pcp
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: 123456
+    networks:
+      - postgres
 networks:
   postgres:
     driver: bridge
+
+
