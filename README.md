@@ -76,42 +76,27 @@ O projeto segue a arquitetura Controller-Service-Repository, promovendo a separa
 
 ### Clonando o Repositório
 ```
-git clone https://github.com/FullStack-Education/M3P-BackEnd-Squad4.git
+git clone https://github.com/FullStack-Education/M3P-BackEnd-Squad4.git && cd M3P-BackEnd-Squad4
 ```
-### Instalando o Projeto
+### Executando o Projeto
 
-Rodar o docker
+Garanta que o serviço do docker esteja sendo executado em sua máquina, e que as portas 8080, 8000 e 5432 estejam disponíveis.
 
-Rodar o docker compose
-
-Criar o BD
-
-Importar o data.sql
-
-
-Se desejar usar o PostgreSQL via Docker, execute os comandos abaixo:
-
-```sh
-docker volume create pgdb
-docker network create pgnet
-docker run -d --name postgres -p 5432:5432 --network pgnet -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=123456 -e POSTGRES_DB=projeto-pcp -v pgdb:/var/lib/postgresql/data postgres:15.6-alpine
-docker run -d --name pgadmin -p 8000:80 --network pgnet -e PGADMIN_DEFAULT_EMAIL=postgres -e PGADMIN_DEFAULT_PASSWORD=123456 -d dpage/pgadmin4
+Digite o comando:
 ```
-Após iniciar o PgAdmin em http://localhost:8000, importe o arquivo data.sql, localizado na pasta sql.
-
-A senha padrão do usuário admin do sistema é: `senhaSegura123`.
-
-### Execução
-Abra o projeto no IntelliJ IDEA e execute-o usando o atalho de execução da IDE.
+docker-compose up --build --force-recreate -d
+```
 
 A aplicação estará disponível em `http://localhost:8080`.
 
 ## Documentação da API
 A documentação da API está disponível pelo swagger que pode ser acessado em:
-![Swagger](http://localhost:8080/swagger-ui/index.html#/)
+[Swagger](http://localhost:8080/swagger-ui/index.html#/)
 
 Todos os endpoints, com exceção do endpoint de Login, recebem um Token JWT que controla o acesso aos dados do mesmo.
 Mais detalhes também podem ser encontrados no arquivo do Postman em anexo ou no diretório doc.
+
+A senha padrão do usuário admin do sistema é: `senhaSegura123`.
 
 ## Anexos:
 - [Documentação do Projeto](FullStack%20%5BEducation%5D%20-%20Módulo%203%20-%20Projeto%20Avaliativo.pdf)
